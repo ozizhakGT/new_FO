@@ -1,0 +1,11 @@
+.navbar {
+  padding: 20px;
+  display: flex;
+  background: grey;
+}
+.navbar__list {
+  display: flex;
+}
+.navbar__item {
+
+}
