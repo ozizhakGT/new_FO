@@ -1,11 +1,21 @@
 .navbar {
-  padding: 20px;
+  padding: 5px 20px;
   display: flex;
-  background: grey;
+  align-items: center;
+  background: var(--secondery-color-main);
+}
+.navbar__title {
+  margin-right: 50px; 
+}
+.navbar__title-main {
+  font-size: 28px;
+}
+.navbar__title-sub {
+  font-size: 15px;
 }
 .navbar__list {
   display: flex;
+  align-self: flex-end;
 }
 .navbar__item {
-
 }
