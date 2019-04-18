@@ -1,0 +1,39 @@
+<nav class="navbar">
+  <div class="navbar__title">
+    <h1 class="navbar__title-main">FO</h1>
+    <h3 class="navbar__title-sub">Publisher</h3>
+  </div>
+  <div class="navbar__menu">
+    <button class="navbar__item" mat-button [matMenuTriggerFor]="sites">Sites</button>
+    <button class="navbar__item" mat-button [matMenuTriggerFor]="tags">Tags</button>
+    <button class="navbar__item" mat-button [matMenuTriggerFor]="management">Management</button>
+
+    <mat-menu #sites="matMenu">
+      <button mat-menu-item>New Site</button>
+      <button mat-menu-item>Exist Site</button>
+      <button mat-menu-item>All Sites</button>
+    </mat-menu>
+
+    <mat-menu #tags="matMenu">
+      <button mat-menu-item>New Tag</button>
+      <button mat-menu-item>Tag Configuration</button>
+      <button mat-menu-item>All Tags</button>
+    </mat-menu>
+
+    <mat-menu #management="matMenu">
+      <button mat-menu-item>My Area</button>
+      <button mat-menu-item>New Publisher</button>
+      <button mat-menu-item>Publisher Configuration</button>
+    </mat-menu>
+  </div>
+  <div class="navbar__search">
+    <mat-form-field class="example-full-width">
+      <input type="text" placeholder="Search" matInput [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</nav>

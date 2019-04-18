@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  background: var(--secondery-color-main);
+}
+/* TITLE */
+.navbar__title {
+  margin-right: 50px;
+  cursor: pointer;
+  transition: .3s all;
+}
+.navbar__title:hover {
+  color: var(--primary-color-sub)
+}
+.navbar__title-main {
+  font-size: 2rem;
+}
+
+.navbar__item {
+  font-size: 1.1rem
+}
+.navbar__item:not(:last-child) {
+  margin-right: 1.5rem;
+}

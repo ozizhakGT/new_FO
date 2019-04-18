@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i');
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 :root {
+  /* COLORS */
   --primary-color-main: #A593E0;
   --primary-color-sub: #566270;
   --secondery-color-main: #E0E3DA;
