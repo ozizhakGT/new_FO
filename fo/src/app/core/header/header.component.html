@@ -28,7 +28,7 @@
   </div>
   <div class="navbar__search">
     <mat-form-field class="example-full-width">
-      <input type="text" placeholder="Search" matInput [matAutocomplete]="auto">
+      <input class="navbar__search--filed" type="text" placeholder="Search" matInput [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of options" [value]="option">
           {{option}}
