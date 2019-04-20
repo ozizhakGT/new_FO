@@ -1,17 +1,17 @@
 <nav class="navbar">
-  <div class="navbar__title">
+  <a class="navbar__title" [routerLink]="'welcome'">
     <h1 class="navbar__title-main">FO</h1>
     <h3 class="navbar__title-sub">Publisher</h3>
-  </div>
+  </a>
   <div class="navbar__menu">
     <button class="navbar__item" mat-button [matMenuTriggerFor]="sites">Sites</button>
     <button class="navbar__item" mat-button [matMenuTriggerFor]="tags">Tags</button>
     <button class="navbar__item" mat-button [matMenuTriggerFor]="management">Management</button>
 
     <mat-menu #sites="matMenu">
-      <button mat-menu-item>New Site</button>
-      <button mat-menu-item>Exist Site</button>
-      <button mat-menu-item>All Sites</button>
+      <button mat-menu-item [routerLink]="['/sites']">All Sites</button>
+      <button mat-menu-item [routerLink]="['sites/new']">New Site</button>
+      <button mat-menu-item [routerLink]="['sites/edit/123']">Exist Site</button>
     </mat-menu>
 
     <mat-menu #tags="matMenu">
@@ -27,13 +27,6 @@
     </mat-menu>
   </div>
   <div class="navbar__search">
-    <mat-form-field class="example-full-width">
-      <input class="navbar__search--filed" type="text" placeholder="Search" matInput [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+      <input #search type="text" class="default-input navbar__search--input" placeholder="Search Publisher ..." (keyup)="onSearch(search.value)">
   </div>
 </nav>

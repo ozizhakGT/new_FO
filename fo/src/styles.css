@@ -9,10 +9,28 @@
   --secondery-color-sub: #FFFFF3;
 }
 
-* {
+*,
+*:active,
+*:visited {
   margin: 0;
   padding: 0;
   text-decoration: none;
   list-style: none;
   font-family: 'PT Sans', sans-serif;
+  color: black;
+}
+/*PAGE DESIGN*/
+.page-body {
+  height: 800px;
+  margin: 5rem 6rem;
+}
+
+/* INPUTS DESIGN */
+.default-input {
+  border: none;
+  border-radius: 7px;
+}
+.default-input:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px var(--primary-color-sub);
 }

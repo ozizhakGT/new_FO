@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {WelcomeComponent} from "./core/welcome/welcome.component";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
+  {path: 'welcome', component: WelcomeComponent},
+  {path: 'sites', loadChildren: './sites/sites.module#SitesModule'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
