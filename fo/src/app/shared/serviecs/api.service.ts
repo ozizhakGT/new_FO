@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  token = 'authenticationToken=db6357e8-3b1c-4742-afed-4f416f80d9f7';
+  token = 'authenticationToken=8883ca0e-791c-48d7-903f-43ceb7801dee';
   baseUrl = 'http://api.adserver.web-pick.com/api/';
   constructor(private http: HttpClient) { }
 /*

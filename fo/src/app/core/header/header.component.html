@@ -9,15 +9,15 @@
     <button class="navbar__item" mat-button [matMenuTriggerFor]="management">Management</button>
 
     <mat-menu #sites="matMenu">
-      <button mat-menu-item [routerLink]="['/sites']">All Sites</button>
+      <button mat-menu-item [routerLink]="['sites']">All Sites</button>
       <button mat-menu-item [routerLink]="['sites/new']">New Site</button>
-      <button mat-menu-item [routerLink]="['sites/edit/123']">Exist Site</button>
+      <button mat-menu-item [routerLink]="['sites/123/edit']">Exist Site</button>
     </mat-menu>
 
     <mat-menu #tags="matMenu">
-      <button mat-menu-item>New Tag</button>
-      <button mat-menu-item>Tag Configuration</button>
-      <button mat-menu-item>All Tags</button>
+      <button mat-menu-item [routerLink]="['tags']">New Tag</button>
+      <button mat-menu-item [routerLink]="['tags/new']">Tag Configuration</button>
+      <button mat-menu-item [routerLink]="['tags/123/edit']">All Tags</button>
     </mat-menu>
 
     <mat-menu #management="matMenu">
@@ -27,6 +27,14 @@
     </mat-menu>
   </div>
   <div class="navbar__search">
-      <input #search type="text" class="default-input navbar__search--input" placeholder="Search Publisher ..." (keyup)="onSearch(search.value)">
+      <input #search type="text" class="default-input navbar__search--input" placeholder="Search Publisher ...">
+      <div class="navbar__search--result" *ngIf="publisherResult.length > 0">
+        <ul>
+          <li class="navbar__search--result-item" *ngFor="let publisher of publisherResult" (click)="onPublisherSelect(publisher)">
+            <p>{{publisher.username}}</p>
+            <span>{{publisher._id}}</span>
+          </li>
+        </ul>
+      </div>
   </div>
 </nav>
