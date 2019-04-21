@@ -21,6 +21,7 @@ selector: 'app-header',
 export class HeaderComponent implements OnInit {
   @ViewChild('search') searchQuery: ElementRef;
   keyupSubscription: Subscription;
+  mouseupSubscription: Subscription;
   lastSearch: string;
   publisherResult: Publisher[] = [];
   // publisherResult: Publisher[] = [
@@ -122,6 +123,7 @@ export class HeaderComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // subscribe search from by keyup wait 1.5 sec and then send request.
     this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup')
       .debounceTime(1500)
       .subscribe(() => {
@@ -130,12 +132,18 @@ export class HeaderComponent implements OnInit {
           this.lastSearch = search;
           this.onGetPublisher(search);
         } else {
-          this.lastSearch = '';
-          this.publisherResult = [];
+          this.onResetSearch(false);
         }
-      })
+      });
+
+    // subscribe for closing window
+    this.mouseupSubscription = Observable.fromEvent(document.querySelector('.page-body'), 'mouseup')
+      .subscribe(() => {
+        this.onResetSearch(false);
+      });
   }
 
+  // Get Publisher function.
   onGetPublisher(query) {
     this.apiService.getPublisher(query)
       .subscribe(
@@ -144,14 +152,22 @@ export class HeaderComponent implements OnInit {
         console.log('The result: ' ,this.publisherResult);
       },
       err => console.log(err)
-    )
-  }
+    )}
 
+  //  Select Publisher from the serach list and clear list and last search
   onPublisherSelect(publisher) {
     const id = publisher._id.toString();
     this.utilsService.publisherSelcted.next(publisher);
+    this.onResetSearch(publisher);
+    this.router.navigate(['../sites', id, 'edit']);
+  }
+
+  // Reset Search
+  private onResetSearch(publisher) {
     this.publisherResult = [];
-    this.searchQuery.nativeElement.value = '';
-    this.router.navigate(['../sites',id,'edit'])
+    this.lastSearch = '';
+    if (publisher) {
+      this.searchQuery.nativeElement.value = '';
+    }
   }
 }

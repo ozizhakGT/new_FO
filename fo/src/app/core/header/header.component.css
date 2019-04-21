@@ -45,13 +45,15 @@
   width: 100%;
 }
 .navbar__search--result {
-  width: 100%;
+  width: 30rem;
+  height: 300px;
   cursor: pointer;
   overflow-x: hidden;
   overflow-y: scroll;
-  position: absolute;
-  bottom: -9.6rem;
+  position: fixed;
+  top: 47px;
   background-color: whitesmoke;
+  -webkit-animation: slideDown 1s both;
   animation: slideDown 1s both;
 }
 .navbar__search--result-item {
