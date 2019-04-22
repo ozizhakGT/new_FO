@@ -1,18 +1,15 @@
 // Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
+import {NgxSpinnerModule} from "ngx-spinner";
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 
 // Components & Directives
 import { AppComponent } from './app.component';
-import {SitesComponent} from "./sites/sites.component";
-import {SitesModule} from "./sites/sites.module";
-import {TagsModule} from "./tags/tags.module";
 
 
 @NgModule({
@@ -21,12 +18,10 @@ import {TagsModule} from "./tags/tags.module";
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    SitesModule,
-    TagsModule,
     BrowserAnimationsModule,
-    CoreModule
+    NgxSpinnerModule,
+    AppRoutingModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

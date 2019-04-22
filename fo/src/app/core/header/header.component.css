@@ -30,9 +30,11 @@
 /* SREACH */
 .navbar__search {
   align-self: center;
+  text-align: center;
   width: 30rem;
   position: relative;
-  margin: 1rem 12rem;
+  /*margin: 1rem auto;*/
+  margin-left: 16rem;
 }
 .navbar__search--input {
   margin: 0 auto;
@@ -56,6 +58,10 @@
   -webkit-animation: slideDown 1s both;
   animation: slideDown 1s both;
 }
+.no-results {
+  height: 30px;
+  overflow: hidden;
+}
 .navbar__search--result-item {
   padding: 1.1rem 0;
 }
@@ -69,6 +75,14 @@
   background-color: var(--third-color-main);
 }
 
+
+.navbar__loading {
+  width: 2rem;
+  align-self: center;
+}
+
+
+/*ANIMATION*/
 @keyframes slideDown {
   0% {opacity: 0; bottom: 0}
   70% {opacity: 0}

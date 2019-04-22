@@ -5,10 +5,10 @@ import {NewSiteComponent} from './new-site/new-site.component';
 import {EditSiteComponent} from './edit-site/edit-site.component';
 
 const sitesRoute: Routes = [
-  {path: '', children: [
-      {path: '', component: SitesComponent},
-      {path: 'new', component: NewSiteComponent},
-      {path: ':id/edit', component: EditSiteComponent},
+  {path: '', component: SitesComponent, children: [
+      {path: '', redirectTo: 'new', pathMatch: 'full'},
+      {path: ':publisherId/new', component: NewSiteComponent},
+      {path: ':siteId/edit', component: EditSiteComponent},
     ]}
 ];
 

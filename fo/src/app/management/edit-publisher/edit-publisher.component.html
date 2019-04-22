@@ -1,0 +1,18 @@
+<div *ngIf="!hasPublisher">
+  <h1>No Publisher Selected</h1>
+  <h2>Selected Publisher!</h2>
+</div>
+<div *ngIf="hasPublisher">
+  <mat-tab-group>
+    <mat-tab label="Publisher Details">
+      <app-publisher-details></app-publisher-details>
+    </mat-tab>
+    <mat-tab label="Payment Details">
+      <app-payment-details></app-payment-details>
+    </mat-tab>
+    <mat-tab label="Ownership History">
+    </mat-tab>
+    <mat-tab label="Sites & Tags">
+    </mat-tab>
+  </mat-tab-group>
+</div>

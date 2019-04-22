@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
@@ -20,10 +20,15 @@ selector: 'app-header',
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('search') searchQuery: ElementRef;
-  keyupSubscription: Subscription;
-  mouseupSubscription: Subscription;
-  lastSearch: string;
-  publisherResult: Publisher[] = [];
+  keyupSubscription    : Subscription;
+  mouseupSubscription  : Subscription;
+
+  publisherId     : string;
+  siteId          : string;
+  lastSearch      : string;
+  isLoading       : boolean;
+  isResults       : boolean;
+  publisherResult : Publisher[] = [];
   // publisherResult: Publisher[] = [
   //   {
   //     _id: 88287,
@@ -127,43 +132,66 @@ export class HeaderComponent implements OnInit {
     this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup')
       .debounceTime(1500)
       .subscribe(() => {
-        const search = this.searchQuery.nativeElement.value;
+        // this.isLoading = true;
+        const search = this.searchQuery.nativeElement.value.toLowerCase();
         if (search.length >= 3 && search !== this.lastSearch) {
+          this.isLoading = true;
           this.lastSearch = search;
           this.onGetPublisher(search);
         } else {
-          this.onResetSearch(false);
+          this.onResetSearch()
         }
       });
 
     // subscribe for closing window
     this.mouseupSubscription = Observable.fromEvent(document.querySelector('.page-body'), 'mouseup')
       .subscribe(() => {
-        this.onResetSearch(false);
+        this.onResetSearch();
       });
+
+    this.utilsService.publisherSelcted.subscribe(
+      (publisher: Publisher) => {
+          this.publisherId = publisher._id.toString();
+          console.log(this.publisherId)
+      }
+    )
   }
 
   // Get Publisher function.
   onGetPublisher(query) {
-    this.apiService.getPublisher(query)
+    this.apiService.getPublishers(query)
       .subscribe(
         (result: Publisher[]) => {
         this.publisherResult = result;
         console.log('The result: ' ,this.publisherResult);
+          this.isLoading = false;
+          this.isResults = true;
       },
-      err => console.log(err)
+      err => {
+          console.info(err);
+          this.onResetSearch();
+          this.isResults = true;
+          this.isLoading = false;
+      }
     )}
 
-  //  Select Publisher from the serach list and clear list and last search
+  //  Select Publisher from the search list and clear list and last search
   onPublisherSelect(publisher) {
-    const id = publisher._id.toString();
     this.utilsService.publisherSelcted.next(publisher);
-    this.onResetSearch(publisher);
-    this.router.navigate(['../sites', id, 'edit']);
+    this.onResetSearch(true);
+        this.route.params.subscribe(
+          (params: Params) => {
+            debugger;
+            // if (params['publisherId']) {
+              params['publisherId'] = publisher._id;
+              console.log(params)
+          }
+        )
   }
 
   // Reset Search
-  private onResetSearch(publisher) {
+  private onResetSearch(publisher=false) {
+    this.isResults = false;
     this.publisherResult = [];
     this.lastSearch = '';
     if (publisher) {
