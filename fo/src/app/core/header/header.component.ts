@@ -23,8 +23,7 @@ export class HeaderComponent implements OnInit {
   keyupSubscription    : Subscription;
   mouseupSubscription  : Subscription;
 
-  publisherId     : string;
-  siteId          : string;
+  publisherId     : string = this.utilsService.onSessionStorageLoad();
   lastSearch      : string;
   isLoading       : boolean;
   isResults       : boolean;
@@ -132,14 +131,13 @@ export class HeaderComponent implements OnInit {
     this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup')
       .debounceTime(1500)
       .subscribe(() => {
-        // this.isLoading = true;
         const search = this.searchQuery.nativeElement.value.toLowerCase();
         if (search.length >= 3 && search !== this.lastSearch) {
           this.isLoading = true;
           this.lastSearch = search;
           this.onGetPublisher(search);
         } else {
-          this.onResetSearch()
+          this.onResetSearch();
         }
       });
 
@@ -149,12 +147,11 @@ export class HeaderComponent implements OnInit {
         this.onResetSearch();
       });
 
-    this.utilsService.publisherSelcted.subscribe(
-      (publisher: Publisher) => {
-          this.publisherId = publisher._id.toString();
-          console.log(this.publisherId)
-      }
-    )
+    this.utilsService.publisherId.subscribe(
+      (id: string) => {
+        this.utilsService.onSessionStorageSave(id);
+        this.publisherId = id;
+    });
   }
 
   // Get Publisher function.
@@ -163,7 +160,6 @@ export class HeaderComponent implements OnInit {
       .subscribe(
         (result: Publisher[]) => {
         this.publisherResult = result;
-        console.log('The result: ' ,this.publisherResult);
           this.isLoading = false;
           this.isResults = true;
       },
@@ -177,16 +173,9 @@ export class HeaderComponent implements OnInit {
 
   //  Select Publisher from the search list and clear list and last search
   onPublisherSelect(publisher) {
-    this.utilsService.publisherSelcted.next(publisher);
+    this.utilsService.publisherId.next(publisher._id.toString());
+    this.router.navigate(['manage/edit', this.publisherId]);
     this.onResetSearch(true);
-        this.route.params.subscribe(
-          (params: Params) => {
-            debugger;
-            // if (params['publisherId']) {
-              params['publisherId'] = publisher._id;
-              console.log(params)
-          }
-        )
   }
 
   // Reset Search

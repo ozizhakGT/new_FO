@@ -6,8 +6,14 @@ import {EditTagComponent} from "./edit-tag/edit-tag.component";
 
 const tagsRoute: Routes = [
   {path: '', component: TagsComponent, children: [
-      {path: ':publisherId/new', component: NewTagComponent},
-      {path: ':tagId/edit', component: EditTagComponent},
+      {path: 'new', children: [
+          {path: '', component: NewTagComponent},
+          {path: ':publisherId', component: NewTagComponent}
+        ]},
+      {path: 'edit', children: [
+          {path: '', component: EditTagComponent},
+          {path: ':tagId', component: EditTagComponent}
+        ]},
     ]}
 ];
 

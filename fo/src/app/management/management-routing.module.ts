@@ -9,7 +9,10 @@ const managementRoutes: Routes = [
   {path: '', component: ManagementComponent, children: [
       {path: '', redirectTo: 'my-area', pathMatch: 'full'},
       {path: 'new', component: NewPublisherComponent},
-      {path: ':publisherId/edit', component: EditPublisherComponent},
+      {path: 'edit', children: [
+          {path: '', component: EditPublisherComponent},
+          {path: ':publisherId', component: EditPublisherComponent}
+        ]},
       {path: 'my-area', component: AccountManagerAreaComponent}
     ]}
 ];

@@ -1,5 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Publisher} from "../../shared/interfaces/publisher.interface";
+import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../shared/serviecs/api.service";
 import {UtilsService} from "../../shared/serviecs/utils.service";
 import {ManagementService} from "../management.service";
@@ -11,26 +10,15 @@ import {Subscription} from "rxjs";
   templateUrl: './edit-publisher.component.html',
   styleUrls: ['./edit-publisher.component.css']
 })
-export class EditPublisherComponent implements OnInit, OnDestroy {
+export class EditPublisherComponent implements OnInit {
   publisherSubscription: Subscription;
-  hasPublisher: boolean = false ;
+  hasPublisher: boolean = true ;
   constructor(private utilsService: UtilsService,
               private managementService: ManagementService,
               private apiService: ApiService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
-      (params: Params) => {
-          if (params['publisherId'] && params['publisherId'] !== 'undefined') {
-            this.apiService.getPaymentDetails(params['publisherId']);
-
-            this.hasPublisher = true;
-          } else {
-            this.hasPublisher = false;
-          }
-      }
-    )
   }
 
 }

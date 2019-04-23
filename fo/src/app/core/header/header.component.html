@@ -10,20 +10,20 @@
 
     <mat-menu #sites="matMenu">
       <!--<button mat-menu-item [routerLink]="['sites']">All Sites</button>-->
-      <button mat-menu-item [routerLink]="['sites/123/new']">New Site</button>
-      <button mat-menu-item [routerLink]="['sites/123/edit']">Site Configuration</button>
+      <button mat-menu-item [routerLink]="['sites/new']">New Site</button>
+      <button mat-menu-item [routerLink]="['sites/edit']">Site Configuration</button>
     </mat-menu>
 
     <mat-menu #tags="matMenu">
       <!--<button mat-menu-item [routerLink]="['tags']">All Tags</button>-->
-      <button mat-menu-item [routerLink]="['tags', publisherId, siteId, 'new']">New Tag</button>
-      <button mat-menu-item [routerLink]="['tags', publisherId, 'edit']">Tag Configuration</button>
+      <button mat-menu-item [routerLink]="['tags','new', publisherId]">New Tag</button>
+      <button mat-menu-item [routerLink]="['tags/edit']">Tag Configuration</button>
     </mat-menu>
 
     <mat-menu #management="matMenu">
       <button mat-menu-item [routerLink]="['manage/my-area']">My Area</button>
       <button mat-menu-item [routerLink]="['manage/new']">New Publisher</button>
-      <button mat-menu-item [routerLink]="['manage',publisherId,'edit']">Publisher Configuration</button>
+      <button mat-menu-item [routerLink]="['manage','edit', publisherId]">Publisher Configuration</button>
     </mat-menu>
   </div>
   <div class="navbar__search">
@@ -31,7 +31,7 @@
       <div class="navbar__search--result" *ngIf="isResults && publisherResult.length > 0">
         <ul>
           <li class="navbar__search--result-item" *ngFor="let publisher of publisherResult" (click)="onPublisherSelect(publisher)">
-            <div *ngIf="publisherResult.length > 0; else no_results">
+            <div *ngIf="publisherResult.length > 0">
               <p>{{publisher.username}}</p>
               <span>{{publisher._id}}</span>
             </div>

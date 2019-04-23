@@ -7,8 +7,14 @@ import {EditSiteComponent} from './edit-site/edit-site.component';
 const sitesRoute: Routes = [
   {path: '', component: SitesComponent, children: [
       {path: '', redirectTo: 'new', pathMatch: 'full'},
-      {path: ':publisherId/new', component: NewSiteComponent},
-      {path: ':siteId/edit', component: EditSiteComponent},
+      {path: 'new', children: [
+          {path: '', component: NewSiteComponent},
+          {path: ':publisherId', component: NewSiteComponent}
+        ]},
+      {path: 'edit', children: [
+          {path: '', component: EditSiteComponent},
+          {path: ':siteId', component: EditSiteComponent}
+        ]},
     ]}
 ];
 
