@@ -1,17 +1,17 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Subscription} from "rxjs/Subscription";
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromEvent';
 
-//SERVICE
+// SERVICE
 import {PublisherApiService} from '../serviecs/publisher-api.service';
-import {UtilsService} from "../serviecs/utils.service";
+import {UtilsService} from '../serviecs/utils.service';
 
-//INTERFACES
-import {Publisher} from "../../shared/interfaces/publisher.interface";
+// INTERFACES
+import {Publisher} from '../../shared/interfaces/publisher.interface';
 
 @Component({
 selector: 'app-header',
@@ -20,14 +20,15 @@ selector: 'app-header',
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('search') searchQuery: ElementRef;
-  keyupSubscription    : Subscription;
-  mouseupSubscription  : Subscription;
+  keyupSubscription: Subscription;
+  mouseupSubscription: Subscription;
+  publisherIdSubscription: Subscription;
 
-  publisherId     : string = this.utilsService.onSessionStorageLoad();
-  lastSearch      : string;
-  isLoading       : boolean;
-  isResults       : boolean;
-  publisherResult : Publisher[] = [];
+  publisherId: string = this.utilsService.onSessionStorageLoad();
+  lastSearch: string;
+  isLoading: boolean;
+  isResults: boolean;
+  publisherResult: Publisher[] = [];
   // publisherResult: Publisher[] = [
   //   {
   //     _id: 88287,
@@ -123,12 +124,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(private apiService: PublisherApiService,
               private utilsService: UtilsService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
   ngOnInit() {
     // subscribe search from by keyup wait 1.5 sec and then send request.
-    this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup')
+    this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup' || '')
       .debounceTime(1500)
       .subscribe(() => {
         const search = this.searchQuery.nativeElement.value.toLowerCase();
@@ -146,12 +146,6 @@ export class HeaderComponent implements OnInit {
       .subscribe(() => {
         this.onResetSearch();
       });
-
-    this.utilsService.publisherId.subscribe(
-      (id: string) => {
-        this.utilsService.onSessionStorageSave(id);
-        this.publisherId = id;
-    });
   }
 
   // Get Publisher function.
@@ -160,8 +154,8 @@ export class HeaderComponent implements OnInit {
       .subscribe(
         (result: Publisher[]) => {
         this.publisherResult = result;
-          this.isLoading = false;
-          this.isResults = true;
+        this.isLoading = false;
+        this.isResults = true;
       },
       err => {
           console.info(err);
@@ -169,17 +163,18 @@ export class HeaderComponent implements OnInit {
           this.isResults = true;
           this.isLoading = false;
       }
-    )}
+    ); }
 
   //  Select Publisher from the search list and clear list and last search
   onPublisherSelect(publisher) {
-    this.utilsService.publisherId.next(publisher._id.toString());
+    this.publisherId = publisher._id.toString();
+    this.utilsService.onSessionStorageSave(this.publisherId);
     this.router.navigate(['manage/edit', this.publisherId]);
     this.onResetSearch(true);
   }
 
   // Reset Search
-  private onResetSearch(publisher=false) {
+  private onResetSearch(publisher= false) {
     this.isResults = false;
     this.publisherResult = [];
     this.lastSearch = '';

@@ -1,31 +1,40 @@
 import { Injectable } from '@angular/core';
-import {PublisherApiService} from "../core/serviecs/publisher-api.service";
-import {ActivatedRoute} from "@angular/router";
-import {Observable, Subject, Subscription} from "rxjs";
-import {map} from "rxjs/operators";
+import {PublisherApiService} from '../core/serviecs/publisher-api.service';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagementService {
   presentPublihser = new Subject();
+  publisherlastSeen = new Subject();
   constructor(private publisherService: PublisherApiService) { }
 
-  getUserDetails(publisherId) {
-    this.publisherService.getUserDetails(publisherId)
+  ongetPublisherDetails(publisherId) {
+    this.publisherService.getPublisherDetails(publisherId)
       .subscribe(
-        resolve => {
-          const publisher = Array.of(resolve['message'].results[0]);
+        response => {
+          const publisher = Array.of(response['message'].results[0]);
             this.presentPublihser.next(publisher);
-            this.getOwner(publisher)
+            // this.getOwner(publisher)
         }
-      )
+      );
   }
 
-  getOwner(publisher) {
-    if (publisher[0]) {
-      // this.publisherService.getPublishers(publisher.id)
-      console.log(publisher[0])
-    }
+  getPublisherLastLogin(username) {
+    this.publisherService.getPublisherLastLogin(username)
+      .subscribe(
+        response => {
+          const lastSeen = Array.of(response['message'].results[0]);
+          return lastSeen;
+        }
+      );
   }
+
+  // getOwner(publisher) {
+  //   if (publisher[0]) {
+  //     // this.publisherService.getPublishers(publisher.id)
+  //     console.log(publisher[0])
+  //   }
+  // }
 }

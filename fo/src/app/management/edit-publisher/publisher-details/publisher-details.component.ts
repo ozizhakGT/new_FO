@@ -10,9 +10,19 @@ import {Subscription} from "rxjs";
 export class PublisherDetailsComponent implements OnInit {
   fieldName: string = 'Email';
   @Input() publisher: any[] = [];
+  lastSeenSubscription: Subscription;
+  publisherLastSeen: any[] = [];
   constructor(private manageService: ManagementService) { }
 
   ngOnInit() {
+    console.log(this.publisher)
+    this.lastSeenSubscription = this.manageService.publisherlastSeen
+      .subscribe(
+        username => {
+          this.publisherLastSeen = this.manageService.getPublisherLastLogin(username);
+        }
+      )
+
   }
 
 }

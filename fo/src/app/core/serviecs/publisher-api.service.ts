@@ -23,8 +23,12 @@ export class PublisherApiService {
   getPublishers(query): Observable<Publisher[]> {
     return this.http.get<Publisher[]>(this.baseUrl + 'publishers_search?' + this.token + '&q=' + query);
   }
-  getUserDetails(publisherId): Observable<{}> {
+
+  getPublisherDetails(publisherId): Observable<{}> {
     return this.http.get<{}>(this.baseUrl + 'user/' + publisherId + '?' + this.token);
   }
 
+  getPublisherLastLogin(username) {
+    return this.http.get(this.baseUrl + 'query/user_last_login?username=' + username);
+  }
 }

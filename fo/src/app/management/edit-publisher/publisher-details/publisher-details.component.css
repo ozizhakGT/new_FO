@@ -4,3 +4,10 @@
   display: flex;
   flex-direction: column;
 }
+.publisher-detail__general {
+  display: flex;
+  margin: .6rem 3.5rem;
+}
+.publisher-detail__general > p:not(:last-child) {
+  margin-right: .7rem;
+}

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PublisherApiService} from "../../core/serviecs/publisher-api.service";
 import {UtilsService} from "../../core/serviecs/utils.service";
 import {ManagementService} from "../management.service";
@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
   templateUrl: './edit-publisher.component.html',
   styleUrls: ['./edit-publisher.component.css']
 })
-export class EditPublisherComponent implements OnInit {
+export class EditPublisherComponent implements OnInit, OnDestroy {
   publisherSubscription: Subscription;
   publisher: any[] = [];
   hasPublisher: boolean = false ;
@@ -25,7 +25,7 @@ export class EditPublisherComponent implements OnInit {
         const id = params['publisherId'];
         if (id && id !== 'undefined') {
           this.hasPublisher = true;
-          this.manageService.getUserDetails(id);
+          this.manageService.ongetPublisherDetails(id);
         } else {
           this.hasPublisher = false;
         }
@@ -34,9 +34,15 @@ export class EditPublisherComponent implements OnInit {
     this.publisherSubscription = this.manageService.presentPublihser
       .subscribe(
         (publisher: any[]) => {
-          this.publisher = publisher
+          console.log(publisher)
+          this.publisher = publisher;
+          this.manageService.publisherlastSeen.next(this.publisher[0].username);
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.publisherSubscription.unsubscribe();
   }
 
 }

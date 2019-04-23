@@ -1,10 +1,6 @@
-<div *ngFor="let pub of publisher">
-  <p>{{pub.first_name}}</p>
-</div>
-
 <div class="publisher-detail__general">
   <p>owner name</p>
-  <p>last seen</p>
+  <p>{{publisherLastSeen.login_timestamp}}</p>
   <p>country last seen</p>
 </div>
 <div class="form-wrapper">
