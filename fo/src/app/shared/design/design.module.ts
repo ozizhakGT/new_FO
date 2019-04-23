@@ -6,7 +6,8 @@ import {
   MatFormFieldModule,
   MatAutocompleteModule,
   MatTabsModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCardModule
 } from '@angular/material';
 
 
@@ -18,6 +19,7 @@ import {
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatCardModule
   ],
   exports: [
     MatTabsModule,
@@ -27,6 +29,7 @@ import {
     MatSelectModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatCardModule
   ]
 })
 export class DesignModule { }

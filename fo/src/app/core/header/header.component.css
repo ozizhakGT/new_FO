@@ -5,7 +5,6 @@
   align-items: flex-end;
   /* justify-content: space-evenly; */
   background: var(--secondery-color-main);
-  z-index: 2000000;
 }
 /* TITLE */
 .navbar__title {

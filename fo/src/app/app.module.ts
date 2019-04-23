@@ -9,8 +9,9 @@ import {NgxSpinnerModule} from "ngx-spinner";
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 
-// Components & Directives
+// Components & Directives & Service
 import { AppComponent } from './app.component';
+import {EnvServiceProvider} from "./env.service.provider";
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     CoreModule,
   ],
-  providers: [],
+  providers: [EnvServiceProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

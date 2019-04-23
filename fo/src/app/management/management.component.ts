@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UtilsService} from "../shared/serviecs/utils.service";
+import {UtilsService} from "../core/serviecs/utils.service";
 import {Publisher} from "../shared/interfaces/publisher.interface";
 
 @Component({

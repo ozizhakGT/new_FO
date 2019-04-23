@@ -1,6 +1,15 @@
+<div *ngFor="let pub of publisher">
+  <p>{{pub.first_name}}</p>
+</div>
+
+<div class="publisher-detail__general">
+  <p>owner name</p>
+  <p>last seen</p>
+  <p>country last seen</p>
+</div>
 <div class="form-wrapper">
   <mat-form-field>
-    <input matInput placeholder="Input">
+    <input matInput [placeholder]="fieldName">
   </mat-form-field>
 
   <mat-form-field>

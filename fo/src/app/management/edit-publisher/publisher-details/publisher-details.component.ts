@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ManagementService} from "../../management.service";
-import {ApiService} from "../../../shared/serviecs/api.service";
-import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-publisher-details',
@@ -9,19 +8,11 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./publisher-details.component.css']
 })
 export class PublisherDetailsComponent implements OnInit {
-
-  constructor(private manageService: ManagementService,
-              private apiService: ApiService,
-              private route: ActivatedRoute) { }
+  fieldName: string = 'Email';
+  @Input() publisher: any[] = [];
+  constructor(private manageService: ManagementService) { }
 
   ngOnInit() {
-    this.onGetUserDetalis()
-  }
-  onGetUserDetalis() {
-    const id = this.route.snapshot.params['publisherId'];
-    if (id && id !== 'undefined') {
-      console.log(id)
-    }
   }
 
 }
