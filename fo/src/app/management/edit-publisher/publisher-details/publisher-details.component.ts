@@ -1,28 +1,39 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ManagementService} from "../../management.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
+import {UserDetails} from "../../../shared/interfaces/user-details.interface";
+import {ManagementService} from "../../management.service";
 
 @Component({
   selector: 'app-publisher-details',
   templateUrl: './publisher-details.component.html',
   styleUrls: ['./publisher-details.component.css']
 })
-export class PublisherDetailsComponent implements OnInit {
+export class PublisherDetailsComponent implements OnInit, OnDestroy {
+  validData: boolean = false;
   fieldName: string = 'Email';
-  @Input() publisher: any[] = [];
-  lastSeenSubscription: Subscription;
-  publisherLastSeen: any[] = [];
-  constructor(private manageService: ManagementService) { }
-
+  publisherSubscription: Subscription;
+  publisher: UserDetails = {
+    details: [],
+    last_login: [],
+    owner: []
+  };
+  constructor(private manageService: ManagementService) {}
   ngOnInit() {
-    console.log(this.publisher)
-    this.lastSeenSubscription = this.manageService.publisherlastSeen
+    this.publisherSubscription = this.manageService.presentPublihser
       .subscribe(
-        username => {
-          this.publisherLastSeen = this.manageService.getPublisherLastLogin(username);
+        (publisher: UserDetails) => {
+          console.log(publisher);
+          this.publisher = publisher;
+          if (this.publisher.details.length > 0 && this.publisher.last_login.length > 0 && this.publisher.owner.length > 0) {
+            this.validData = true;
+          }
         }
-      )
-
+      );
   }
+
+  ngOnDestroy() {
+    this.publisherSubscription.unsubscribe();
+  }
+
 
 }

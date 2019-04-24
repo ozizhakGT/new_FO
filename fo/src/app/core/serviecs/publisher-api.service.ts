@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Publisher} from "../../shared/interfaces/publisher.interface";
 import {EnvService} from "../../env.service";
 import {Observable} from "rxjs/Observable";
+import {Publisher} from "../../shared/interfaces/publisher.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,12 @@ export class PublisherApiService {
   GET REQUESTS
  */
 
-  getPublishers(query): Observable<Publisher[]> {
+  getPublishers(query) {
     return this.http.get<Publisher[]>(this.baseUrl + 'publishers_search?' + this.token + '&q=' + query);
   }
 
-  getPublisherDetails(publisherId): Observable<{}> {
-    return this.http.get<{}>(this.baseUrl + 'user/' + publisherId + '?' + this.token);
+  async getPublisherDetails(publisherId) {
+    return await this.http.get<{}>(this.baseUrl + 'user/' + publisherId + '?' + this.token).toPromise();
   }
 
   getPublisherLastLogin(username) {
