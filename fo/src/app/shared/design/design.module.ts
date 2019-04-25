@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {NgxSpinnerModule} from 'ngx-spinner';
 import {
   MatButtonModule,
   MatMenuModule,
@@ -7,12 +8,13 @@ import {
   MatAutocompleteModule,
   MatTabsModule,
   MatSelectModule,
-  MatCardModule
+  MatCardModule, MatProgressSpinnerModule
 } from '@angular/material';
 
 
 @NgModule({
   imports: [
+    MatProgressSpinnerModule,
     MatTabsModule,
     MatMenuModule,
     MatButtonModule,
@@ -22,6 +24,7 @@ import {
     MatCardModule
   ],
   exports: [
+    MatProgressSpinnerModule,
     MatTabsModule,
     MatMenuModule,
     MatButtonModule,

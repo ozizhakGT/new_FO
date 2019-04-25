@@ -1,9 +1,23 @@
-<section *ngIf="validData">
-  <div class="publisher-detail__general">
-    <p>{{publisher.owner[0].owner}}</p>
-    <p>{{publisher.last_login[0].login_timestamp}}</p>
-    <p>{{publisher.last_login[0].country}}</p>
-  </div>
+<mat-spinner *ngIf="isLoader" class="app_spinner" [diameter]="30"></mat-spinner>
+<section *ngIf="!isLoader">
+  <mat-card class="publisher-detail__card">
+    <mat-card-content>
+      <div class="publisher-detail__general">
+        <div>
+          <img src="../../../../assets/owner.png" alt="ownerPic" width="20" height="20">
+          <p>{{owner}}</p>
+        </div>
+        <div>
+          <img src="../../../../assets/last-login.jpg" alt="ownerPic" width="20" height="20">
+          <p>{{lastlogin.login_timestamp}}</p>
+        </div>
+        <div>
+          <span class="flag-icon flag-icon-{{lastlogin.country | lowercase}}"></span>
+          <p>{{lastlogin.country}}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
   <div class="form-wrapper">
     <mat-form-field>
       <input matInput [placeholder]="fieldName">

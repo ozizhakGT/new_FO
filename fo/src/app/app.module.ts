@@ -22,7 +22,7 @@ import {EnvServiceProvider} from "./env.service.provider";
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule,
+    // NgxSpinnerModule,
     AppRoutingModule,
     CoreModule,
   ],

@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {UserDetails} from "../../../shared/interfaces/user-details.interface";
 import {ManagementService} from "../../management.service";
+import {PublisherApiService} from "../../../core/serviecs/publisher-api.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-publisher-details',
@@ -9,30 +10,57 @@ import {ManagementService} from "../../management.service";
   styleUrls: ['./publisher-details.component.css']
 })
 export class PublisherDetailsComponent implements OnInit, OnDestroy {
-  validData: boolean = false;
   fieldName: string = 'Email';
   publisherSubscription: Subscription;
-  publisher: UserDetails = {
-    details: [],
-    last_login: [],
-    owner: []
-  };
-  constructor(private manageService: ManagementService) {}
-  ngOnInit() {
-    this.publisherSubscription = this.manageService.presentPublihser
-      .subscribe(
-        (publisher: UserDetails) => {
-          console.log(publisher);
-          this.publisher = publisher;
-          if (this.publisher.details.length > 0 && this.publisher.last_login.length > 0 && this.publisher.owner.length > 0) {
-            this.validData = true;
-          }
-        }
-      );
+  publisher = {};
+  owner: string = '';
+  lastlogin = {};
+  isLoader: boolean = true;
+
+  constructor(private manageService: ManagementService,
+              private publisherService: PublisherApiService,
+              private route: ActivatedRoute) {
   }
 
+  ngOnInit() {
+    this.publisherSubscription = this.manageService.hasPublisher
+      .subscribe(
+        value => {
+          if (value) {
+            let id = this.route.snapshot.params['publisherId'];
+            this.getUserDetails(id);
+          }
+        }
+  );
+  }
   ngOnDestroy() {
     this.publisherSubscription.unsubscribe();
+  }
+
+  getUserDetails(publisherId) {
+    this.isLoader = true;
+    this.publisherService.getPublisherDetails(publisherId)
+      .then(
+        value => {
+          this.publisher = value['message'].results[0];
+          this.publisherService.getPublisherLastLogin(this.publisher['username'])
+            .then(
+              lastLogin => {
+                this.lastlogin = lastLogin['message'].results[0]
+              }
+            )
+          this.publisherService.getOwnerById(this.publisher['account_manager_id'])
+            .then(owners => {
+              if (owners.length === 1) {
+                this.owner = owners[0].username;
+              } else {
+                let ownerId = owners.findIndex(owner => owner._id == this.publisher['account_manager_id'])
+                this.owner = owners[ownerId].username
+              }
+              this.isLoader = false;
+            });
+        }
+      );
   }
 
 
