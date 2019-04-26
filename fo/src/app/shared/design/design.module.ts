@@ -8,7 +8,7 @@ import {
   MatAutocompleteModule,
   MatTabsModule,
   MatSelectModule,
-  MatCardModule, MatProgressSpinnerModule
+  MatCardModule, MatProgressSpinnerModule, MatProgressBarModule, MatTooltipModule
 } from '@angular/material';
 
 
@@ -21,7 +21,9 @@ import {
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule,
+    MatTooltipModule
   ],
   exports: [
     MatProgressSpinnerModule,
@@ -32,7 +34,9 @@ import {
     MatSelectModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule,
+    MatTooltipModule
   ]
 })
 export class DesignModule { }

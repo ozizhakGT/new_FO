@@ -55,6 +55,7 @@
   position: fixed;
   top: 47px;
   background-color: whitesmoke;
+  z-index: 100;
   -webkit-animation: slideDown 1s both;
   animation: slideDown 1s both;
 }

@@ -40,5 +40,6 @@
       </div>
     <div class="navbar__search--result no-results" *ngIf="isResults && publisherResult.length === 0">No results</div>
   </div>
-  <img *ngIf="isLoading" src="../../../assets/search-loading.gif" alt="loading..." class="navbar__loading">
+  <img *ngIf="isNavbarLoading" src="../../../assets/search-loading.gif" alt="loading..." class="navbar__loading">
 </nav>
+<mat-progress-bar *ngIf="isAppLoading" mode="indeterminate"></mat-progress-bar>

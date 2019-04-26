@@ -22,118 +22,31 @@ export class HeaderComponent implements OnInit {
   @ViewChild('search') searchQuery: ElementRef;
   keyupSubscription: Subscription;
   mouseupSubscription: Subscription;
-  publisherIdSubscription: Subscription;
+  loaderSubscription: Subscription;
 
   publisherId: string = this.utilsService.onSessionStorageLoad();
   lastSearch: string;
-  isLoading: boolean;
+  isNavbarLoading: boolean;
+  isAppLoading: boolean;
   isResults: boolean;
   publisherResult: Publisher[] = [];
-  // publisherResult: Publisher[] = [
-  //   {
-  //     _id: 88287,
-  //     username: "ozizhak@walla.com",
-  //     sites: [
-  //       {
-  //         _id: 65873,
-  //         name: "fdbfb",
-  //         url: "http://www.adsology.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 81175,
-  //         name: "test",
-  //         url: "https://gamesmor hter.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 87008,
-  //         name: "test ownership",
-  //         url: "https://oztest.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 65354,
-  //         name: "test site",
-  //         url: "https://www.blabla.com",
-  //         enable: true
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     _id: 71231,
-  //     username: "oz@web-pick.com",
-  //     sites: [
-  //       {
-  //         _id: 81331,
-  //         name: "test banner",
-  //         url: "http://ben.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 79574,
-  //         name: "google",
-  //         url: "http://google.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 81129,
-  //         name: "blabla",
-  //         url: "http://walla.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 63599,
-  //         name: "ozizhak test",
-  //         url: "https://publisher.ad-maven.com",
-  //         enable: false
-  //       },
-  //       {
-  //         _id: 66155,
-  //         name: "hara",
-  //         url: "https://walla.com",
-  //         enable: true
-  //       },
-  //       {
-  //         _id: 66238,
-  //         name: "blabla",
-  //         url: "https://walla.com",
-  //         enable: false
-  //       },
-  //       {
-  //         _id: 63598,
-  //         name: "testSite",
-  //         url: "https://www.one.co.il",
-  //         enable: false
-  //       },
-  //       {
-  //         _id: 66405,
-  //         name: "newOne",
-  //         url: "https://www.ynet.co.il",
-  //         enable: false
-  //       },
-  //       {
-  //         _id: 51287,
-  //         name: "ozsITE",
-  //         url: "https://ynet.co.il",
-  //         enable: false
-  //       }
-  //     ]
-  //   }
-  // ]
+
 
   constructor(private apiService: PublisherApiService,
               private utilsService: UtilsService,
               private router: Router) { }
 
   ngOnInit() {
+    this.loaderSubscription = this.utilsService.loader
+      .subscribe(value => this.isAppLoading = value);
+
     // subscribe search from by keyup wait 1.5 sec and then send request.
-    this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup' || '')
+    this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup')
       .debounceTime(1500)
       .subscribe(() => {
         const search = this.searchQuery.nativeElement.value.toLowerCase();
         if (search.length >= 3 && search !== this.lastSearch) {
-          this.isLoading = true;
+          this.isNavbarLoading = true;
           this.lastSearch = search;
           this.onGetPublisher(search);
         } else {
@@ -154,14 +67,14 @@ export class HeaderComponent implements OnInit {
       .subscribe(
         (result: Publisher[]) => {
         this.publisherResult = result;
-        this.isLoading = false;
+        this.isNavbarLoading = false;
         this.isResults = true;
       },
       err => {
           console.info(err);
           this.onResetSearch();
           this.isResults = true;
-          this.isLoading = false;
+          this.isNavbarLoading = false;
       }
     ); }
 

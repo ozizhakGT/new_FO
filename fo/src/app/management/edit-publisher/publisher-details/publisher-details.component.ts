@@ -3,6 +3,8 @@ import {Subscription} from "rxjs";
 import {ManagementService} from "../../management.service";
 import {PublisherApiService} from "../../../core/serviecs/publisher-api.service";
 import {ActivatedRoute} from "@angular/router";
+import {UtilsService} from "../../../core/serviecs/utils.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-publisher-details',
@@ -15,10 +17,11 @@ export class PublisherDetailsComponent implements OnInit, OnDestroy {
   publisher = {};
   owner: string = '';
   lastlogin = {};
-  isLoader: boolean = true;
+  dataIsPrapre: boolean = false;
 
   constructor(private manageService: ManagementService,
               private publisherService: PublisherApiService,
+              private utilsService: UtilsService,
               private route: ActivatedRoute) {
   }
 
@@ -35,10 +38,12 @@ export class PublisherDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.publisherSubscription.unsubscribe();
+    this.utilsService.loader.next(false);
   }
 
   getUserDetails(publisherId) {
-    this.isLoader = true;
+    this.utilsService.loader.next(true);
+    this.dataIsPrapre = false;
     this.publisherService.getPublisherDetails(publisherId)
       .then(
         value => {
@@ -57,10 +62,15 @@ export class PublisherDetailsComponent implements OnInit, OnDestroy {
                 let ownerId = owners.findIndex(owner => owner._id == this.publisher['account_manager_id'])
                 this.owner = owners[ownerId].username
               }
-              this.isLoader = false;
+              this.utilsService.loader.next(false);
+              this.dataIsPrapre = true;
             });
         }
       );
+  }
+
+  userDetalisForm(f: NgForm) {
+    console.log(f)
   }
 
 

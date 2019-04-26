@@ -1,17 +1,16 @@
-<mat-spinner *ngIf="isLoader" class="app_spinner" [diameter]="30"></mat-spinner>
-<section *ngIf="!isLoader">
+<section *ngIf="dataIsPrapre">
   <mat-card class="publisher-detail__card">
     <mat-card-content>
       <div class="publisher-detail__general">
-        <div>
+        <div matTooltip="Owner">
           <img src="../../../../assets/owner.png" alt="ownerPic" width="20" height="20">
           <p>{{owner}}</p>
         </div>
-        <div>
+        <div matTooltip="Last Login">
           <img src="../../../../assets/last-login.jpg" alt="ownerPic" width="20" height="20">
           <p>{{lastlogin.login_timestamp}}</p>
         </div>
-        <div>
+        <div matTooltip="Last Check In">
           <span class="flag-icon flag-icon-{{lastlogin.country | lowercase}}"></span>
           <p>{{lastlogin.country}}</p>
         </div>
@@ -19,15 +18,28 @@
     </mat-card-content>
   </mat-card>
   <div class="form-wrapper">
-    <mat-form-field>
-      <input matInput [placeholder]="fieldName">
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-select placeholder="Select">
+    <form (ngSubmit)="userDetalisForm(f)" #f>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="First Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name">
+        </mat-form-field>
+        <button mat-button type="submit">Change Password</button>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Account type">
+        </mat-form-field>
+        <mat-form-field>
+        <mat-select placeholder="Select">
         <mat-option value="option">Option</mat-option>
-      </mat-select>
-    </mat-form-field>
+        </mat-select>
+        </mat-form-field>
+      </div>
+
+    </form>
   </div>
 
 </section>

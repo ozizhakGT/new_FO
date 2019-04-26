@@ -2,9 +2,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CoreModule} from './core/core.module';
-import {NgxSpinnerModule} from "ngx-spinner";
+import {MatProgressBarModule} from "@angular/material";
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -22,9 +22,10 @@ import {EnvServiceProvider} from "./env.service.provider";
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    // NgxSpinnerModule,
+    FormsModule,
     AppRoutingModule,
     CoreModule,
+    MatProgressBarModule
   ],
   providers: [EnvServiceProvider],
   bootstrap: [AppComponent]

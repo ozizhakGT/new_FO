@@ -1,21 +1,22 @@
+mat-form-field {
+  margin-right: 2rem;
+}
+
 .app_spinner {
   margin: 15rem auto;
 }
-
 .form-wrapper {
   margin: 4rem;
-  width: 30%;
+  width: 50%;
   display: flex;
   flex-direction: column;
 }
 .publisher-detail__card {
   margin: 3rem;
-  width: 520px;
-  text-align: center;
+  width: 405px;
 }
 .publisher-detail__general {
   display: flex;
-  margin: .6rem 3.5rem;
 }
 .publisher-detail__general > div:not(:last-child) {
   margin-right: .7rem;
@@ -23,5 +24,7 @@
 .publisher-detail__general div {
   display: flex;
   align-items: center;
-
+}
+.publisher-detail__general div p {
+  margin-left: .4rem;
 }
