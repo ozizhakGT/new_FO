@@ -5,7 +5,7 @@
 <div *ngIf="isValidPublisher">
   <mat-tab-group>
     <mat-tab label="Publisher Details">
-      <app-publisher-details></app-publisher-details>
+      <app-publisher-details [publisherDetails]="publisherDetails"></app-publisher-details>
     </mat-tab>
     <mat-tab label="Payment Details">
       <app-payment-details></app-payment-details>

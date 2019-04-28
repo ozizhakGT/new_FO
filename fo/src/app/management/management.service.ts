@@ -6,10 +6,13 @@ import {BehaviorSubject, Subject} from "rxjs";
   providedIn: 'root'
 })
 export class ManagementService {
+  publisherDetails;
   hasPublisher = new BehaviorSubject<boolean>(false);
   publisher = new Subject();
   constructor(private publisherService: PublisherApiService) {}
 
-
+  getUser(id) {
+    return this.publisherService.getPublisherDetails(id);
+  }
 
 }

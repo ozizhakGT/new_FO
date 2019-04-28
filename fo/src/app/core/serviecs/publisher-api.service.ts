@@ -23,15 +23,11 @@ export class PublisherApiService {
     return this.http.get<Publisher[]>(this.baseUrl + 'publishers_search?' + this.token + '&q=' + query);
   }
 
-  async getOwnerById(id) {
-    return await this.http.get<Publisher[]>(this.baseUrl + 'publishers_search?' + this.token + '&q=' + id).toPromise();
+  getPublisherDetails(publisherId) {
+    return this.http.get<{}>(this.baseUrl + 'user/' + publisherId + '?' + this.token);
   }
 
-  async getPublisherDetails(publisherId) {
-    return await this.http.get<{}>(this.baseUrl + 'user/' + publisherId + '?' + this.token).toPromise();
-  }
-
-  async getPublisherLastLogin(username) {
-    return await this.http.get(this.baseUrl + 'query/user_last_login?username=' + username).toPromise();
+  getPublisherLastLogin(username) {
+    return this.http.get(this.baseUrl + 'query/user_last_login?username=' + username);
   }
 }

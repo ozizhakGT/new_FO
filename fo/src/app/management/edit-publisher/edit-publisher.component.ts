@@ -11,7 +11,7 @@ import {PublisherApiService} from "../../core/serviecs/publisher-api.service";
   styleUrls: ['./edit-publisher.component.css']
 })
 export class EditPublisherComponent implements OnInit {
-
+  publisherDetails: any[] =[];
   isValidPublisher: boolean = false ;
   constructor(private utilsService: UtilsService,
               private manageService: ManagementService,
@@ -22,6 +22,7 @@ export class EditPublisherComponent implements OnInit {
       (params: Params) => {
         const id = params['publisherId'];
         if (id && id !== 'undefined') {
+          this.onGetUser(id);
           this.isValidPublisher = true;
         } else {
           this.isValidPublisher = false;
@@ -29,5 +30,13 @@ export class EditPublisherComponent implements OnInit {
         this.manageService.hasPublisher.next(this.isValidPublisher)
       });
   }
-
+  onGetUser(id) {
+    this.manageService.getUser(id).toPromise()
+      .then(
+        user => {
+          this.publisherDetails = user['message'].results[0];
+          console.log(this.publisherDetails);
+        }
+      )
+  }
 }
