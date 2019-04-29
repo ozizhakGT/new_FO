@@ -9,7 +9,11 @@ export class ManagementService {
   constructor(private publisherService: PublisherApiService) {}
 
   getUser(id): any {
-    return this.publisherService.getPublisherDetails(id)
+    return this.publisherService.getPublisherDetails(id).toPromise()
+  }
+
+  getLastLogin(username) {
+    return this.publisherService.getPublisherLastLogin(username).toPromise()
   }
 
 }

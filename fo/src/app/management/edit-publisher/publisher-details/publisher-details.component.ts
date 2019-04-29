@@ -10,29 +10,27 @@ import {UtilsService} from "../../../core/serviecs/utils.service";
   styleUrls: ['./publisher-details.component.css']
 })
 export class PublisherDetailsComponent implements OnInit {
+  @Input() userDetails: Promise<any>;
   detailsForm: FormGroup;
-  @Input() publisherDetails: Observable<any>;
-  publisher;
+  // owner;
+  // lastLogin;
+  // userDetails;
 
 
-  constructor(private manageService: ManagementService,
-              private utilsService: UtilsService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.formInit()
-    this.publisherDetails
-      .subscribe(
-        value => {
-          console.log(value)
-        }
-      )
+    this.userDetails.then(
+      value => {
+        this.formInit(value.details.publisher)
+      })
+    // this.formInit(this.userDetails);
   }
 
-
-
-  formInit() {
+  formInit(publisher) {
       this.detailsForm = new FormGroup({
-        'username': new FormControl('')
+        'first_name': new FormControl(publisher.first_name),
+        'last_name': new FormControl(publisher.last_name),
       })
   }
 
