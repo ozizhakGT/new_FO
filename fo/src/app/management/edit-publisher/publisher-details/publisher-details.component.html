@@ -1,23 +1,24 @@
 <div *ngIf="userDetails | async">
   <mat-card class="publisher-detail__card">
-    <mat-card-title>General Details</mat-card-title>
+    <mat-card-title>General Info</mat-card-title>
     <mat-card-content class="publisher-detail__item">
         <div matTooltip="Current Owner">
           <img class="publisher-detail__pic" src="../../../../assets/owner.png" alt="ownerPic">
           <p>{{generalDetails.owner}}</p>
         </div>
-        <div matTooltip="Publisher Last Seen In Panel">
+        <div *ngIf="generalDetails.login_timestamp" matTooltip="Publisher Last Seen In Panel">
           <img class="publisher-detail__pic" src="../../../../assets/last-login.jpg" alt="ownerPic">
           <p>{{generalDetails.login_timestamp}}</p>
         </div>
-        <div matTooltip="Last Check-In">
+        <div *ngIf="generalDetails.country" matTooltip="Last Check-In">
           <span class="flag-icon flag-icon-{{generalDetails.country | lowercase}}"></span>
           <p>{{generalDetails.country}}</p>
         </div>
     </mat-card-content>
   </mat-card>
 
-  <form [formGroup]="detailsForm">
+  <form [formGroup]="detailsForm" class="form-wrapper">
+    <h2>Publisher Details</h2>
     <mat-form-field class="example-full-width">
       <input matInput placeholder="First Name" formControlName='first_name'>
     </mat-form-field>

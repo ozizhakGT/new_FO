@@ -6,26 +6,27 @@ mat-form-field {
   margin: 15rem auto;
 }
 .form-wrapper {
-  margin: 4rem;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
+  /*margin: 4rem;*/
+  width: fit-content;
+}
+.form-wrapper h2 {
+  font-weight: normal;
 }
 .publisher-detail__card {
   margin: 3rem;
-  width: 35rem;
+  width: fit-content;
 }
 .publisher-detail__pic {
-  width: 21px;
+  width: 1.3rem;
 }
 .publisher-detail__item {
   display: flex;
-  justify-content: space-evenly;
   margin-top: 1rem;
 }
 .publisher-detail__item div {
   display: flex;
   align-items: center;
+  margin-right: 1rem;
 }
 .publisher-detail__item div p {
   margin-left: .4rem;

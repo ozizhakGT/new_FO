@@ -21,9 +21,8 @@ export class PublisherDetailsComponent implements OnInit {
   ngOnInit() {
     this.userDetails.then(
       userState => {
-        this.generalDetails = {...userState.details.lastLogin, owner: userState.details.owner};
-        console.log(this.generalDetails)
         this.formInit(userState.details.publisher)
+        this.generalDetails = {...userState.details.lastLogin, owner: userState.details.owner};
       })
     // this.formInit(this.userDetails);
   }
