@@ -1,1 +1,7 @@
-<div>{{publisherDetails.id}}</div>
+<form *ngIf="publisherDetails | async" [formGroup]="detailsForm">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Favorite food" formControlName='username'>
+  </mat-form-field>
+  <button type="button" mat-button (click)="submit()">submit</button>
+</form>
+<ng-template #loading>Loading...</ng-template>
