@@ -13,18 +13,23 @@ mat-form-field {
 }
 .publisher-detail__card {
   margin: 3rem;
-  width: 405px;
+  width: 35rem;
 }
-.publisher-detail__general {
+.publisher-detail__pic {
+  width: 21px;
+}
+.publisher-detail__item {
   display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
 }
-.publisher-detail__general > div:not(:last-child) {
-  margin-right: .7rem;
-}
-.publisher-detail__general div {
+.publisher-detail__item div {
   display: flex;
   align-items: center;
 }
-.publisher-detail__general div p {
+.publisher-detail__item div p {
   margin-left: .4rem;
+}
+.publisher-detail__item div span {
+  transform: scaleX(1.3);
 }

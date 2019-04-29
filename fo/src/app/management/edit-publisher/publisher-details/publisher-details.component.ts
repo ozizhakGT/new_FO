@@ -12,8 +12,7 @@ import {UtilsService} from "../../../core/serviecs/utils.service";
 export class PublisherDetailsComponent implements OnInit {
   @Input() userDetails: Promise<any>;
   detailsForm: FormGroup;
-  // owner;
-  // lastLogin;
+  generalDetails;
   // userDetails;
 
 
@@ -21,8 +20,10 @@ export class PublisherDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.userDetails.then(
-      value => {
-        this.formInit(value.details.publisher)
+      userState => {
+        this.generalDetails = {...userState.details.lastLogin, owner: userState.details.owner};
+        console.log(this.generalDetails)
+        this.formInit(userState.details.publisher)
       })
     // this.formInit(this.userDetails);
   }
