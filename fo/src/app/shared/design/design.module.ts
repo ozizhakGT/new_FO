@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   MatButtonModule,
   MatMenuModule,
@@ -8,9 +8,11 @@ import {
   MatAutocompleteModule,
   MatTabsModule,
   MatSelectModule,
-  MatCardModule, MatProgressSpinnerModule, MatProgressBarModule, MatTooltipModule
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatTooltipModule, MatDialogModule, MatSlideToggleModule
 } from '@angular/material';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -24,9 +26,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatDialogModule,
     MatCardModule,
     MatProgressBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSlideToggleModule
   ],
   exports: [
     FormsModule,
@@ -39,9 +43,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatSelectModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatDialogModule,
     MatCardModule,
     MatProgressBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSlideToggleModule
   ]
 })
 export class DesignModule { }

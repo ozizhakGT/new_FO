@@ -9,6 +9,7 @@ import {DesignModule} from '../shared/design/design.module';
 import {CoreModule} from '../core/core.module';
 import { PublisherDetailsComponent } from './edit-publisher/publisher-details/publisher-details.component';
 import { PaymentDetailsComponent } from './edit-publisher/payment-details/payment-details.component';
+import { DialogChangePasswordComponent } from './edit-publisher/publisher-details/dialog-change-password/dialog-change-password.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,15 @@ import { PaymentDetailsComponent } from './edit-publisher/payment-details/paymen
     EditPublisherComponent,
     AccountManagerAreaComponent,
     PublisherDetailsComponent,
-    PaymentDetailsComponent
+    PaymentDetailsComponent,
+    DialogChangePasswordComponent
   ],
   imports: [
     CommonModule,
     CoreModule,
     DesignModule,
     ManagementRoutingModule
-  ]
+  ],
+  entryComponents: [DialogChangePasswordComponent]
 })
 export class ManagementModule { }

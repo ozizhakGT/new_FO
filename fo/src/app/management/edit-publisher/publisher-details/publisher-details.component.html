@@ -1,6 +1,6 @@
-<div *ngIf="userDetails | async">
+<div class="publisher-detail__wrapper" *ngIf="userDetails | async">
   <mat-card class="publisher-detail__card">
-    <mat-card-title>General Info</mat-card-title>
+    <mat-card-title>{{generalDetails.username}}</mat-card-title>
     <mat-card-content class="publisher-detail__item">
         <div matTooltip="Current Owner">
           <img class="publisher-detail__pic" src="../../../../assets/owner.png" alt="ownerPic">
@@ -19,10 +19,56 @@
 
   <form [formGroup]="detailsForm" class="form-wrapper">
     <h2>Publisher Details</h2>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="First Name" formControlName='first_name'>
+    <div>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="First Name" formControlName='first_name' required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="First Name" formControlName='last_name' required>
+      </mat-form-field>
+      <button mat-raised-button (click)="openChangePasswordDialog()">Change User Password</button>
+    </div>
+    <div>
+      <mat-form-field>
+      <mat-label>User Type</mat-label>
+      <mat-select formControlName="account_type">
+        <mat-option *ngFor="let userType of userTypes" [value]="userType.id">
+          {{userType.type}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-    <button type="button" mat-button (click)="submit()">submit</button>
+      <mat-form-field>
+        <mat-label>User Status</mat-label>
+        <mat-select formControlName="mode">
+          <mat-option *ngFor="let status of userStatus" [value]="status.id">
+            {{status.type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <input matInput type="number" placeholder="Max Sites" formControlName='max_sites' required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput type="number" placeholder="Max Tags" formControlName='max_tags_per_site' required>
+        <mat-hint>max tags per site!</mat-hint>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Outsource" formControlName='outsource' required>
+      </mat-form-field>
+      <div style="display: inline;">
+        <mat-slide-toggle #costExternal
+                          [checked]="this.detailsForm.value.cost_by_external === 1"
+                          (click)="onToggle(detailsForm.value.cost_by_external,costExternal)">
+          Is Cost External
+        </mat-slide-toggle>
+        <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
+      </div>
+    </div>
+
   </form>
 
 </div>

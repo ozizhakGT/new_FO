@@ -18,7 +18,6 @@ export class EditPublisherComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.generalDetails)
     this.route.params
       .subscribe(
       (params: Params) => {

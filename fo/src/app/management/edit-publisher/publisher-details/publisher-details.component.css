@@ -1,19 +1,10 @@
 mat-form-field {
   margin-right: 2rem;
 }
-
-.app_spinner {
-  margin: 15rem auto;
-}
-.form-wrapper {
-  /*margin: 4rem;*/
-  width: fit-content;
-}
-.form-wrapper h2 {
-  font-weight: normal;
+.publisher-detail__wrapper {
+  margin: 3rem;
 }
 .publisher-detail__card {
-  margin: 3rem;
   width: fit-content;
 }
 .publisher-detail__pic {
@@ -33,4 +24,11 @@ mat-form-field {
 }
 .publisher-detail__item div span {
   transform: scaleX(1.3);
+}
+.form-wrapper {
+  width: fit-content;
+}
+.form-wrapper h2 {
+  font-weight: normal;
+  margin: 2rem 0;
 }
