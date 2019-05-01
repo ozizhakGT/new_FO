@@ -3,6 +3,8 @@ mat-form-field {
 }
 .publisher-detail__wrapper {
   margin: 3rem;
+  opacity: 1;
+  animation: fadeIn 1s;
 }
 .publisher-detail__card {
   width: fit-content;
@@ -15,9 +17,13 @@ mat-form-field {
   margin-top: 1rem;
 }
 .publisher-detail__item div {
+  font-size: 1rem;
   display: flex;
   align-items: center;
   margin-right: 1rem;
+}
+.publisher-detail__item div i {
+  font-size: 1.5rem;
 }
 .publisher-detail__item div p {
   margin-left: .4rem;
@@ -25,10 +31,19 @@ mat-form-field {
 .publisher-detail__item div span {
   transform: scaleX(1.3);
 }
+.forms-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
 .form-wrapper {
   width: fit-content;
 }
 .form-wrapper h2 {
   font-weight: normal;
   margin: 2rem 0;
+}
+.form__slide-btn {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
 }
