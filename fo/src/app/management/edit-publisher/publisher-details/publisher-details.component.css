@@ -33,10 +33,11 @@ mat-form-field {
 }
 .forms-wrapper {
   display: flex;
-  justify-content: space-evenly;
+  /*justify-content: space-around;*/
 }
 .form-wrapper {
   width: fit-content;
+  margin-right: 10rem;
 }
 .form-wrapper h2 {
   font-weight: normal;
@@ -46,4 +47,10 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   width: fit-content;
+}
+.reports-form {
+  animation: fadeIn 1.2s;
+}
+.reports-form__input {
+  animation: fadeIn .6s;
 }

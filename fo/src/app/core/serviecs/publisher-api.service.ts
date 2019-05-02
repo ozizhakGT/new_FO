@@ -9,15 +9,17 @@ import {Publisher} from "../../shared/interfaces/publisher.interface";
 export class PublisherApiService {
   token = 'authenticationToken=edd5eabf-73c8-4dda-b279-91563cc846a2';
   baseUrl = '';
+
   constructor(private env: EnvService, private http: HttpClient) {
     this.baseUrl = this.env.apiBEUrl;
     if (this.env.enableDebug) {
       console.log('debug mode enable');
     }
   }
-/*
-  GET REQUESTS
- */
+
+  /*
+    GET REQUESTS
+   */
 
   getPublishers(query) {
     return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}&${this.token}`);
@@ -32,6 +34,8 @@ export class PublisherApiService {
   }
 
   ReportColumnsRequest(request, userId, monetizationId) {
-    return this.http.get(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`)
+    if (request === 'get') {
+      return this.http.get(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`);
+    }
   }
 }
