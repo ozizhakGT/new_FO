@@ -5,5 +5,6 @@ export const operationcategoriesArray = [
   {id: 17, name: "Banner VPN"},
   {id: 31, name: "Push In Page"},
   {id: 32, name: "Native Ads"},
+  {id: 20, name: "Download Button"},
   {id: 34, name: "Dialog Box"}
 ];

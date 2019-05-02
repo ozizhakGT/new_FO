@@ -8,7 +8,7 @@ export class ManagementService {
   constructor(private publisherService: PublisherApiService) {}
 
   getUser(id): any {
-    return this.publisherService.getPublisherDetails(id).toPromise();
+    return this.publisherService.UserDetailRequests('get',id).toPromise();
   }
 
   getLastLogin(username) {
@@ -16,7 +16,10 @@ export class ManagementService {
   }
 
   getReportColumns(userId, monetizationId) {
-    return this.publisherService.ReportColumnsRequest('get', userId, monetizationId)
+    return this.publisherService.ReportColumnsRequests('get', userId, monetizationId)
   }
 
+  updateUserDetails(id, data) {
+    return this.publisherService.UserDetailRequests('put', id, data);
+  }
 }

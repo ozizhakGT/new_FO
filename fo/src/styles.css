@@ -52,7 +52,7 @@ BUTTONS
 
 /*SEPARETE LINE*/
 .divide-line {
-  background: var(--third-color-main);
+  background: var(--secondery-color-main) !important;
   width: .07rem;
   margin: 2.3rem;
 }

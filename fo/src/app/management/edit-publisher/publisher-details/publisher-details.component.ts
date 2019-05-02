@@ -5,6 +5,7 @@ import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-cha
 import {userStatusArray, userTypeArray} from "../../enums/publisher-enums";
 import {operationcategoriesArray} from "../../../core/general-enums/operation_categories";
 import {ManagementService} from "../../management.service";
+import {UtilsService} from "../../../core/serviecs/utils.service";
 
 @Component({
   selector: 'app-publisher-details',
@@ -29,7 +30,9 @@ export class PublisherDetailsComponent implements OnInit {
   reportColumnsForm : FormGroup;
 
 
-  constructor(public dialog: MatDialog, private manageService: ManagementService) {}
+  constructor(public dialog: MatDialog,
+              private manageService: ManagementService,
+              private utilsService: UtilsService) {}
 
   ngOnInit() {
     this.userDetails.then(
@@ -59,6 +62,7 @@ export class PublisherDetailsComponent implements OnInit {
         'max_tags_per_site': new FormControl(publisher.max_tags_per_site, [Validators.required, Validators.min(-1)]),
         'israeli': new FormControl(publisher.israeli),
         'cost_by_external': new FormControl(publisher.cost_by_external),
+        'source_id': new FormControl(publisher.source_id),
       })
   }
 
@@ -128,4 +132,17 @@ export class PublisherDetailsComponent implements OnInit {
     }
   }
 
+  saveUserDetails(form) {
+
+    this.manageService.updateUserDetails(this.generalDetails.id, form.value)
+      .subscribe(
+       isUpdate => {
+              this.utilsService.loader.next(true);
+              if (isUpdate['type'] === 'updated') {
+                this.utilsService.messageNotification('User Updated!', 'Let\'s Dance:)')
+              }
+              this.utilsService.loader.next(false);
+            }
+      )
+  }
 }

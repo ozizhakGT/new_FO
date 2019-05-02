@@ -25,15 +25,20 @@ export class PublisherApiService {
     return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}&${this.token}`);
   }
 
-  getPublisherDetails(publisherId) {
-    return this.http.get<{}>(this.baseUrl + `user/${publisherId}?${this.token}`);
+  UserDetailRequests(request, publisherId, data?: {}) {
+    if (request == 'get') {
+      return this.http.get(this.baseUrl + `user/${publisherId}?${this.token}`)
+
+    } else {
+      return this.http.put(`${this.baseUrl}user/${publisherId}?${this.token}`, data);
+    }
   }
 
   getPublisherLastLogin(username) {
     return this.http.get(this.baseUrl + `query/user_last_login?username=${username}`);
   }
 
-  ReportColumnsRequest(request, userId, monetizationId) {
+  ReportColumnsRequests(request, userId, monetizationId) {
     if (request === 'get') {
       return this.http.get(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`);
     }

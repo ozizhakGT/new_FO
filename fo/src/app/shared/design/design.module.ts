@@ -14,7 +14,7 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatToolbarModule
+  MatToolbarModule, MatSnackBarModule
 } from '@angular/material';
 
 
@@ -34,7 +34,8 @@ import {
     MatProgressBarModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSnackBarModule
   ],
   exports: [
     FormsModule,
@@ -52,7 +53,8 @@ import {
     MatProgressBarModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSnackBarModule
   ]
 })
 export class DesignModule { }

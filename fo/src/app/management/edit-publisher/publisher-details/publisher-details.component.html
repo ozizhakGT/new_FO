@@ -2,7 +2,9 @@
   <mat-card class="publisher-detail__card">
     <mat-card-title>
       <i class="fa fa-plug" [ngStyle]="{color: changeColorByStatus()}"></i>
-      {{generalDetails.username}}
+      <span matTooltip="Username">{{generalDetails.username}}</span>
+      <span>&#9996;</span>
+      <span matTooltip="User ID">{{generalDetails.id}}</span>
     </mat-card-title>
     <mat-card-content class="publisher-detail__item">
         <div matTooltip="Current Owner">
@@ -23,7 +25,7 @@
   <div class="forms-wrapper">
     <mat-card>
       <mat-card-content><div class="form-wrapper">
-        <form [formGroup]="detailsForm">
+        <form [formGroup]="detailsForm" (ngSubmit)="saveUserDetails(detailsForm)">
           <h2>Publisher Details</h2>
           <div>
             <mat-form-field class="example-full-width">
@@ -32,7 +34,7 @@
             <mat-form-field class="example-full-width">
               <input matInput placeholder="First Name" formControlName='last_name' required>
             </mat-form-field>
-            <button mat-raised-button (click)="openChangePasswordDialog()">Change User Password</button>
+            <button mat-raised-button type="button" (click)="openChangePasswordDialog()">Change User Password</button>
           </div>
           <div>
             <mat-form-field>
@@ -79,9 +81,8 @@
             </mat-slide-toggle>
             <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
           </div>
-          <div>
+          <br>
             <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Submit</button>
-          </div>
         </form>
       </div></mat-card-content>
       <div class="divide-line"></div>

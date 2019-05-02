@@ -1,4 +1,4 @@
-mat-form-field {
+.mat-form-field {
   margin-right: 2rem;
 }
 .publisher-detail__wrapper {
@@ -8,6 +8,13 @@ mat-form-field {
 }
 .publisher-detail__card {
   width: fit-content;
+}
+.mat-card-title {
+  display: flex;
+  align-items: center;
+}
+.mat-card-title span {
+  margin-right: .6rem;
 }
 .publisher-detail__pic {
   width: 1.3rem;
