@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i');
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /*@import "./assets/icons/line-awesome.min.css";*/
 :root {
   /* COLORS */
-  --primary-color-main: #A593E0;
+  --primary-color-main: #3f51b5;
   --primary-color-sub: #566270;
   --secondery-color-main: #E0E3DA;
   --secondery-color-sub: #FFFFF3;
-  --third-color-main: #d7d4d4;
+  --third-color-main: #fdfdfd;
   --third-color-sub: #e3dede;
 }
 
@@ -20,12 +20,15 @@
   text-decoration: none;
   list-style: none;
   font-family: 'PT Sans', sans-serif;
-  color: black;
+  color: currentColor;
+  font-size: 16px;
 }
-/*PAGE DESIGN*/
-.page-body {
-  height: 800px;
-  margin: 5rem 6rem;
+html {
+  background: #fdfdfd;
+}
+
+.mat-card {
+  background: var(--third-color-main);
 }
 
 .app_spinner {
@@ -42,6 +45,17 @@
   box-shadow: 0px 0px 2px var(--primary-color-sub);
 }
 
+BUTTONS
+.mat-raised-button.mat-primary {
+  color: white;
+}
+
+/*SEPARETE LINE*/
+.divide-line {
+  background: var(--third-color-main);
+  width: .07rem;
+  margin: 2.3rem;
+}
 
 /*GENERAL ANIMATION*/
 @keyframes fadeIn {

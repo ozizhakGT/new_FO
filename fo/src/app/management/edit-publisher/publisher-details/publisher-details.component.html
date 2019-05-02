@@ -13,7 +13,7 @@
           <img class="publisher-detail__pic" src="../../../../assets/last-login.jpg" alt="lastSeenPic">
           <p>{{generalDetails.login_timestamp}}</p>
         </div>
-        <div *ngIf="generalDetails.country" matTooltip="Last Check-In">
+        <div *ngIf="generalDetails.country && generalDetails.country !== '-1'" matTooltip="Last Check-In">
           <span class="flag-icon flag-icon-{{generalDetails.country | lowercase}}"></span>
           <p>{{generalDetails.country}}</p>
         </div>
@@ -21,100 +21,103 @@
   </mat-card>
 
   <div class="forms-wrapper">
-    <div class="form-wrapper">
-      <form [formGroup]="detailsForm">
-        <h2>Publisher Details</h2>
-        <div>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="First Name" formControlName='first_name' required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="First Name" formControlName='last_name' required>
-          </mat-form-field>
-          <button mat-raised-button (click)="openChangePasswordDialog()">Change User Password</button>
-        </div>
+    <mat-card>
+      <mat-card-content><div class="form-wrapper">
+        <form [formGroup]="detailsForm">
+          <h2>Publisher Details</h2>
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="First Name" formControlName='first_name' required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="First Name" formControlName='last_name' required>
+            </mat-form-field>
+            <button mat-raised-button (click)="openChangePasswordDialog()">Change User Password</button>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>User Type</mat-label>
+              <mat-select formControlName="account_type" required>
+                <mat-option *ngFor="let userType of userTypes" [value]="userType.id">
+                  {{userType.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>User Status</mat-label>
+              <mat-select formControlName="mode" required>
+                <mat-option *ngFor="let status of userStatus" [value]="status.id">
+                  {{status.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput type="number" min="-1" placeholder="Max Sites" formControlName='max_sites' required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput type="number" min="-1" placeholder="Max Tags" formControlName='max_tags_per_site' required>
+              <mat-hint>max tags per site!</mat-hint>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Outsource" formControlName='outsource'>
+            </mat-form-field>
+            <mat-slide-toggle #israeli
+                              [checked]="detailsForm.value.israeli === 1"
+                              (change)="onToggle('israeli',israeli.checked)">
+              israeli
+            </mat-slide-toggle>
+          </div>
+          <div class="form__slide-btn">
+            <mat-slide-toggle #costExternal
+                              [checked]="detailsForm.value.cost_by_external === 1"
+                              (change)="onToggle('cost_by_external',costExternal.checked)">
+              Is Cost External
+            </mat-slide-toggle>
+            <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Submit</button>
+          </div>
+        </form>
+      </div></mat-card-content>
+      <div class="divide-line"></div>
+      <mat-card-content><div class="form-wrapper">
+        <h2>Report columns</h2>
         <div>
           <mat-form-field>
-            <mat-label>User Type</mat-label>
-            <mat-select formControlName="account_type" required>
-              <mat-option *ngFor="let userType of userTypes" [value]="userType.id">
-                {{userType.type}}
+            <mat-label>Monetization Type</mat-label>
+            <mat-select (selectionChange)="onGetReportColumns($event.value)">
+              <mat-option [value]="false">No Type Selected</mat-option>
+              <mat-option #isMonitization *ngFor="let monetization of monetizations" [value]="monetization.id">
+                {{monetization.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field>
-            <mat-label>User Status</mat-label>
-            <mat-select formControlName="mode" required>
-              <mat-option *ngFor="let status of userStatus" [value]="status.id">
-                {{status.type}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
         </div>
-        <div>
-          <mat-form-field class="example-full-width">
-            <input matInput type="number" min="-1" placeholder="Max Sites" formControlName='max_sites' required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput type="number" min="-1" placeholder="Max Tags" formControlName='max_tags_per_site' required>
-            <mat-hint>max tags per site!</mat-hint>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Outsource" formControlName='outsource'>
-          </mat-form-field>
-          <mat-slide-toggle #israeli
-                            [checked]="detailsForm.value.israeli === 1"
-                            (change)="onToggle('israeli',israeli.checked)">
-            israeli
-          </mat-slide-toggle>
-        </div>
-        <div class="form__slide-btn">
-          <mat-slide-toggle #costExternal
-                            [checked]="detailsForm.value.cost_by_external === 1"
-                            (change)="onToggle('cost_by_external',costExternal.checked)">
-            Is Cost External
-          </mat-slide-toggle>
-          <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
-        </div>
-        <div>
-          <button mat-button type="submit" [disabled]="!detailsForm.valid">Submit</button>
-        </div>
-      </form>
-    </div>
-    <div class="form-wrapper">
-      <h2>Report columns</h2>
-      <div>
-        <mat-form-field>
-          <mat-label>Monetization Type</mat-label>
-          <mat-select (selectionChange)="onGetReportColumns($event.value)">
-            <mat-option [value]="false">No Type Selected</mat-option>
-            <mat-option #isMonitization *ngFor="let monetization of monetizations" [value]="monetization.id">
-              {{monetization.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <form class="reports-form" [formGroup]="reportColumnsForm" *ngIf="columnsReportObs | async">
-        <div>
-          <mat-slide-toggle [checked]="reportColumnsForm.value.columns.cpm">CPM</mat-slide-toggle>
-        </div>
-        <div>
-          <mat-slide-toggle [checked]="reportColumnsForm.value.columns.country_code">COUNTRIES</mat-slide-toggle>
-        </div>
-        <div>
-        <mat-slide-toggle #impressions [checked]="reportColumnsForm.value.columns.impressions">IMPRESSIONS</mat-slide-toggle>
-        </div>
-        <div class="reports-form__input" *ngIf="impressions.checked">
-          <mat-form-field class="example-full-width">
-            <input matInput type="number" min="0" max="100" placeholder="Impressions" formControlName='impressions_shaving_percent' required>
-            <mat-hint>% Precenetage!</mat-hint>
-          </mat-form-field>
-        </div>
+        <form class="reports-form" [formGroup]="reportColumnsForm" *ngIf="columnsReportObs | async">
+          <div>
+            <mat-slide-toggle [checked]="reportColumnsForm.value.columns.cpm">CPM</mat-slide-toggle>
+          </div>
+          <div>
+            <mat-slide-toggle [checked]="reportColumnsForm.value.columns.country_code">COUNTRIES</mat-slide-toggle>
+          </div>
+          <div>
+            <mat-slide-toggle #impressions [checked]="reportColumnsForm.value.columns.impressions">IMPRESSIONS</mat-slide-toggle>
+          </div>
+          <div class="reports-form__input" *ngIf="impressions.checked">
+            <mat-form-field class="example-full-width">
+              <input matInput type="number" min="0" max="100" placeholder="Impressions" formControlName='impressions_shaving_percent' required>
+              <mat-hint>% Precenetage!</mat-hint>
+            </mat-form-field>
+          </div>
 
-      </form>
-    </div>
+        </form>
+      </div></mat-card-content>
+    </mat-card>
   </div>
 
 </div>

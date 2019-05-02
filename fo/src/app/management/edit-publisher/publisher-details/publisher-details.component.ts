@@ -12,14 +12,21 @@ import {ManagementService} from "../../management.service";
   styleUrls: ['./publisher-details.component.css']
 })
 export class PublisherDetailsComponent implements OnInit {
-  userTypes = userTypeArray;
-  userStatus = userStatusArray;
-  monetizations = operationcategoriesArray;
+  // PROMISE FOR GETTING USER STATE
+  // MERGE SOME DATA FOR GENERAL DETAILS
   @Input() userDetails: Promise<any>;
-  columnsReportObs;
-  detailsForm: FormGroup;
-  reportColumnsForm: FormGroup;
   generalDetails;
+
+  // OBSERVABLE FOR GETTING RELEVANT COLUMN REPORT BY MONETIZATION ID
+  columnsReportObs;
+  // SELECT ARRAY
+  userTypes     = userTypeArray;
+  userStatus    = userStatusArray;
+  monetizations = operationcategoriesArray;
+
+  // FORMS OBJECTS
+  detailsForm       : FormGroup;
+  reportColumnsForm : FormGroup;
 
 
   constructor(public dialog: MatDialog, private manageService: ManagementService) {}

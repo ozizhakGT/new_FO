@@ -4,3 +4,7 @@ app-header {
   top: 0;
   z-index: 999 !important;
 }
+.page-body {
+  height: 100%;
+  margin: 5rem 6rem;
+}
