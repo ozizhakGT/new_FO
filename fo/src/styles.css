@@ -30,9 +30,20 @@ html {
 .mat-card {
   background: var(--third-color-main);
 }
-
+/*SPINNERS*/
 .app_spinner {
   margin: 15rem auto;
+}
+.form-spinner {
+  position: absolute !important;
+  top: 50%;
+  right: 50%;
+  transform: translate(-50%,-50%);
+}
+.block-form {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 /* INPUTS DESIGN */
@@ -45,7 +56,7 @@ html {
   box-shadow: 0px 0px 2px var(--primary-color-sub);
 }
 
-BUTTONS
+/*BUTTONS*/
 .mat-raised-button.mat-primary {
   color: white;
 }
@@ -57,8 +68,35 @@ BUTTONS
   margin: 2.3rem;
 }
 
+/*BLUR WHILE CHECKING AND SENDING DATA*/
+.blur {
+  filter: blur(0px);
+  animation: blurAnimation .5s alternate;
+}
+
+/*NOTIFICATION MESSAGES*/
+.mat-snack-bar-container {
+  margin: 80px 34px !important;
+}
+
+.mat-simple-snackbar span {
+  color: var(--third-color-sub);
+  font-size: 24px;
+}
+.success {
+  background: #04a84f;
+}
+.failed {
+  background: #cd3301;
+}
+
 /*GENERAL ANIMATION*/
 @keyframes fadeIn {
-  0% {opacity: 0}
+  0%   {opacity: 0}
   100% {opacity: 100%}
+}
+
+@keyframes blurAnimation {
+  0%   {filter: blur(0)}
+  100% {filter: blur(5px)}
 }

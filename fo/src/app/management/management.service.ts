@@ -7,8 +7,9 @@ import {PublisherApiService} from '../core/serviecs/publisher-api.service';
 export class ManagementService {
   constructor(private publisherService: PublisherApiService) {}
 
+  //GET REQUEST
   getUser(id): any {
-    return this.publisherService.UserDetailRequests('get',id).toPromise();
+    return this.publisherService.UserDetailRequests('get', id).toPromise();
   }
 
   getLastLogin(username) {
@@ -19,7 +20,28 @@ export class ManagementService {
     return this.publisherService.ReportColumnsRequests('get', userId, monetizationId)
   }
 
-  updateUserDetails(id, data) {
-    return this.publisherService.UserDetailRequests('put', id, data);
+
+
+  // POST REQUEST
+  async updateUserDetails(id, data) {
+    return await this.publisherService.UserDetailRequests('put', id, data).toPromise();
+  }
+
+  async postReportColumn(id, monitizationId, data) {
+    return await this.publisherService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
+  }
+
+
+//  FIX REPORT COLUMN OBJECT
+  fixReportColumn(columns) {
+    console.log(columns)
+    const columnsArray = [];
+    for (let column in columns) {
+        if (columns[column]) {
+         columnsArray.push(column)
+        }
+    }
+    columns = columnsArray.join(';')
+    console.log(columns)
   }
 }

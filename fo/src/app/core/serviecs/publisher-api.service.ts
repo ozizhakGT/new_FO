@@ -38,9 +38,12 @@ export class PublisherApiService {
     return this.http.get(this.baseUrl + `query/user_last_login?username=${username}`);
   }
 
-  ReportColumnsRequests(request, userId, monetizationId) {
+  ReportColumnsRequests(request, userId, monetizationId , data?: {}) {
     if (request === 'get') {
       return this.http.get(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`);
+
+    } else {
+      return this.http.post(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`, data);
     }
   }
 }

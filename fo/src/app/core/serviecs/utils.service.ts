@@ -20,9 +20,12 @@ export class UtilsService {
       }
   }
 
-  messageNotification(message, action) {
+  messageNotification(message, action, messagetype) {
     this.Notification.open(message, action, {
-      duration: 4000
+      duration: 3500,
+      panelClass: messagetype,
+      verticalPosition: 'top',
+      horizontalPosition: 'right'
     })
   }
 }

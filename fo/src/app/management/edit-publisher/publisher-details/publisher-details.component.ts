@@ -25,6 +25,9 @@ export class PublisherDetailsComponent implements OnInit {
   userStatus    = userStatusArray;
   monetizations = operationcategoriesArray;
 
+  // Local Spinner
+  spinner: boolean = false;
+
   // FORMS OBJECTS
   detailsForm       : FormGroup;
   reportColumnsForm : FormGroup;
@@ -133,16 +136,26 @@ export class PublisherDetailsComponent implements OnInit {
   }
 
   saveUserDetails(form) {
-
-    this.manageService.updateUserDetails(this.generalDetails.id, form.value)
-      .subscribe(
-       isUpdate => {
-              this.utilsService.loader.next(true);
-              if (isUpdate['type'] === 'updated') {
-                this.utilsService.messageNotification('User Updated!', 'Let\'s Dance:)')
-              }
-              this.utilsService.loader.next(false);
-            }
+    this.spinner = true;
+     this.manageService.updateUserDetails(this.generalDetails.id, form.value)
+      .then(
+        userForm => {
+          if (userForm['type'] === 'updated') {
+              this.utilsService.messageNotification('✔ User Updated!', null, 'success');
+          }
+        }
       )
+       .catch(err => {
+         this.utilsService.messageNotification('✖ Failed Updating!', null, 'failed');
+       })
+       .finally(() => this.spinner = false);
   }
+
+  saveReportColumn(form) {
+    console.log(form.value)
+      let columns = form.value.columns;
+      this.manageService.fixReportColumn(columns);
+  }
+
+
 }
