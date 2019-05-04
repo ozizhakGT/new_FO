@@ -41,7 +41,6 @@ export class PublisherDetailsComponent implements OnInit {
     this.userDetails.then(
       userState => {
         let publisher = userState.details.publisher;
-        console.log(userState);
         this.detailFormInit(publisher);
         this.generalDetails = {
           ...userState.details.lastLogin,
@@ -70,7 +69,6 @@ export class PublisherDetailsComponent implements OnInit {
   }
 
   reportColumnsFormInit(report) {
-    console.log(report)
     let cpm = report.columns.includes('cpm');
     let impressions = report.columns.includes('impressions');
     let country_code = report.columns.includes('country_code');
@@ -88,8 +86,6 @@ export class PublisherDetailsComponent implements OnInit {
 
 
     });
-
-    console.log(this.reportColumnsForm.value)
   }
 
   openChangePasswordDialog() {
@@ -104,8 +100,12 @@ export class PublisherDetailsComponent implements OnInit {
     });
   }
 
-  onToggle(fieldName,checked) {
-    this.detailsForm.value[fieldName] = (checked) ? 1 : 0;
+  onToggle(form, fieldName, checked) {
+    if (form.columns) {
+      form.columns[fieldName] = (checked) ? true : false;
+    } else {
+      form[fieldName] = (checked) ? 1 : 0;
+    }
   }
 
   changeColorByStatus() {
@@ -139,23 +139,31 @@ export class PublisherDetailsComponent implements OnInit {
     this.spinner = true;
      this.manageService.updateUserDetails(this.generalDetails.id, form.value)
       .then(
-        userForm => {
-          if (userForm['type'] === 'updated') {
+        response => {
+          if (response['type'] === 'updated') {
               this.utilsService.messageNotification('✔ User Updated!', null, 'success');
           }
         }
       )
        .catch(err => {
-         this.utilsService.messageNotification('✖ Failed Updating!', null, 'failed');
+         this.utilsService.messageNotification('✖ Failed Update User!', null, 'failed');
        })
        .finally(() => this.spinner = false);
   }
 
   saveReportColumn(form) {
-    console.log(form.value)
-      let columns = form.value.columns;
-      this.manageService.fixReportColumn(columns);
+      this.spinner = true;
+      let finalReport = this.manageService.fixReportColumn(form.value);
+      this.manageService.postReportColumn(finalReport.user_id, finalReport.monetization_id, finalReport)
+        .then(
+          response => {
+            if (response['type'] === "created") {
+              this.utilsService.messageNotification('✔  Report Created!', null, 'success');
+            }})
+        .catch(err => {
+            console.log(err);
+              this.utilsService.messageNotification('✖ Failed Create Report!', null, 'failed');
+        })
+        .finally(() => this.spinner = false);
   }
-
-
 }

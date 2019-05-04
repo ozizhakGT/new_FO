@@ -34,14 +34,15 @@ export class ManagementService {
 
 //  FIX REPORT COLUMN OBJECT
   fixReportColumn(columns) {
-    console.log(columns)
-    const columnsArray = [];
-    for (let column in columns) {
-        if (columns[column]) {
-         columnsArray.push(column)
-        }
+    let report = JSON.parse(JSON.stringify(columns));
+    let reportArray = [];
+    for (let reportKey in report.columns) {
+      if (report.columns[reportKey]) {
+        reportArray.push(reportKey);
+      }
+      delete report.columns[reportKey];
     }
-    columns = columnsArray.join(';')
-    console.log(columns)
+    report.columns = reportArray.join(';');
+    return report;
   }
 }

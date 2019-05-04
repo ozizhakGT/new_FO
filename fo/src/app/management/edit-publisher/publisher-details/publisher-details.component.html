@@ -71,20 +71,20 @@
               </mat-form-field>
               <mat-slide-toggle #israeli
                                 [checked]="detailsForm.value.israeli === 1"
-                                (change)="onToggle('israeli',israeli.checked)">
+                                (change)="onToggle(detailsForm.value, 'israeli', israeli.checked)">
                 israeli
               </mat-slide-toggle>
             </div>
             <div class="form__slide-btn">
               <mat-slide-toggle #costExternal
                                 [checked]="detailsForm.value.cost_by_external === 1"
-                                (change)="onToggle('cost_by_external',costExternal.checked)">
+                                (change)="onToggle(detailsForm.value, 'cost_by_external', costExternal.checked)">
                 Is Cost External
               </mat-slide-toggle>
               <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
             </div>
             <br>
-            <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Submit</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Update User</button>
           </form>
         </div>
       </mat-card-content>
@@ -105,13 +105,27 @@
           </div>
           <form class="reports-form" [formGroup]="reportColumnsForm" *ngIf="columnsReportObs | async" (ngSubmit)="saveReportColumn(reportColumnsForm)">
             <div>
-              <mat-slide-toggle  [checked]="reportColumnsForm.value.columns.cpm">CPM</mat-slide-toggle>
+              <mat-slide-toggle
+                #cpm
+                [checked]="reportColumnsForm.value.columns.cpm"
+                (change)="onToggle(reportColumnsForm.value, 'cpm', cpm.checked)">
+                CPM
+              </mat-slide-toggle>
             </div>
             <div>
-              <mat-slide-toggle [checked]="reportColumnsForm.value.columns.country_code">COUNTRIES</mat-slide-toggle>
+              <mat-slide-toggle
+                #countries
+                [checked]="reportColumnsForm.value.columns.country_code"
+                (change)="onToggle(reportColumnsForm.value, 'country_code', countries.checked)">
+                COUNTRIES
+              </mat-slide-toggle>
             </div>
             <div>
-              <mat-slide-toggle #impressions [checked]="reportColumnsForm.value.columns.impressions">IMPRESSIONS
+              <mat-slide-toggle
+                #impressions
+                [checked]="reportColumnsForm.value.columns.impressions"
+                (change)="onToggle(reportColumnsForm.value, 'impressions', impressions.checked)">
+                IMPRESSIONS
               </mat-slide-toggle>
             </div>
             <div class="reports-form__input" *ngIf="impressions.checked">
@@ -122,7 +136,7 @@
               </mat-form-field>
             </div>
             <br>
-            <button mat-raised-button color="primary" type="submit" [disabled]="!reportColumnsForm.valid">Submit</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!reportColumnsForm.valid">Create Report</button>
           </form>
         </div>
       </mat-card-content>
