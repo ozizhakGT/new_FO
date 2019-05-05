@@ -23,7 +23,7 @@ export class EditPublisherComponent implements OnInit {
       (params: Params) => {
         const id = params['publisherId'];
         if (id && id !== 'undefined') {
-          this.userState = this.onGetuserStateDetails(id)
+          this.userState = this.onGetuserStateDetails(id);
           this.isValidPublisher = true;
         } else {
           this.isValidPublisher = false;
@@ -55,6 +55,7 @@ export class EditPublisherComponent implements OnInit {
       } else {
         userState.details.owner = 'No Owner'
       }
+
       this.isValidPublisher = true;
     }
     else {

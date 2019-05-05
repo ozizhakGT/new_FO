@@ -6,6 +6,7 @@ import {userStatusArray, userTypeArray} from "../../enums/publisher-enums";
 import {operationcategoriesArray} from "../../../core/general-enums/operation_categories";
 import {ManagementService} from "../../management.service";
 import {UtilsService} from "../../../core/serviecs/utils.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-publisher-details',
@@ -35,7 +36,9 @@ export class PublisherDetailsComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               private manageService: ManagementService,
-              private utilsService: UtilsService) {}
+              private utilsService: UtilsService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.userDetails.then(
@@ -82,7 +85,7 @@ export class PublisherDetailsComponent implements OnInit {
       'user_id': new FormControl(report.user_id),
       'monetization_id': new FormControl(report.monetization_id),
       'show_100_percent_revenue': new FormControl(report.show_100_percent_revenue),
-      'impressions_shaving_percent': new FormControl(report.impressions_shaving_percent, [Validators.required, Validators.min(-1)])
+      'impressions_shaving_percent': new FormControl(report.impressions_shaving_percent, [Validators.required, Validators.min(0), Validators.max(100)])
 
 
     });
@@ -165,5 +168,29 @@ export class PublisherDetailsComponent implements OnInit {
               this.utilsService.messageNotification('✖ Failed Create Report!', null, 'failed');
         })
         .finally(() => this.spinner = false);
+  }
+
+  deleteUser() {
+    this.spinner = true;
+    if(confirm(`Are you sure you want Deleting ${this.generalDetails.username} ?`)) {
+      this.manageService.deleteUser(this.generalDetails.id)
+        .then(
+          response => {
+            if (response['type'] === 'deleted') {
+              this.utilsService.messageNotification('✔  User Deleted', null, 'success');
+              this.utilsService.onSessionStorageSave('publisherId', undefined);
+              this.utilsService.onSessionStorageRemove('publisherId');
+              this.router.navigate(['../'], {relativeTo: this.route});
+            }
+          })
+        .catch(err => {
+          this.utilsService.messageNotification('✖ Failed Deleting User!', null, 'failed');
+          console.error(err)
+        })
+        .finally(() => this.spinner = false)
+    }
+    else {
+      this.spinner = false;
+    }
   }
 }

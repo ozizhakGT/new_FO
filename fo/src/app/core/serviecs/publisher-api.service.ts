@@ -29,8 +29,11 @@ export class PublisherApiService {
     if (request == 'get') {
       return this.http.get(this.baseUrl + `user/${publisherId}?${this.token}`)
 
-    } else {
+    } else if (request == 'put') {
       return this.http.put(`${this.baseUrl}user/${publisherId}?${this.token}`, data);
+
+    } else if (request == 'delete') {
+      return this.http.delete(`${this.baseUrl}user/${publisherId}?${this.token}`);
     }
   }
 

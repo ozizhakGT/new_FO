@@ -31,6 +31,11 @@ export class ManagementService {
     return await this.publisherService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
   }
 
+//  DELETE REQUEST
+  async deleteUser(id) {
+    return await this.publisherService.UserDetailRequests('delete', id).toPromise();
+  }
+
 
 //  FIX REPORT COLUMN OBJECT
   fixReportColumn(columns) {

@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
   mouseupSubscription: Subscription;
   loaderSubscription: Subscription;
 
-  publisherId: string = this.utilsService.onSessionStorageLoad();
+  publisherId: string = this.utilsService.onSessionStorageLoad('publisherId');
   lastSearch: string;
   isNavbarLoading: boolean;
   isAppLoading: boolean;
@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit {
   //  Select Publisher from the search list and clear list and last search
   onPublisherSelect(publisher) {
     this.publisherId = publisher._id.toString();
-    this.utilsService.onSessionStorageSave(this.publisherId);
+    this.utilsService.onSessionStorageSave('publisherId', this.publisherId);
     this.router.navigate(['manage/edit', this.publisherId]);
     this.onResetSearch(true);
   }

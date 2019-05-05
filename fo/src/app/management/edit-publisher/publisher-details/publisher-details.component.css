@@ -11,7 +11,7 @@
 }
 .mat-card-title {
   display: flex;
-  align-items: center;
+  /*align-items: center;*/
 }
 .mat-card-title span {
   margin-right: .6rem;
@@ -41,10 +41,10 @@
 .forms-wrapper {
   margin: 3rem 0;
 }
-.forms-wrapper mat-card {
+.forms-wrapper .mat-card {
   display: flex;
   width: fit-content;
-
+  font-size: 20px;
 }
 .divide-line {
   background: var(--third-color-main);
@@ -69,3 +69,4 @@
 .reports-form__input {
   animation: fadeIn .6s;
 }
+

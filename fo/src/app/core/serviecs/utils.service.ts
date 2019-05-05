@@ -9,15 +9,19 @@ export class UtilsService {
   loader = new BehaviorSubject<boolean>(false);
   constructor(private Notification: MatSnackBar) { }
 
-  onSessionStorageSave(id: string) {
-    sessionStorage.setItem('publisherId', id);
+  onSessionStorageSave(key: string, value) {
+    sessionStorage.setItem(key, value);
   }
 
-  onSessionStorageLoad() {
-      const id = sessionStorage.getItem('publisherId');
+  onSessionStorageLoad(key) {
+      const id = sessionStorage.getItem(key);
       if (id) {
         return id;
       }
+  }
+
+  onSessionStorageRemove(key) {
+    sessionStorage.removeItem(key)
   }
 
   messageNotification(message, action, messagetype) {

@@ -1,7 +1,7 @@
 <div class="publisher-detail__wrapper" *ngIf="userDetails | async">
   <mat-card class="publisher-detail__card">
     <mat-card-title>
-      <i class="fa fa-plug" [ngStyle]="{color: changeColorByStatus()}"></i>
+      <i class="fa fa-plug" [ngStyle]="{color: changeColorByStatus()}" matTooltip="User Status"></i>
       <span matTooltip="Username">{{generalDetails.username}}</span>
       <span>&#9996;</span>
       <span matTooltip="User ID">{{generalDetails.id}}</span>
@@ -27,13 +27,15 @@
       <mat-card-content>
         <div class="form-wrapper">
           <form [formGroup]="detailsForm" (ngSubmit)="saveUserDetails(detailsForm)">
-            <h2>Publisher Details</h2>
+            <h2>Publisher Settings</h2>
             <div>
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="First Name" formControlName='first_name' required>
+                <mat-error>Need Provide First Name</mat-error>
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="First Name" formControlName='last_name' required>
+                <input matInput placeholder="Last Name" formControlName='last_name' required>
+                <mat-error>Need Provide Last Name</mat-error>
               </mat-form-field>
               <button mat-raised-button type="button" (click)="openChangePasswordDialog()">Change User Password</button>
             </div>
@@ -58,11 +60,13 @@
             <div>
               <mat-form-field class="example-full-width">
                 <input matInput type="number" min="-1" placeholder="Max Sites" formControlName='max_sites' required>
+                <mat-error>Minimum Sites is -1(unlimited sites)</mat-error>
               </mat-form-field>
               <mat-form-field class="example-full-width">
                 <input matInput type="number" min="-1" placeholder="Max Tags" formControlName='max_tags_per_site'
                        required>
                 <mat-hint>max tags per site!</mat-hint>
+                <mat-error>Minimum Tags is -1(unlimited tags)</mat-error>
               </mat-form-field>
             </div>
             <div>
@@ -85,6 +89,7 @@
             </div>
             <br>
             <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Update User</button>
+            <button style="float: right" mat-raised-button color="warn" type="button" (click)="deleteUser()">Delete User</button>
           </form>
         </div>
       </mat-card-content>
@@ -97,7 +102,7 @@
               <mat-label>Monetization Type</mat-label>
               <mat-select (selectionChange)="onGetReportColumns($event.value)">
                 <mat-option [value]="false">No Type Selected</mat-option>
-                <mat-option #isMonitization *ngFor="let monetization of monetizations" [value]="monetization.id">
+                <mat-option *ngFor="let monetization of monetizations" [value]="monetization.id">
                   {{monetization.name}}
                 </mat-option>
               </mat-select>
@@ -133,6 +138,7 @@
                 <input matInput type="number" min="0" max="100" placeholder="Impressions"
                        formControlName='impressions_shaving_percent' required>
                 <mat-hint>% Precenetage!</mat-hint>
+                <mat-error>Number Range between 0 - 100 (%)</mat-error>
               </mat-form-field>
             </div>
             <br>
