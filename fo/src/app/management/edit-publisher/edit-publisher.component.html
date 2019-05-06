@@ -4,10 +4,10 @@
 <div *ngIf="isValidPublisher">
   <mat-tab-group>
     <mat-tab label="Publisher Settings">
-      <app-publisher-details *ngIf="userState | async" [userDetails]="userState"></app-publisher-details>
+      <app-publisher-details *ngIf="userState | async" [userState]="userState"></app-publisher-details>
     </mat-tab>
     <mat-tab label="Payment Settings">
-      <app-payment-details></app-payment-details>
+      <app-payment-details *ngIf="userState | async" [userState]="userState"></app-payment-details>
     </mat-tab>
     <mat-tab label="Ownership History">
     </mat-tab>

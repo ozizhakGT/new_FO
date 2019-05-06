@@ -20,7 +20,7 @@ import {operationcategoriesArray} from "../../../core/general-enums/operation_ca
 export class PublisherDetailsComponent implements OnInit {
   // PROMISE FOR GETTING USER STATE
   // MERGE SOME DATA FOR GENERAL DETAILS
-  @Input() userDetails: Promise<any>;
+  @Input() userState: Promise<any>;
   generalDetails;
 
   // OBSERVABLE FOR GETTING RELEVANT COLUMN REPORT BY MONETIZATION ID
@@ -45,7 +45,7 @@ export class PublisherDetailsComponent implements OnInit {
               private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.userDetails.then(
+    this.userState.then(
       userState => {
         let publisher = userState.details.publisher;
         this.detailFormInit(publisher);

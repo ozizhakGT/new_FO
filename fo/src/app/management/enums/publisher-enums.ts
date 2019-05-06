@@ -15,3 +15,12 @@ export const userStatusArray: UserStructre[] = [
   {id: 2, type: 'Deactivated'},
   {id: 3, type: 'Suspend'},
 ];
+
+export const paymentsMethodsArray: UserStructre[] = [
+  {id: 1, type: 'Paypal'},
+  {id: 2, type: 'Bank Account'},
+  {id: 3, type: 'Payoneer'},
+  {id: 4, type: 'Bitcoin'},
+  {id: 5, type: 'Monero'},
+  {id: 6, type: 'Paxum'},
+]

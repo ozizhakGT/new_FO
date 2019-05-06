@@ -32,6 +32,11 @@ html {
 .mat-form-field {
   font-size: 1rem;
 }
+.general-wrapper {
+margin: 3rem;
+opacity: 1;
+animation: fadeIn 1s;
+}
 
 /*SPINNERS*/
 .app_spinner {
@@ -43,10 +48,19 @@ html {
   right: 50%;
   transform: translate(-50%,-50%);
 }
+.form-wrapper {
+  width: fit-content;
+}
 .block-form {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+.divide-line {
+  background: var(--secondery-color-main) !important;
+  width: .07rem;
+  margin: 2.3rem;
 }
 
 /* INPUTS DESIGN */
@@ -62,13 +76,6 @@ html {
 /*BUTTONS*/
 .mat-raised-button.mat-primary {
   color: white;
-}
-
-/*SEPARETE LINE*/
-.divide-line {
-  background: var(--secondery-color-main) !important;
-  width: .07rem;
-  margin: 2.3rem;
 }
 
 /*BLUR WHILE CHECKING AND SENDING DATA*/

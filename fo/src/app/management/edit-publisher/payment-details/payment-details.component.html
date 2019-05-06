@@ -1,11 +1,59 @@
-<div class="form-wrapper">
-  <mat-form-field>
-    <input matInput placeholder="Input">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Select">
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="general-wrapper" *ngIf="userState | async">
+  <mat-card class="form-wrapper">
+    <h2>Payments Methods</h2>
+    <div class="wrapper">
+      <form [formGroup]="paymentmethodsForm">
+        <div>
+          <mat-form-field>
+            <mat-label>Payment Options</mat-label>
+            <mat-select formControlName='payment_method'>
+              <mat-option *ngFor="let method of paymetsMethodOption" [value]="method.id">
+                {{method.type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="divide-line"></div>
+        <div *ngIf="paymentmethodsForm.value.payment_method !== 2">
+          <mat-form-field>
+            <input matInput type="email" formControlName='payment_email' placeholder="Email For Payment" required email>
+          </mat-form-field>
+        </div>
+        <div *ngIf="paymentmethodsForm.value.payment_method === 2">
+          <div>
+            <mat-form-field>
+              <input matInput type="text" formControlName='beneficiary_name' placeholder="Beneficiary Name" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" formControlName='beneficiary_address' placeholder="Beneficiary Address" required>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput type="text" formControlName='bank_name' placeholder="Bank Name" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" formControlName='bank_address' placeholder="Bank Address" required>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput type="text" formControlName='swift_code' placeholder="Swift Code" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" formControlName='iban_number' placeholder="IBAN Number" required>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput type="text" formControlName='account_number' placeholder="Account Number" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" formControlName='payment_period' placeholder="Payment Period" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-card>
 </div>

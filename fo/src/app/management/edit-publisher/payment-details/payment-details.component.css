@@ -1,6 +1,7 @@
-.form-wrapper {
-  margin: 4rem;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
+.wrapper form div {
+  margin: 1rem
+}
+.divide-line {
+  width: 40rem;
+  height: .1rem;
 }

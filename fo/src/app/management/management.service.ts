@@ -20,6 +20,10 @@ export class ManagementService {
     return this.publisherService.ReportColumnsRequests('get', userId, monetizationId)
   }
 
+  getPaymentMethod(userId) {
+    return this.publisherService.paymentMethods('get', userId).toPromise()
+  }
+
 
 
   // POST REQUEST

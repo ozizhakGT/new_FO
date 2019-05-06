@@ -42,7 +42,8 @@ export class EditPublisherComponent implements OnInit {
         publisher: null,
         lastLogin: null,
         owner: null
-      }
+      },
+      paymentsMethods: null
     };
     // get user request
     userState.details.publisher = await this.manageService.getUser(id);
@@ -58,6 +59,9 @@ export class EditPublisherComponent implements OnInit {
       } else {
         userState.details.owner = 'No Owner'
       }
+
+      userState.paymentsMethods = await this.manageService.getPaymentMethod(userState.details.publisher.id);
+      userState.paymentsMethods = userState.paymentsMethods['message'].results[0].payment_methods.results[0];
 
       this.isValidPublisher = true;
     }

@@ -1,11 +1,6 @@
 .mat-form-field {
   margin-right: 2rem;
 }
-.publisher-detail__wrapper {
-  margin: 3rem;
-  opacity: 1;
-  animation: fadeIn 1s;
-}
 .publisher-detail__card {
   width: fit-content;
 }
@@ -45,14 +40,6 @@
   display: flex;
   width: fit-content;
   font-size: 20px;
-}
-.divide-line {
-  background: var(--third-color-main);
-  width: .07rem;
-  margin: 2.3rem;
-}
-.form-wrapper {
-  width: fit-content;
 }
 .form-wrapper h2 {
   font-weight: normal;

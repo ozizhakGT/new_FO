@@ -1,4 +1,4 @@
-<div class="publisher-detail__wrapper" *ngIf="userDetails | async">
+<div class="general-wrapper" *ngIf="userState | async">
   <mat-card class="publisher-detail__card">
     <mat-card-title>
       <i class="fa fa-plug" [ngStyle]="{color: changeColorByStatus()}" matTooltip="User Status"></i>

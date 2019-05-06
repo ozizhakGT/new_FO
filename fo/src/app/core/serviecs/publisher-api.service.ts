@@ -26,14 +26,14 @@ export class PublisherApiService {
   }
 
   UserDetailRequests(request, publisherId, data?: {}) {
-    if (request == 'get') {
-      return this.http.get(this.baseUrl + `user/${publisherId}?${this.token}`)
-
-    } else if (request == 'put') {
-      return this.http.put(`${this.baseUrl}user/${publisherId}?${this.token}`, data);
-
-    } else if (request == 'delete') {
-      return this.http.delete(`${this.baseUrl}user/${publisherId}?${this.token}`);
+    const userDetailsUrl = `${this.baseUrl}user/${publisherId}?${this.token}`;
+    switch (request) {
+      case 'get':
+        return this.http.get(userDetailsUrl);
+      case 'put':
+        return this.http.put(userDetailsUrl, data);
+      case 'delete':
+        return this.http.delete(userDetailsUrl);
     }
   }
 
@@ -42,11 +42,21 @@ export class PublisherApiService {
   }
 
   ReportColumnsRequests(request, userId, monetizationId , data?: {}) {
-    if (request === 'get') {
-      return this.http.get(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`);
+    const reportsUrl = `${this.baseUrl}publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`;
+    switch (request) {
+      case 'get':
+        return this.http.get(reportsUrl);
+      case 'post':
+        return this.http.post(reportsUrl, data);
+    }
+  }
 
-    } else {
-      return this.http.post(this.baseUrl + `publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`, data);
+  paymentMethods(request, userId) {
+    const paymentMethodUrl = `${this.baseUrl}user/${userId}/payment_method?${this.token}`
+
+    switch (request) {
+      case 'get':
+        return this.http.get(paymentMethodUrl);
     }
   }
 }
