@@ -1,13 +1,12 @@
-<div *ngIf="!isValidPublisher">
-  <h1>No Publisher Selected</h1>
-  <h2>Selected Publisher!</h2>
+<div class="default-no-choose-screen" *ngIf="!isValidPublisher">
+  <h1>Search For Publisher  <i class="fa fa-user-secret"></i></h1>
 </div>
 <div *ngIf="isValidPublisher">
   <mat-tab-group>
-    <mat-tab label="Publisher Details">
+    <mat-tab label="Publisher Settings">
       <app-publisher-details *ngIf="userState | async" [userDetails]="userState"></app-publisher-details>
     </mat-tab>
-    <mat-tab label="Payment Details">
+    <mat-tab label="Payment Settings">
       <app-payment-details></app-payment-details>
     </mat-tab>
     <mat-tab label="Ownership History">

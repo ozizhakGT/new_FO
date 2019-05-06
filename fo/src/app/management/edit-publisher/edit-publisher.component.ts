@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+
+import {ActivatedRoute, Params, Router} from "@angular/router";
+
 import {UtilsService} from "../../core/serviecs/utils.service";
 import {ManagementService} from "../management.service";
-import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
   selector: 'app-edit-publisher',
@@ -11,11 +13,11 @@ import {ActivatedRoute, Params} from "@angular/router";
 export class EditPublisherComponent implements OnInit {
   isValidPublisher: boolean;
   userState: Promise<any>;
-  generalDetails;
 
   constructor(private utilsService: UtilsService,
               private manageService: ManagementService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.route.params
@@ -26,6 +28,7 @@ export class EditPublisherComponent implements OnInit {
           this.userState = this.onGetuserStateDetails(id);
           this.isValidPublisher = true;
         } else {
+          this.router.navigate(['../'], {relativeTo:this.route})
           this.isValidPublisher = false;
         }
       });

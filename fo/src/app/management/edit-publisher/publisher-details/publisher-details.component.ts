@@ -1,12 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material";
-import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-change-password.component";
-import {userStatusArray, userTypeArray} from "../../enums/publisher-enums";
-import {operationcategoriesArray} from "../../../core/general-enums/operation_categories";
+
 import {ManagementService} from "../../management.service";
 import {UtilsService} from "../../../core/serviecs/utils.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+
+import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-change-password.component";
+
+import {userStatusArray, userTypeArray} from "../../enums/publisher-enums";
+import {operationcategoriesArray} from "../../../core/general-enums/operation_categories";
+
 
 @Component({
   selector: 'app-publisher-details',
@@ -178,7 +182,6 @@ export class PublisherDetailsComponent implements OnInit {
           response => {
             if (response['type'] === 'deleted') {
               this.utilsService.messageNotification('✔  User Deleted', null, 'success');
-              this.utilsService.onSessionStorageSave('publisherId', undefined);
               this.utilsService.onSessionStorageRemove('publisherId');
               this.router.navigate(['../'], {relativeTo: this.route});
             }

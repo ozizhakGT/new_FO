@@ -1,0 +1,11 @@
+.default-no-choose-screen {
+  font-size: 1.4rem;
+  margin: 10rem 0;
+  /*text-align: center;*/
+  display: flex;
+  align-items: center;
+}
+.default-no-choose-screen h1 i {
+  font-size: 4rem;
+  color: var(--primary-color-main);
+}
