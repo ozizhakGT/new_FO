@@ -7,7 +7,7 @@ import {PublisherApiService} from '../core/serviecs/publisher-api.service';
 export class ManagementService {
   constructor(private publisherService: PublisherApiService) {}
 
-  //GET REQUEST
+  //GET REQUESTS
   getUser(id): any {
     return this.publisherService.UserDetailRequests('get', id).toPromise();
   }
@@ -24,11 +24,17 @@ export class ManagementService {
     return this.publisherService.paymentMethods('get', userId).toPromise()
   }
 
+  getPaymentHistory(userId) {
+    return this.publisherService.getPaymentHistory(userId).toPromise()
+  }
 
+  // CRUD REQUESTS
+  async updateUserDetails(userId, data) {
+    return await this.publisherService.UserDetailRequests('put', userId, data).toPromise();
+  }
 
-  // POST REQUEST
-  async updateUserDetails(id, data) {
-    return await this.publisherService.UserDetailRequests('put', id, data).toPromise();
+  async updatePaymentMethod(userId, paymentMethodId, data) {
+    return await this.publisherService.paymentMethods('put', userId, paymentMethodId, data).toPromise()
   }
 
   async postReportColumn(id, monitizationId, data) {

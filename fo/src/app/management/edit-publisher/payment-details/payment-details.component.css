@@ -1,7 +1,25 @@
-.wrapper form div {
-  margin: 1rem
+.general-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.block-form {
+  position: static;
+}
+form {
+  padding: 2rem;
+}
+form div .mat-form-field {
+  margin: 0 2rem;
+  width: 17rem;
+}
+form button {
+  margin-top: 2rem;
 }
 .divide-line {
-  width: 40rem;
+  width: 90%;
   height: .1rem;
+  margin: 1rem auto;
+}
+.comments-textarea {
+  width: 91% !important;
 }

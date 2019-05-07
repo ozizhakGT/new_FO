@@ -25,7 +25,17 @@ export class UtilsService {
   }
 
   messageNotification(message, action, messagetype) {
-    this.Notification.open(message, action, {
+    let textMessage: string;
+    switch (messagetype) {
+      case 'success':
+        textMessage = '✔ ';
+        break;
+      case 'failed':
+        textMessage = '✖ ';
+        break;
+    }
+    textMessage += message
+    this.Notification.open(textMessage, action, {
       duration: 3500,
       panelClass: messagetype,
       verticalPosition: 'top',

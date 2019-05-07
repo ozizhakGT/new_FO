@@ -8,7 +8,7 @@ import {UtilsService} from "../../../core/serviecs/utils.service";
 
 import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-change-password.component";
 
-import {userStatusArray, userTypeArray} from "../../enums/publisher-enums";
+import {userStatusStructure, userTypeStructure} from "../../enums/publisher-enums";
 import {operationcategoriesArray} from "../../../core/general-enums/operation_categories";
 
 
@@ -26,8 +26,8 @@ export class PublisherDetailsComponent implements OnInit {
   // OBSERVABLE FOR GETTING RELEVANT COLUMN REPORT BY MONETIZATION ID
   columnsReportObs;
   // SELECT ARRAY
-  userTypes     = userTypeArray;
-  userStatus    = userStatusArray;
+  userTypes     = userTypeStructure;
+  userStatus    = userStatusStructure;
   monetizations = operationcategoriesArray;
 
   // Local Spinner
@@ -148,12 +148,12 @@ export class PublisherDetailsComponent implements OnInit {
       .then(
         response => {
           if (response['type'] === 'updated') {
-              this.utilsService.messageNotification('✔ User Updated!', null, 'success');
+              this.utilsService.messageNotification('User Updated!', null, 'success');
           }
         }
       )
        .catch(err => {
-         this.utilsService.messageNotification('✖ Failed Update User!', null, 'failed');
+         this.utilsService.messageNotification('Failed Update User!', null, 'failed');
        })
        .finally(() => this.spinner = false);
   }
@@ -165,11 +165,10 @@ export class PublisherDetailsComponent implements OnInit {
         .then(
           response => {
             if (response['type'] === "created") {
-              this.utilsService.messageNotification('✔  Report Created!', null, 'success');
+              this.utilsService.messageNotification('Report Created!', null, 'success');
             }})
         .catch(err => {
-            console.log(err);
-              this.utilsService.messageNotification('✖ Failed Create Report!', null, 'failed');
+              this.utilsService.messageNotification('Failed Create Report!', null, 'failed');
         })
         .finally(() => this.spinner = false);
   }
@@ -181,14 +180,13 @@ export class PublisherDetailsComponent implements OnInit {
         .then(
           response => {
             if (response['type'] === 'deleted') {
-              this.utilsService.messageNotification('✔  User Deleted', null, 'success');
+              this.utilsService.messageNotification('User Deleted', null, 'success');
               this.utilsService.onSessionStorageRemove('publisherId');
               this.router.navigate(['../'], {relativeTo: this.route});
             }
           })
         .catch(err => {
-          this.utilsService.messageNotification('✖ Failed Deleting User!', null, 'failed');
-          console.error(err)
+          this.utilsService.messageNotification('Failed Deleting User!', null, 'failed');
         })
         .finally(() => this.spinner = false)
     }

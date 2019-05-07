@@ -17,9 +17,6 @@ export class PublisherApiService {
     }
   }
 
-  /*
-    GET REQUESTS
-   */
 
   getPublishers(query) {
     return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}&${this.token}`);
@@ -38,7 +35,11 @@ export class PublisherApiService {
   }
 
   getPublisherLastLogin(username) {
-    return this.http.get(this.baseUrl + `query/user_last_login?username=${username}`);
+    return this.http.get( `${this.baseUrl}query/user_last_login?username=${username}`);
+  }
+
+  getPaymentHistory(userId) {
+    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
   }
 
   ReportColumnsRequests(request, userId, monetizationId , data?: {}) {
@@ -51,12 +52,14 @@ export class PublisherApiService {
     }
   }
 
-  paymentMethods(request, userId) {
-    const paymentMethodUrl = `${this.baseUrl}user/${userId}/payment_method?${this.token}`
+  paymentMethods(request, userId, paymentMethodId?, data?: {}) {
+    const paymentMethodUrl = `${this.baseUrl}user/${userId}/payment_method`;
 
     switch (request) {
       case 'get':
-        return this.http.get(paymentMethodUrl);
+        return this.http.get(`${paymentMethodUrl}?${this.token}`);
+      case 'put':
+        return this.http.put(`${paymentMethodUrl}/${paymentMethodId}?${this.token}`, data);
     }
   }
 }

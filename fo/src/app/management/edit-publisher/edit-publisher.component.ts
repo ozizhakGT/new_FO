@@ -43,7 +43,8 @@ export class EditPublisherComponent implements OnInit {
         lastLogin: null,
         owner: null
       },
-      paymentsMethods: null
+      paymentsMethods: null,
+      paymentsHistory: null
     };
     // get user request
     userState.details.publisher = await this.manageService.getUser(id);
@@ -62,6 +63,9 @@ export class EditPublisherComponent implements OnInit {
 
       userState.paymentsMethods = await this.manageService.getPaymentMethod(userState.details.publisher.id);
       userState.paymentsMethods = userState.paymentsMethods['message'].results[0].payment_methods.results[0];
+
+      userState.paymentsHistory = await this.manageService.getPaymentHistory(userState.details.publisher.id);
+      userState.paymentsHistory = userState.paymentsHistory['message'].results;
 
       this.isValidPublisher = true;
     }

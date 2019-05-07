@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ManagementService} from "../../management.service";
-import {paymentsMethodsArray} from "../../enums/publisher-enums";
+import {paymentsMethodsStructure, paymentsPeriodStructure} from "../../enums/publisher-enums";
 import {FormControl, FormGroup} from "@angular/forms";
+import {UtilsService} from "../../../core/serviecs/utils.service";
 
 @Component({
   selector: 'app-payment-details',
@@ -10,14 +11,29 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class PaymentDetailsComponent implements OnInit {
   @Input() userState: Promise<any>;
-  paymetsMethodOption = paymentsMethodsArray;
+
   paymentmethodsForm: FormGroup;
-  constructor(private manageService: ManagementService) { }
+
+  paymentsMethodOption = paymentsMethodsStructure;
+  paymentPeriodOption = paymentsPeriodStructure;
+
+  genearalDetails: {user_id: number, payment_method_id: number};
+  displayedColumns = ['changed_date']
+  paymentsHistory: any[] = [];
+
+  spinner: boolean = false;
+  constructor(private manageService: ManagementService,
+              private utilsService: UtilsService) { }
 
   ngOnInit() {
       this.userState.then(
         paymentMethods => {
-          console.log(paymentMethods)
+          this.paymentsHistory = paymentMethods.paymentsHistory;
+          console.log(this.paymentsHistory)
+          this.genearalDetails = {
+            user_id: paymentMethods.paymentsMethods.user_id,
+            payment_method_id: paymentMethods.paymentsMethods.id
+          };
           this.paymentMethodsOnInitForm(paymentMethods.paymentsMethods)
         }
       )
@@ -38,6 +54,19 @@ export class PaymentDetailsComponent implements OnInit {
       'comment': new FormControl(form.comment),
     })
     console.log(this.paymentmethodsForm)
+  }
+
+  onUpdatePaymentMethod(form) {
+    this.spinner = true;
+    this.manageService.updatePaymentMethod(this.genearalDetails.user_id, this.genearalDetails.payment_method_id, form.value)
+      .then(
+        response => {
+          if (response['type'] === 'updated') {
+            this.utilsService.messageNotification('Payment Method Update!', null, 'success')
+          }
+        })
+      .catch(err => this.utilsService.messageNotification('Failed Update Payment Method!', null, 'failed'))
+      .finally(() => this.spinner = false)
   }
 
 }
