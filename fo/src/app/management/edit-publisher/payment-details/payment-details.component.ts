@@ -21,6 +21,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   genearalDetails =  {user_id: null, payment_method_id: null};
   paymentsHistory: any[] = [];
+  page: number = 1;
 
   spinner: boolean = false;
   constructor(private manageService: ManagementService,
@@ -67,5 +68,4 @@ export class PaymentDetailsComponent implements OnInit {
       .catch(err => this.utilsService.messageNotification('Failed Update Payment Method!', null, 'failed'))
       .finally(() => this.spinner = false)
   }
-
 }

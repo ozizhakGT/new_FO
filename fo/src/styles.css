@@ -37,6 +37,9 @@ margin: 3rem;
 opacity: 1;
 animation: fadeIn 1s;
 }
+.ngx-pagination .current {
+  background: var(--primary-color-main) !important;
+}
 
 /*SPINNERS*/
 .app_spinner {

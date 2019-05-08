@@ -3,6 +3,7 @@
 }
 .mat-card:first-child {
   margin-right: 3rem;
+  height: fit-content;
 }
 .mat-card:last-child {
   flex-grow: 50;
@@ -31,9 +32,8 @@ form button {
 .comments-textarea {
   width: 91% !important;
 }
-.payment-history__details {
-  display: flex;
-  /*justify-content: space-evenly;*/
+.payment-history__details div {
+  margin: .6rem 0
 }
 .payment-history__details .payment-history__general {
   font-size: 1rem;

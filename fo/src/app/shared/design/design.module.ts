@@ -19,6 +19,7 @@ import {
   MatTableModule,
   MatExpansionModule
 } from '@angular/material';
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {
     MatToolbarModule,
     MatSnackBarModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxPaginationModule
   ],
   exports: [
     FormsModule,
@@ -61,7 +63,8 @@ import {
     MatToolbarModule,
     MatSnackBarModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxPaginationModule
   ]
 })
 export class DesignModule { }

@@ -25,6 +25,7 @@
     "flag-icon-css": "^3.3.0",
     "lodash": "^4.17.11",
     "ngx-flag-icon-css": "^1.0.1",
+    "ngx-pagination": "^3.2.1",
     "ngx-spinner": "^7.1.4",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",
