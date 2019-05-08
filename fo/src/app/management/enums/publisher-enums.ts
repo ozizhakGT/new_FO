@@ -23,7 +23,16 @@ export const paymentsMethodsStructure: UserStructre[] = [
   {id: 4, type: 'Bitcoin'},
   {id: 5, type: 'Monero'},
   {id: 6, type: 'Paxum'},
-]
+];
+  export const paymentMethodArray: string[] = [
+     null,
+    'Paypal',
+    'Bank Account',
+    'Payonner',
+    'Bitcoin',
+    'Monero',
+    'Paxum'
+  ];
 
 export const paymentsPeriodStructure: string[] = [
   'net 0',

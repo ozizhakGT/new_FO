@@ -1,6 +1,14 @@
 .general-wrapper {
   display: flex;
-  justify-content: space-between;
+}
+.mat-card:first-child {
+  margin-right: 3rem;
+}
+.mat-card:last-child {
+  flex-grow: 50;
+}
+.mat-card:last-child h2{
+  margin-bottom: 2rem;
 }
 .block-form {
   position: static;
@@ -22,4 +30,14 @@ form button {
 }
 .comments-textarea {
   width: 91% !important;
+}
+.payment-history__details {
+  display: flex;
+  /*justify-content: space-evenly;*/
+}
+.payment-history__details .payment-history__general {
+  font-size: 1rem;
+}
+.payment-history__details .payment-history__description {
+  font-size: .9rem;
 }

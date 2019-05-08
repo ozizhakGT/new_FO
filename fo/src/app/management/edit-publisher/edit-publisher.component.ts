@@ -19,7 +19,7 @@ export class EditPublisherComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.params
       .subscribe(
       (params: Params) => {
@@ -28,7 +28,7 @@ export class EditPublisherComponent implements OnInit {
           this.userState = this.onGetuserStateDetails(id);
           this.isValidPublisher = true;
         } else {
-          this.router.navigate(['../'], {relativeTo:this.route})
+          this.router.navigate(['../'], {relativeTo:this.route});
           this.isValidPublisher = false;
         }
       });

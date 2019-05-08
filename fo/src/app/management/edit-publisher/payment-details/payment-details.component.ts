@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ManagementService} from "../../management.service";
-import {paymentsMethodsStructure, paymentsPeriodStructure} from "../../enums/publisher-enums";
+import {paymentMethodArray, paymentsMethodsStructure, paymentsPeriodStructure} from "../../enums/publisher-enums";
 import {FormControl, FormGroup} from "@angular/forms";
 import {UtilsService} from "../../../core/serviecs/utils.service";
 
@@ -15,29 +15,29 @@ export class PaymentDetailsComponent implements OnInit {
   paymentmethodsForm: FormGroup;
 
   paymentsMethodOption = paymentsMethodsStructure;
+  paymentsMethodArray = paymentMethodArray;
   paymentPeriodOption = paymentsPeriodStructure;
 
-  genearalDetails: {user_id: number, payment_method_id: number};
-  displayedColumns = ['changed_date']
+
+  genearalDetails =  {user_id: null, payment_method_id: null};
   paymentsHistory: any[] = [];
 
   spinner: boolean = false;
   constructor(private manageService: ManagementService,
-              private utilsService: UtilsService) { }
+              private utilsService: UtilsService) { };
 
   ngOnInit() {
       this.userState.then(
         paymentMethods => {
-          this.paymentsHistory = paymentMethods.paymentsHistory;
-          console.log(this.paymentsHistory)
+          // console.log(this.paymentsHistory)
           this.genearalDetails = {
             user_id: paymentMethods.paymentsMethods.user_id,
             payment_method_id: paymentMethods.paymentsMethods.id
           };
-          this.paymentMethodsOnInitForm(paymentMethods.paymentsMethods)
-        }
-      )
-  }
+          this.paymentMethodsOnInitForm(paymentMethods.paymentsMethods);
+          this.paymentsHistory = paymentMethods.paymentsHistory;
+        });
+  };
 
   paymentMethodsOnInitForm(form) {
     this.paymentmethodsForm = new FormGroup({
@@ -52,9 +52,8 @@ export class PaymentDetailsComponent implements OnInit {
       'account_number': new FormControl(form.account_number),
       'payment_period': new FormControl(form.payment_period),
       'comment': new FormControl(form.comment),
-    })
-    console.log(this.paymentmethodsForm)
-  }
+    });
+  };
 
   onUpdatePaymentMethod(form) {
     this.spinner = true;

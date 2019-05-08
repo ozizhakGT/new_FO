@@ -1,7 +1,8 @@
+<!--98819 id for checking errors! -->
 <div class="general-wrapper" *ngIf="userState | async">
   <mat-card class="form-wrapper" [ngClass]="{'blur': spinner}">
     <h2>Payments Methods</h2>
-    <form [formGroup]="paymentmethodsForm" (ngSubmit)="onUpdatePaymentMethod(paymentmethodsForm)">
+    <form *ngIf="paymentmethodsForm" [formGroup]="paymentmethodsForm" (ngSubmit)="onUpdatePaymentMethod(paymentmethodsForm)">
       <div>
         <mat-form-field>
           <mat-label>Payment Options</mat-label>
@@ -71,14 +72,36 @@
   </mat-card>
   <mat-card>
     <h2>Payments History</h2>
-    <table mat-table [dataSource]="paymentsHistory" class="mat-elevation-z8">
-
-      <ng-container matColumnDef='0'>
-        <th mat-header-cell *matHeaderCellDef> Date Changed </th>
-        <td mat-cell *matCellDef="let element"> {{element.changed_date}} </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let payment of paymentsHistory; i as index">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{payment.changed_date | date:"MM/dd/yyyy"}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{paymentsMethodArray[payment.payment_method] || 'No Method Chosen!'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="payment-history__details">
+          <div class="payment-history__general">
+            <p><strong>Changed in: </strong>{{payment.changed_date | date: "h:mma"}}</p>
+            <p><strong>Payment Period:</strong> {{payment.payment_period}}</p>
+          </div>
+          <div class="mat-expansion-panel-header payment-history__description">
+            <ul *ngIf="payment.payment_method === 2; else showOnlyEmail">
+              <h3>Details</h3>
+              <li><strong>Beneficiary Name:</strong> {{payment.beneficiary_name}}</li>
+              <li><strong>Beneficiary Address:</strong> {{payment.beneficiary_address}}</li>
+              <li><strong>Swift Code:</strong> {{payment.swift_code}}</li>
+              <li><strong>IBAN Number:</strong> {{payment.iban_number}}</li>
+              <li><strong>Account Number:</strong> {{payment.account_number}}</li>
+            </ul>
+            <ng-template #showOnlyEmail>
+              <div><strong>Email: </strong> {{payment.payment_email}}</div>
+            </ng-template>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-card>
 </div>
