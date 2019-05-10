@@ -9,11 +9,13 @@ import { DesignModule } from '../shared/design/design.module';
 // Components and Directives
 import { HeaderComponent } from './header/header.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { SortByPipe } from './pipes/sort-by.pipe';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    SortByPipe
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
   ],
   exports: [
     HeaderComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    SortByPipe
   ]
 })
 export class CoreModule { }

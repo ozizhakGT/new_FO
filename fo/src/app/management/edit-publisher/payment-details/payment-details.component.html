@@ -72,9 +72,9 @@
   </mat-card>
   <mat-card>
     <h2>Payments History</h2>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let payment of paymentsHistory | paginate: { itemsPerPage: 10, currentPage: p }">
+      <mat-expansion-panel *ngFor="let payment of (paymentsHistory | sortBy :'changed_date') | paginate: { itemsPerPage: 10, currentPage: page }">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{payment.changed_date | date:"MM/dd/yyyy"}}
