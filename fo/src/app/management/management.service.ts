@@ -25,7 +25,7 @@ export class ManagementService {
   }
 
   getPaymentHistory(userId) {
-    return this.publisherService.getPaymentHistory(userId).toPromise()
+    return this.publisherService.getPaymentHistory(userId).toPromise();
   }
 
   // CRUD REQUESTS
@@ -34,7 +34,7 @@ export class ManagementService {
   }
 
   async updatePaymentMethod(userId, paymentMethodId, data) {
-    return await this.publisherService.paymentMethods('put', userId, paymentMethodId, data).toPromise()
+    return await this.publisherService.paymentMethods('put', userId, paymentMethodId, data).toPromise();
   }
 
   async postReportColumn(id, monitizationId, data) {

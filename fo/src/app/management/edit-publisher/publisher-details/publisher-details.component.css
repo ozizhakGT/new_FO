@@ -56,4 +56,15 @@
 .reports-form__input {
   animation: fadeIn .6s;
 }
-
+.actions-btn {
+  float: right;
+}
+.actions {
+  font-size: 1.25rem;
+}
+.fa-users {
+  color: dodgerblue;
+}
+.fa-user-times {
+  color: red;
+}

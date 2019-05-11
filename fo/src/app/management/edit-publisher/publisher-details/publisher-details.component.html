@@ -89,7 +89,11 @@
             </div>
             <br>
             <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Update User</button>
-            <button style="float: right" mat-raised-button color="warn" type="button" (click)="deleteUser()">Delete User</button>
+            <button class="actions-btn" type="button" mat-raised-button color="accent" [matMenuTriggerFor]="actions">ACTIONS</button>
+            <mat-menu class="actions" #actions="matMenu">
+              <button mat-menu-item><i class="fa fa-users actions"></i> Take Ownership</button>
+              <button mat-menu-item (click)="deleteUser()"><i class="fa fa-user-times actions"></i> Delete User</button>
+            </mat-menu>
           </form>
         </div>
       </mat-card-content>
@@ -108,7 +112,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <form class="reports-form" [formGroup]="reportColumnsForm" *ngIf="columnsReportObs | async" (ngSubmit)="saveReportColumn(reportColumnsForm)">
+          <form class="reports-form" [formGroup]="reportColumnsForm" *ngIf="reportColumnsForm && (columnsReportObs | async)" (ngSubmit)="saveReportColumn(reportColumnsForm)">
             <div>
               <mat-slide-toggle
                 #cpm

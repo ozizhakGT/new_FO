@@ -86,12 +86,10 @@ export class PublisherDetailsComponent implements OnInit {
         'impressions': new FormControl(impressions, Validators.required),
         'country_code': new FormControl(country_code, Validators.required)
       }),
-      'user_id': new FormControl(report.user_id),
-      'monetization_id': new FormControl(report.monetization_id),
+      'user_id': new FormControl(parseInt(report.user_id)),
+      'monetization_id': new FormControl(parseInt(report.monetization_id)),
       'show_100_percent_revenue': new FormControl(report.show_100_percent_revenue),
       'impressions_shaving_percent': new FormControl(report.impressions_shaving_percent, [Validators.required, Validators.min(0), Validators.max(100)])
-
-
     });
   }
 
@@ -126,6 +124,28 @@ export class PublisherDetailsComponent implements OnInit {
         return 'red';
       case 3:
         return 'grey';
+    }
+  }
+
+  deleteUser() {
+    this.spinner = true;
+    if(confirm(`Are you sure you want Deleting ${this.generalDetails.username} ?`)) {
+      this.manageService.deleteUser(this.generalDetails.id)
+        .then(
+          response => {
+            if (response['type'] === 'deleted') {
+              this.utilsService.messageNotification('User Deleted', null, 'success');
+              this.utilsService.onSessionStorageRemove('publisherId');
+              this.router.navigate(['../'], {relativeTo: this.route});
+            }
+          })
+        .catch(err => {
+          this.utilsService.messageNotification('Failed Deleting User!', null, 'failed');
+        })
+        .finally(() => this.spinner = false)
+    }
+    else {
+      this.spinner = false;
     }
   }
 
@@ -173,25 +193,4 @@ export class PublisherDetailsComponent implements OnInit {
         .finally(() => this.spinner = false);
   }
 
-  deleteUser() {
-    this.spinner = true;
-    if(confirm(`Are you sure you want Deleting ${this.generalDetails.username} ?`)) {
-      this.manageService.deleteUser(this.generalDetails.id)
-        .then(
-          response => {
-            if (response['type'] === 'deleted') {
-              this.utilsService.messageNotification('User Deleted', null, 'success');
-              this.utilsService.onSessionStorageRemove('publisherId');
-              this.router.navigate(['../'], {relativeTo: this.route});
-            }
-          })
-        .catch(err => {
-          this.utilsService.messageNotification('Failed Deleting User!', null, 'failed');
-        })
-        .finally(() => this.spinner = false)
-    }
-    else {
-      this.spinner = false;
-    }
-  }
 }
