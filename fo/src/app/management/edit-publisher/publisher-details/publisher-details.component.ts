@@ -127,6 +127,19 @@ export class PublisherDetailsComponent implements OnInit {
     }
   }
 
+  onGetReportColumns(monetizationId) {
+    if (monetizationId) {
+      this.columnsReportObs = this.manageService.getReportColumns(this.generalDetails.id, monetizationId);
+      this.columnsReportObs.subscribe(
+        report => {
+          this.reportColumnsFormInit(report['message'].results[0]);
+        });
+    } else {
+      this.reportColumnsForm.reset();
+      this.columnsReportObs = '';
+    }
+  }
+
   deleteUser() {
     this.spinner = true;
     if(confirm(`Are you sure you want Deleting ${this.generalDetails.username} ?`)) {
@@ -146,19 +159,6 @@ export class PublisherDetailsComponent implements OnInit {
     }
     else {
       this.spinner = false;
-    }
-  }
-
-  onGetReportColumns(monetizationId) {
-    if (monetizationId) {
-      this.columnsReportObs = this.manageService.getReportColumns(this.generalDetails.id, monetizationId);
-      this.columnsReportObs.subscribe(
-        report => {
-          this.reportColumnsFormInit(report['message'].results[0]);
-        });
-    } else {
-      this.reportColumnsForm.reset();
-      this.columnsReportObs = '';
     }
   }
 
@@ -193,4 +193,17 @@ export class PublisherDetailsComponent implements OnInit {
         .finally(() => this.spinner = false);
   }
 
+  takeOwner(publisherId, username) {
+    this.spinner = true;
+    if (publisherId) {
+      this.manageService.postTakeOwner(publisherId)
+        .then(response => {
+          if (response['type'] === 'created') {
+            this.utilsService.messageNotification(`You take ${username} Ownership`, null, 'success');
+          }
+        })
+        .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
+        .finally(() => this.spinner = false);
+    }
+  }
 }

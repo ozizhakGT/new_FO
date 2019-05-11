@@ -41,6 +41,10 @@ export class ManagementService {
     return await this.publisherService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
   }
 
+  async postTakeOwner(publisherId) {
+    return await this.publisherService.TakeOwnership(publisherId).toPromise();
+  }
+
 //  DELETE REQUEST
   async deleteUser(id) {
     return await this.publisherService.UserDetailRequests('delete', id).toPromise();
