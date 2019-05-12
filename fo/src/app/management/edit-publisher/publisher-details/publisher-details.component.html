@@ -91,7 +91,7 @@
             <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Update User</button>
             <button class="actions-btn" type="button" mat-raised-button color="accent" [matMenuTriggerFor]="actions">ACTIONS</button>
             <mat-menu class="actions" #actions="matMenu">
-              <button mat-menu-item (click)="takeOwner()"><i class="fa fa-users actions"></i> Take Ownership</button>
+              <button mat-menu-item (click)="takeOwner(generalDetails.id, generalDetails.username)"><i class="fa fa-users actions"></i> Take Ownership</button>
               <button mat-menu-item (click)="deleteUser()"><i class="fa fa-user-times actions"></i> Delete User</button>
             </mat-menu>
           </form>

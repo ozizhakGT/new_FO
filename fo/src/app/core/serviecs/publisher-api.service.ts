@@ -64,6 +64,7 @@ export class PublisherApiService {
   }
  // http://api.adserver.web-pick.com/api/publisher_account_manager_association?publisher_id=123421&authenticationToken=d69b4ea1-8925-48cd-94ec-5f7b960e27d9
   TakeOwnership(publusherId) {
+    // @ts-ignore
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publusherId}&${this.token}`);
   }
 }

@@ -194,16 +194,20 @@ export class PublisherDetailsComponent implements OnInit {
   }
 
   takeOwner(publisherId, username) {
-    this.spinner = true;
     if (publisherId) {
-      this.manageService.postTakeOwner(publisherId)
-        .then(response => {
-          if (response['type'] === 'created') {
-            this.utilsService.messageNotification(`You take ${username} Ownership`, null, 'success');
-          }
-        })
-        .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
-        .finally(() => this.spinner = false);
+      this.spinner = true;
+      if (confirm(`are you sure you want taking ownership on ${username}`)) {
+        this.manageService.postTakeOwner(publisherId)
+          .then(response => {
+            if (response['type'] === 'created') {
+              this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
+            }
+          })
+          .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
+          .finally(() => this.spinner = false);
+      } else {
+        this.spinner = false;
+      }
     }
   }
 }
