@@ -8,33 +8,37 @@ export class ManagementService {
   constructor(private publisherService: PublisherApiService) {}
 
   //GET REQUESTS
-  getUser(id): any {
-    return this.publisherService.UserDetailRequests('get', id).toPromise();
+  getUser(publisherId): any {
+    return this.publisherService.UserDetailRequests('get', publisherId).toPromise();
   }
 
   getLastLogin(username) {
     return this.publisherService.getPublisherLastLogin(username).toPromise();
   }
 
-  getReportColumns(userId, monetizationId) {
-    return this.publisherService.ReportColumnsRequests('get', userId, monetizationId)
+  getReportColumns(publisherId, monetizationId) {
+    return this.publisherService.ReportColumnsRequests('get', publisherId, monetizationId)
   }
 
-  getPaymentMethod(userId) {
-    return this.publisherService.paymentMethods('get', userId).toPromise()
+  getPaymentMethod(publisherId) {
+    return this.publisherService.paymentMethods('get', publisherId).toPromise()
   }
 
-  getPaymentHistory(userId) {
-    return this.publisherService.getPaymentHistory(userId).toPromise();
+  getPaymentHistory(publisherId) {
+    return this.publisherService.getPaymentHistory(publisherId).toPromise();
+  }
+
+  getOwnershipHistory(publisherId) {
+    return this.publisherService.getOwnershipHistory(publisherId).toPromise();
   }
 
   // CRUD REQUESTS
-  async updateUserDetails(userId, data) {
-    return await this.publisherService.UserDetailRequests('put', userId, data).toPromise();
+  async updateUserDetails(publisherId, data) {
+    return await this.publisherService.UserDetailRequests('put', publisherId, data).toPromise();
   }
 
-  async updatePaymentMethod(userId, paymentMethodId, data) {
-    return await this.publisherService.paymentMethods('put', userId, paymentMethodId, data).toPromise();
+  async updatePaymentMethod(publisherId, paymentMethodId, data) {
+    return await this.publisherService.paymentMethods('put', publisherId, paymentMethodId, data).toPromise();
   }
 
   async postReportColumn(id, monitizationId, data) {
@@ -46,8 +50,8 @@ export class ManagementService {
   }
 
 //  DELETE REQUEST
-  async deleteUser(id) {
-    return await this.publisherService.UserDetailRequests('delete', id).toPromise();
+  async deleteUser(publisherId) {
+    return await this.publisherService.UserDetailRequests('delete', publisherId).toPromise();
   }
 
 

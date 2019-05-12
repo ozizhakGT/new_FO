@@ -17,7 +17,8 @@ import {
   MatToolbarModule,
   MatSnackBarModule,
   MatTableModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatPaginatorModule
 } from '@angular/material';
 import {NgxPaginationModule} from "ngx-pagination";
 
@@ -41,6 +42,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     MatToolbarModule,
     MatSnackBarModule,
     MatTableModule,
+    MatPaginatorModule,
     MatExpansionModule,
     NgxPaginationModule
   ],
@@ -63,6 +65,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     MatToolbarModule,
     MatSnackBarModule,
     MatTableModule,
+    MatPaginatorModule,
     MatExpansionModule,
     NgxPaginationModule
   ]

@@ -10,6 +10,7 @@ import {CoreModule} from '../core/core.module';
 import { PublisherDetailsComponent } from './edit-publisher/publisher-details/publisher-details.component';
 import { PaymentDetailsComponent } from './edit-publisher/payment-details/payment-details.component';
 import { DialogChangePasswordComponent } from './edit-publisher/publisher-details/dialog-change-password/dialog-change-password.component';
+import { PublisherOwnershipHistoryComponent } from './edit-publisher/publisher-ownership-history/publisher-ownership-history.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DialogChangePasswordComponent } from './edit-publisher/publisher-detail
     AccountManagerAreaComponent,
     PublisherDetailsComponent,
     PaymentDetailsComponent,
-    DialogChangePasswordComponent
+    DialogChangePasswordComponent,
+    PublisherOwnershipHistoryComponent
   ],
   imports: [
     CommonModule,

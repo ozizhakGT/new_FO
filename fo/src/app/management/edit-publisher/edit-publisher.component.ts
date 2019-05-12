@@ -44,7 +44,8 @@ export class EditPublisherComponent implements OnInit {
         owner: null
       },
       paymentsMethods: null,
-      paymentsHistory: null
+      paymentsHistory: null,
+      ownershipHistory: null
     };
     // get user request
     userState.details.publisher = await this.manageService.getUser(id);
@@ -67,13 +68,14 @@ export class EditPublisherComponent implements OnInit {
       userState.paymentsHistory = await this.manageService.getPaymentHistory(userState.details.publisher.id);
       userState.paymentsHistory = userState.paymentsHistory['message'].results;
 
+      userState.ownershipHistory = await this.manageService.getOwnershipHistory(userState.details.publisher.id);
+      userState.ownershipHistory = userState.ownershipHistory['message'].results;
+
       this.isValidPublisher = true;
     }
     else {
       this.isValidPublisher = false;
     }
-
-
     this.utilsService.loader.next(false);
     return userState;
   }

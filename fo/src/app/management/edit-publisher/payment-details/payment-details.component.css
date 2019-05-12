@@ -6,12 +6,6 @@
   height: fit-content;
   width: -webkit-fill-available;
 }
-/*.mat-card:last-child {*/
-  /*flex-grow: 50;*/
-/*}*/
-/*.no-history {*/
-  /*flex-grow: 0;*/
-/*}*/
 .mat-card h2{
   margin-bottom: 2rem;
 }
