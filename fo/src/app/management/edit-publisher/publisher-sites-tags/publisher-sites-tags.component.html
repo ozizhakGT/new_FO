@@ -1,0 +1,31 @@
+<mat-card>
+  <h2>Sites and Tags List</h2>
+  <mat-accordion *ngIf="sites.length > 0">
+    <mat-expansion-panel *ngFor="let site of sites">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{site.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <div>{{site.url}}</div>
+          <div *ngIf="site.enable; else disable" style="color: green">ON <i class="fa fa-thumbs-up"></i></div>
+          <ng-template #disable><div style="color: red">OFF <i class="fa fa-thumbs-down"></i></div></ng-template>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table>
+        <thead>
+        <th>Tag Name</th>
+        <th>Tag ID</th>
+        <th>BI LIVE</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let tag of site.tags">
+          <td>{{tag.tag_name}}</td>
+          <td>{{tag.tag_id}}</td>
+          <td>{{tag.live}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>

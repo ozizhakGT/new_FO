@@ -11,6 +11,7 @@ import { PublisherDetailsComponent } from './edit-publisher/publisher-details/pu
 import { PaymentDetailsComponent } from './edit-publisher/payment-details/payment-details.component';
 import { DialogChangePasswordComponent } from './edit-publisher/publisher-details/dialog-change-password/dialog-change-password.component';
 import { PublisherOwnershipHistoryComponent } from './edit-publisher/publisher-ownership-history/publisher-ownership-history.component';
+import { PublisherSitesTagsComponent } from './edit-publisher/publisher-sites-tags/publisher-sites-tags.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PublisherOwnershipHistoryComponent } from './edit-publisher/publisher-o
     PublisherDetailsComponent,
     PaymentDetailsComponent,
     DialogChangePasswordComponent,
-    PublisherOwnershipHistoryComponent
+    PublisherOwnershipHistoryComponent,
+    PublisherSitesTagsComponent
   ],
   imports: [
     CommonModule,

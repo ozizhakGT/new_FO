@@ -81,8 +81,10 @@ export class HeaderComponent implements OnInit {
 
   //  Select Publisher from the search list and clear list and last search
   onPublisherSelect(publisher) {
+
     this.publisherId = publisher._id.toString();
     this.utilsService.onSessionStorageSave('publisherId', this.publisherId);
+    this.utilsService.onSessionStorageSave('publisherSites', JSON.stringify(publisher['sites']));
     this.router.navigate(['manage/edit', this.publisherId]);
     this.onResetSearch(true);
   }

@@ -3,4 +3,5 @@ export interface Site {
   name: string,
   url: string,
   enable: boolean
+  tags?: []
 }

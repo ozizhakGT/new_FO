@@ -32,6 +32,10 @@ export class ManagementService {
     return this.publisherService.getOwnershipHistory(publisherId).toPromise();
   }
 
+  getTagsbySiteId(siteId) {
+    return this.publisherService.getPublisherTagsBySiteId(siteId).toPromise();
+  }
+
   // CRUD REQUESTS
   async updateUserDetails(publisherId, data) {
     return await this.publisherService.UserDetailRequests('put', publisherId, data).toPromise();
@@ -67,5 +71,18 @@ export class ManagementService {
     }
     report.columns = reportArray.join(';');
     return report;
+  }
+
+  removeDupicatesHistoryOwner(ownershipHistory) {
+    let holder = {};
+    let history = [];
+    ownershipHistory.forEach(
+      log => {
+        if (log['username'] !== holder['username'] && log['timestamp'] !== holder['timestamp']) {
+          history.push(log)
+        }
+        holder = log;
+      });
+    return history
   }
 }

@@ -18,12 +18,8 @@ interface ownershipHistory {
 })
 export class PublisherOwnershipHistoryComponent implements OnInit {
   @Input() userState: Promise<any>;
-  // ownerHistory: ownershipHistory[] = [];
-  // shortOwnerHistory: ownershipHistory[] = [];
-  noResluts: boolean = false;
+  ownerHistory: ownershipHistory[] = [];
   displayedColumns: string[] = ['timestamp', 'hour', 'owner'];
-  ELEMENT_DATA: ownershipHistory[] = [];
-  ownerHistory = new MatTableDataSource<ownershipHistory>(this.ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private manageService: ManagementService) { }
 
@@ -31,22 +27,8 @@ export class PublisherOwnershipHistoryComponent implements OnInit {
     this.userState
       .then(
         userState => {
-          this.ELEMENT_DATA = this.removeDupicates(userState.ownershipHistory);
+          console.log(userState);
+          this.ownerHistory = userState.ownershipHistory;
         })
-    // console.log(this.shortOwnerHistory)
-  }
-
-  removeDupicates(ownershipHistory) {
-    let holder = {};
-    let history = [];
-    ownershipHistory.forEach(
-      log => {
-        if (log['user_id'] !== holder['user_id'] && log['timestamp'] !== holder['timestamp']) {
-          this.manageService.getUser(log['user_id']).then(owner => log['owner_name'] = owner['message'].results[0].username);
-          history.push(log)
-        }
-        holder = log;
-      });
-    return history
   }
 }

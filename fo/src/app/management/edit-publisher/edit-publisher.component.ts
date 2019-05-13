@@ -69,7 +69,7 @@ export class EditPublisherComponent implements OnInit {
       userState.paymentsHistory = userState.paymentsHistory['message'].results;
 
       userState.ownershipHistory = await this.manageService.getOwnershipHistory(userState.details.publisher.id);
-      userState.ownershipHistory = userState.ownershipHistory['message'].results;
+      userState.ownershipHistory = this.manageService.removeDupicatesHistoryOwner(userState.ownershipHistory['message'].results);
 
       this.isValidPublisher = true;
     }

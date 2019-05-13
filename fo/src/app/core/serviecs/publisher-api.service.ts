@@ -38,6 +38,10 @@ export class PublisherApiService {
     return this.http.get( `${this.baseUrl}query/user_last_login?username=${username}`);
   }
 
+  getPublisherTagsBySiteId(siteId) {
+    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`)
+  }
+
   getPaymentHistory(userId) {
     return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
   }
@@ -67,8 +71,8 @@ export class PublisherApiService {
     // @ts-ignore
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publusherId}&${this.token}`);
   }
-  //placement_account_manager_association_log?publisher_id=71231&authenticationToken=edd5eabf-73c8-4dda-b279-91563cc846a2
   getOwnershipHistory(publisherId) {
-    return this.http.get(`${this.baseUrl}placement_account_manager_association_log?publisher_id=${publisherId}&${this.token}`);
+    // return this.http.get(`${this.baseUrl}placement_account_manager_association_log?publisher_id=${publisherId}&${this.token}`);
+    return this.http.get(`${this.baseUrl}query/ownership_history?publisher_id=${publisherId}&${this.token}`);
   }
 }
