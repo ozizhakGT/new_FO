@@ -69,7 +69,7 @@ export class PublisherApiService {
 
   TakeOwnership(publusherId) {
     // @ts-ignore
-    return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publusherId}&${this.token}`);
+    return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publusherId}&${this.token}`, null  );
   }
   getOwnershipHistory(publisherId) {
     // return this.http.get(`${this.baseUrl}placement_account_manager_association_log?publisher_id=${publisherId}&${this.token}`);

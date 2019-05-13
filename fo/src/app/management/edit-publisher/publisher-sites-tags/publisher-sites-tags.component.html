@@ -15,13 +15,11 @@
       <table>
         <thead>
         <th>Tag Name</th>
-        <th>Tag ID</th>
         <th>BI LIVE</th>
         </thead>
         <tbody>
         <tr *ngFor="let tag of site.tags">
           <td>{{tag.tag_name}}</td>
-          <td>{{tag.tag_id}}</td>
           <td>{{tag.live}}</td>
         </tr>
         </tbody>

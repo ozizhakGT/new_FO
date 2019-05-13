@@ -1,5 +1,5 @@
 <div class="mat-elevation-z8">
-  <table mat-table *ngIf="(userState | async) && !spinner" [dataSource]="ownerHistory">
+  <table mat-table *ngIf="(userState | async)" [dataSource]="ownerHistory">
     <ng-container matColumnDef="timestamp">
       <th mat-header-cell *matHeaderCellDef> Changed Date </th>
       <td mat-cell *matCellDef="let element"> {{element.timestamp | date:"MM/dd/yyyy"}} </td>

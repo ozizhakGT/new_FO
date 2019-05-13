@@ -35,6 +35,7 @@ export class EditPublisherComponent implements OnInit {
   }
 
   async onGetuserStateDetails(id) {
+    let fetchPromiseArr: Promise<any>[] = []
     this.utilsService.loader.next(true);
     // userState state Data structre
     let userState = {
@@ -45,31 +46,52 @@ export class EditPublisherComponent implements OnInit {
       },
       paymentsMethods: null,
       paymentsHistory: null,
-      ownershipHistory: null
+      ownershipHistory: null,
+      sites: JSON.parse(this.utilsService.onSessionStorageLoad('publisherSites'))
     };
     // get user request
     userState.details.publisher = await this.manageService.getUser(id);
     userState.details.publisher = userState.details.publisher['message'].results[0];
 
     if (userState.details.publisher) {
-      userState.details.lastLogin = await this.manageService.getLastLogin(userState.details.publisher.username);
-      userState.details.lastLogin = userState.details.lastLogin['message'].results[0];
+      userState.details.lastLogin = this.manageService.getLastLogin(userState.details.publisher.username)
+        .then(response => {
+          userState.details.lastLogin = response['message'].results[0];
+        });
+      fetchPromiseArr.push(userState.details.lastLogin)
 
       if (userState.details.publisher.account_manager_id) {
-        userState.details.owner = await this.manageService.getUser(userState.details.publisher.account_manager_id);
-        userState.details.owner = userState.details.owner['message'].results[0].username
+        userState.details.owner = this.manageService.getUser(userState.details.publisher.account_manager_id)
+          .then(response => {
+            userState.details.owner = response['message'].results[0].username
+          });
+        fetchPromiseArr.push(userState.details.owner)
       } else {
         userState.details.owner = 'No Owner'
       }
 
-      userState.paymentsMethods = await this.manageService.getPaymentMethod(userState.details.publisher.id);
-      userState.paymentsMethods = userState.paymentsMethods['message'].results[0].payment_methods.results[0];
+      userState.paymentsMethods = this.manageService.getPaymentMethod(userState.details.publisher.id)
+        .then(
+          response => {
+            userState.paymentsMethods = response['message'].results[0].payment_methods.results[0];
+          });
+      fetchPromiseArr.push(userState.paymentsMethods)
+      userState.paymentsHistory = this.manageService.getPaymentHistory(userState.details.publisher.id)
+        .then(
+          response => {
+            userState.paymentsHistory = response['message'].results;
+          });
+      fetchPromiseArr.push(userState.paymentsHistory)
+      userState.ownershipHistory = this.manageService.getOwnershipHistory(userState.details.publisher.id)
+        .then(
+          response => {
+            userState.ownershipHistory = this.manageService.removeDupicatesHistoryOwner(response['message'].results);
+          });
+      fetchPromiseArr.push(userState.ownershipHistory);
 
-      userState.paymentsHistory = await this.manageService.getPaymentHistory(userState.details.publisher.id);
-      userState.paymentsHistory = userState.paymentsHistory['message'].results;
-
-      userState.ownershipHistory = await this.manageService.getOwnershipHistory(userState.details.publisher.id);
-      userState.ownershipHistory = this.manageService.removeDupicatesHistoryOwner(userState.ownershipHistory['message'].results);
+      this.getSiteTags(userState.sites);
+      fetchPromiseArr.push(userState.sites);
+      await Promise.all(fetchPromiseArr);
 
       this.isValidPublisher = true;
     }
@@ -78,6 +100,15 @@ export class EditPublisherComponent implements OnInit {
     }
     this.utilsService.loader.next(false);
     return userState;
+  }
+
+  getSiteTags(sites) {
+    sites.forEach(site => {
+      this.manageService.getTagsbySiteId(site._id)
+        .then(response => {
+          site['tags'] = response['message'].results;
+        });
+    });
   }
 
 }

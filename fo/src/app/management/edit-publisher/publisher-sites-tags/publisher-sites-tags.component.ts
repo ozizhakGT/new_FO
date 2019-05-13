@@ -9,18 +9,15 @@ import {ManagementService} from "../../management.service";
   styleUrls: ['./publisher-sites-tags.component.css']
 })
 export class PublisherSitesTagsComponent implements OnInit {
-  sites: Site[] = JSON.parse(this.utilsService.onSessionStorageLoad('publisherSites'));
+  @Input() userState: Promise<any>;
+  sites: Site[] = [];
   constructor(private utilsService: UtilsService, private manageService: ManagementService) { }
 
   ngOnInit() {
-    this.getSiteTags()
-  }
-
-  getSiteTags() {
-    this.sites.forEach(site => {
-      this.manageService.getTagsbySiteId(site._id)
-        .then(response => site['tags'] = response['message'].results)
-    });
-    console.log(this.sites)
+    this.userState
+      .then(
+        userState => {
+          this.sites = userState.sites;
+        });
   }
 }

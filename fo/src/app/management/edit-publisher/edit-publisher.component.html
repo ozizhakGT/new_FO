@@ -13,7 +13,7 @@
       <app-publisher-ownership-history *ngIf="userState | async" [userState]="userState"></app-publisher-ownership-history>
     </mat-tab>
     <mat-tab label="Sites & Tags">
-      <app-publisher-sites-tags *ngIf="userState | async" ></app-publisher-sites-tags>
+      <app-publisher-sites-tags *ngIf="userState | async" [userState]="userState"></app-publisher-sites-tags>
     </mat-tab>
   </mat-tab-group>
 </div>
