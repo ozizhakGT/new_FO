@@ -23,6 +23,7 @@ export class EditPublisherComponent implements OnInit {
     this.route.params
       .subscribe(
       (params: Params) => {
+        console.log(params['publisherId'])
         const id = params['publisherId'];
         if (id && id !== 'undefined') {
           this.userState = this.onGetuserStateDetails(id);
@@ -58,7 +59,7 @@ export class EditPublisherComponent implements OnInit {
         .then(response => {
           userState.details.lastLogin = response['message'].results[0];
         });
-      fetchPromiseArr.push(userState.details.lastLogin)
+      fetchPromiseArr.push(userState.details.lastLogin);
 
       if (userState.details.publisher.account_manager_id) {
         userState.details.owner = this.manageService.getUser(userState.details.publisher.account_manager_id)
@@ -89,9 +90,15 @@ export class EditPublisherComponent implements OnInit {
           });
       fetchPromiseArr.push(userState.ownershipHistory);
 
-      if (userState.sites.length > 0){
+      if (this.utilsService.onSessionStorageLoad('publisherSites') === undefined) {
+
+      }
+
+      if (userState.sites.length > 0) {
         this.manageService.getSiteTags(userState.sites);
         fetchPromiseArr.push(userState.sites);
+      } else {
+        userState.sites = []
       }
       await Promise.all(fetchPromiseArr);
       this.isValidPublisher = true;

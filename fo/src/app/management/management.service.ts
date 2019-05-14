@@ -44,13 +44,16 @@ export class ManagementService {
   async updatePaymentMethod(publisherId, paymentMethodId, data) {
     return await this.apiService.paymentMethods('put', publisherId, paymentMethodId, data).toPromise();
   }
+  updateBILive(tagId, live) {
+    return this.apiService.updateBILive(tagId,live);
+  }
 
   async postReportColumn(id, monitizationId, data) {
     return await this.apiService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
   }
 
   async postTakeOwner(publisherId) {
-    return await this.apiService.TakeOwnership(publisherId).toPromise();
+    return await this.apiService.updateOwnership(publisherId).toPromise();
   }
 
 //  DELETE REQUEST

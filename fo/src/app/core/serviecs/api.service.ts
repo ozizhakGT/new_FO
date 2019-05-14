@@ -17,11 +17,7 @@ export class ApiService {
     }
   }
 
-
-  getPublishers(query) {
-    return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}&${this.token}`);
-  }
-
+  // COMBINED REQUESTS
   UserDetailRequests(request, publisherId, data?: {}) {
     const userDetailsUrl = `${this.baseUrl}user/${publisherId}?${this.token}`;
     switch (request) {
@@ -33,19 +29,6 @@ export class ApiService {
         return this.http.delete(userDetailsUrl);
     }
   }
-
-  getPublisherLastLogin(username) {
-    return this.http.get( `${this.baseUrl}query/user_last_login?username=${username}`);
-  }
-
-  getPublisherTagsBySiteId(siteId) {
-    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`)
-  }
-
-  getPaymentHistory(userId) {
-    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
-  }
-
   ReportColumnsRequests(request, userId, monetizationId , data?: {}) {
     const reportsUrl = `${this.baseUrl}publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`;
     switch (request) {
@@ -55,10 +38,8 @@ export class ApiService {
         return this.http.post(reportsUrl, data);
     }
   }
-
   paymentMethods(request, userId, paymentMethodId?, data?: {}) {
     const paymentMethodUrl = `${this.baseUrl}user/${userId}/payment_method`;
-
     switch (request) {
       case 'get':
         return this.http.get(`${paymentMethodUrl}?${this.token}`);
@@ -67,11 +48,28 @@ export class ApiService {
     }
   }
 
-  TakeOwnership(publusherId) {
-    // @ts-ignore
-    return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publusherId}&${this.token}`, null  );
+  // GET REQUEST
+  getPublishers(query) {
+    return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}&${this.token}`);
   }
   getOwnershipHistory(publisherId) {
     return this.http.get(`${this.baseUrl}query/ownership_history?publisher_id=${publisherId}&${this.token}`);
+  }
+  getPublisherLastLogin(username) {
+    return this.http.get( `${this.baseUrl}query/user_last_login?username=${username}`);
+  }
+  getPublisherTagsBySiteId(siteId) {
+    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`)
+  }
+  getPaymentHistory(userId) {
+    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
+  }
+
+  // CRUD REQUEST
+  updateOwnership(publisherId) {
+    return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}&${this.token}`, {}  );
+  }
+  updateBILive(tagId,live) {
+    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}&${this.token}`,{})
   }
 }
