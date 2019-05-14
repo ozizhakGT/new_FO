@@ -1,61 +1,61 @@
 import { Injectable } from '@angular/core';
-import {PublisherApiService} from '../core/serviecs/publisher-api.service';
+import {ApiService} from '../core/serviecs/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagementService {
-  constructor(private publisherService: PublisherApiService) {}
+  constructor(private apiService: ApiService) {}
 
   //GET REQUESTS
   getUser(publisherId): any {
-    return this.publisherService.UserDetailRequests('get', publisherId).toPromise();
+    return this.apiService.UserDetailRequests('get', publisherId).toPromise();
   }
 
   getLastLogin(username) {
-    return this.publisherService.getPublisherLastLogin(username).toPromise();
+    return this.apiService.getPublisherLastLogin(username).toPromise();
   }
 
   getReportColumns(publisherId, monetizationId) {
-    return this.publisherService.ReportColumnsRequests('get', publisherId, monetizationId)
+    return this.apiService.ReportColumnsRequests('get', publisherId, monetizationId)
   }
 
   getPaymentMethod(publisherId) {
-    return this.publisherService.paymentMethods('get', publisherId).toPromise()
+    return this.apiService.paymentMethods('get', publisherId).toPromise()
   }
 
   getPaymentHistory(publisherId) {
-    return this.publisherService.getPaymentHistory(publisherId).toPromise();
+    return this.apiService.getPaymentHistory(publisherId).toPromise();
   }
 
   getOwnershipHistory(publisherId) {
-    return this.publisherService.getOwnershipHistory(publisherId).toPromise();
+    return this.apiService.getOwnershipHistory(publisherId).toPromise();
   }
 
   getTagsbySiteId(siteId) {
-    return this.publisherService.getPublisherTagsBySiteId(siteId).toPromise();
+    return this.apiService.getPublisherTagsBySiteId(siteId).toPromise();
   }
 
   // CRUD REQUESTS
   async updateUserDetails(publisherId, data) {
-    return await this.publisherService.UserDetailRequests('put', publisherId, data).toPromise();
+    return await this.apiService.UserDetailRequests('put', publisherId, data).toPromise();
   }
 
   async updatePaymentMethod(publisherId, paymentMethodId, data) {
-    return await this.publisherService.paymentMethods('put', publisherId, paymentMethodId, data).toPromise();
+    return await this.apiService.paymentMethods('put', publisherId, paymentMethodId, data).toPromise();
   }
 
   async postReportColumn(id, monitizationId, data) {
-    return await this.publisherService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
+    return await this.apiService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
   }
 
   async postTakeOwner(publisherId) {
-    return await this.publisherService.TakeOwnership(publisherId).toPromise();
+    return await this.apiService.TakeOwnership(publisherId).toPromise();
   }
 
 //  DELETE REQUEST
   async deleteUser(publisherId) {
-    return await this.publisherService.UserDetailRequests('delete', publisherId).toPromise();
+    return await this.apiService.UserDetailRequests('delete', publisherId).toPromise();
   }
 
 

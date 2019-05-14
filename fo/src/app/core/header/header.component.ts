@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromEvent';
 
 // SERVICE
-import {PublisherApiService} from '../serviecs/publisher-api.service';
+import {ApiService} from '../serviecs/api.service';
 import {UtilsService} from '../serviecs/utils.service';
 
 // INTERFACES
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   publisherResult: Publisher[] = [];
 
 
-  constructor(private apiService: PublisherApiService,
+  constructor(private apiService: ApiService,
               private utilsService: UtilsService,
               private router: Router) { }
 

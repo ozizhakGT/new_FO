@@ -6,7 +6,7 @@ import {Publisher} from "../../shared/interfaces/publisher.interface";
 @Injectable({
   providedIn: 'root'
 })
-export class PublisherApiService {
+export class ApiService {
   token = 'authenticationToken=edd5eabf-73c8-4dda-b279-91563cc846a2';
   baseUrl = '';
 
@@ -72,7 +72,6 @@ export class PublisherApiService {
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publusherId}&${this.token}`, null  );
   }
   getOwnershipHistory(publisherId) {
-    // return this.http.get(`${this.baseUrl}placement_account_manager_association_log?publisher_id=${publisherId}&${this.token}`);
     return this.http.get(`${this.baseUrl}query/ownership_history?publisher_id=${publisherId}&${this.token}`);
   }
 }

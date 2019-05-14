@@ -70,4 +70,4 @@ import {NgxPaginationModule} from "ngx-pagination";
     NgxPaginationModule
   ]
 })
-export class DesignModule { }
+export class SharedModule { }
