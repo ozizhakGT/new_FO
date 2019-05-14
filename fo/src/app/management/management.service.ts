@@ -85,4 +85,15 @@ export class ManagementService {
       });
     return history
   }
+
+  getSiteTags(sites) {
+    sites.forEach(site => {
+      this.getTagsbySiteId(site._id)
+        .then(response => {
+          if (response['message'].results.length > 0) {
+            site['tags'] = response['message'].results;
+          }
+        });
+    });
+  };
 }

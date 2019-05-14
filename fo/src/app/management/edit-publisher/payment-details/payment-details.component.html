@@ -1,8 +1,8 @@
 <!--98819 id for checking errors! -->
 <div class="general-wrapper" *ngIf="userState | async">
-  <mat-card class="form-wrapper" [ngClass]="{'blur': spinner}">
+  <mat-card *ngIf="paymentmethodsForm; else noPaymentMethod" class="form-wrapper" [ngClass]="{'blur': spinner}">
     <h2>Payments Methods</h2>
-    <form *ngIf="paymentmethodsForm; else noPaymentMethod" [formGroup]="paymentmethodsForm" (ngSubmit)="onUpdatePaymentMethod(paymentmethodsForm)">
+    <form [formGroup]="paymentmethodsForm" (ngSubmit)="onUpdatePaymentMethod(paymentmethodsForm)">
       <div>
         <mat-form-field>
           <mat-label>Payment Options</mat-label>
@@ -66,15 +66,19 @@
       </div>
       <button mat-raised-button type="submit" color="primary">Update Payment Method</button>
     </form>
-    <ng-template #noPaymentMethod>No Payment Method Available</ng-template>
     <div *ngIf="spinner" class="block-form">
       <mat-spinner [diameter]="30" class="form-spinner"></mat-spinner>
     </div>
   </mat-card>
-  <mat-card [ngClass]="{'no-history': paymentsHistory.length === 0}">
+  <ng-template #noPaymentMethod>
+    <mat-card class="no-content fix-no-content">
+      <h2>No Payment Method Available</h2> <i class="fa fa-money"></i>
+    </mat-card>
+  </ng-template>
+  <mat-card *ngIf="paymentsHistory.length > 0; else noHistory">
     <h2>Payments History</h2>
     <pagination-controls *ngIf="paymentsHistory.length > 10" (pageChange)="page = $event"></pagination-controls>
-    <mat-accordion *ngIf="paymentsHistory.length > 0; else noHistoty">
+    <mat-accordion>
       <mat-expansion-panel *ngFor="let payment of (paymentsHistory | sortBy :'changed_date') | paginate: { itemsPerPage: 10, currentPage: page }">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -105,6 +109,10 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-    <ng-template #noHistoty>No History Available</ng-template>
   </mat-card>
+  <ng-template #noHistory>
+    <mat-card class="no-content fix-no-content">
+      <h2>No History Available</h2> <i class="fa fa-history"></i>
+    </mat-card>
+  </ng-template>
 </div>

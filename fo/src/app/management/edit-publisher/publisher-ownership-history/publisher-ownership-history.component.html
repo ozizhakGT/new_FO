@@ -1,18 +1,25 @@
-<div class="mat-elevation-z8">
-  <table mat-table *ngIf="(userState | async)" [dataSource]="ownerHistory">
-    <ng-container matColumnDef="timestamp">
-      <th mat-header-cell *matHeaderCellDef> Changed Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.timestamp | date:"MM/dd/yyyy"}} </td>
-    </ng-container>
-    <ng-container matColumnDef="hour">
-      <th mat-header-cell *matHeaderCellDef> Changed Hour </th>
-      <td mat-cell *matCellDef="let element"> {{element.timestamp | date: "h:mma"}} </td>
-    </ng-container>
-    <ng-container stickyEnd="true" matColumnDef="owner">
-      <th mat-header-cell *matHeaderCellDef> Owner Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+<div class="general-wrapper">
+  <div *ngIf="(userState | async) && ownerHistory.length > 0; else noHistory" class="mat-elevation-z8">
+    <table mat-table [dataSource]="ownerHistory">
+      <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef> Changed Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.timestamp | date:"MM/dd/yyyy"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="hour">
+        <th mat-header-cell *matHeaderCellDef> Changed Hour </th>
+        <td mat-cell *matCellDef="let element"> {{element.timestamp | date: "h:mma"}} </td>
+      </ng-container>
+      <ng-container stickyEnd="true" matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef> Owner Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <ng-template #noHistory>
+    <div class="no-content">
+      <h2>No Ownership History</h2> <i class="fa fa-history"></i>
+    </div>
+  </ng-template>
 </div>

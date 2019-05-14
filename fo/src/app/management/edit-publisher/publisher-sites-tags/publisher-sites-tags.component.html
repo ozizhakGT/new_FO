@@ -1,29 +1,45 @@
-<mat-card>
-  <h2>Sites and Tags List</h2>
-  <mat-accordion *ngIf="sites.length > 0">
-    <mat-expansion-panel *ngFor="let site of sites">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{site.name}}
-        </mat-panel-title>
-        <mat-panel-description>
-          <div>{{site.url}}</div>
-          <div *ngIf="site.enable; else disable" style="color: green">ON <i class="fa fa-thumbs-up"></i></div>
-          <ng-template #disable><div style="color: red">OFF <i class="fa fa-thumbs-down"></i></div></ng-template>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <table>
-        <thead>
-        <th>Tag Name</th>
-        <th>BI LIVE</th>
-        </thead>
-        <tbody>
-        <tr *ngFor="let tag of site.tags">
-          <td>{{tag.tag_name}}</td>
-          <td>{{tag.live}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </mat-expansion-panel>
-  </mat-accordion>
-</mat-card>
+<div *ngIf="userState | async" class="general-wrapper">
+  <mat-card *ngIf="sites.length > 0; else noSites">
+    <h2>Sites and Tags List</h2>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let site of sites">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{site.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            <div>{{site.url}}</div>
+            <div *ngIf="site.enable; else disable" style="color: green">ON <i class="fa fa-thumbs-up"></i></div>
+            <ng-template #disable><div style="color: red">OFF <i class="fa fa-thumbs-down"></i></div></ng-template>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngIf="site.tags; else noTags" class="mat-elevation-z8">
+          <table mat-table [dataSource]="site.tags">
+            <ng-container matColumnDef="tag_id">
+              <th mat-header-cell *matHeaderCellDef> Tag ID </th>
+              <td mat-cell *matCellDef="let element"> {{element.tag_id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="tag_name">
+              <th mat-header-cell *matHeaderCellDef> Tag Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.tag_name}} </td>
+            </ng-container>
+            <ng-container stickyEnd="true" matColumnDef="bi_live">
+              <th mat-header-cell *matHeaderCellDef> BI Live </th>
+              <td mat-cell *matCellDef="let element"> {{element.live}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <ng-template #noTags>
+          <h3>No Tags in this Site</h3>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+  <ng-template #noSites>
+    <div class="no-content">
+      <h2>No Site & Tags </h2> <i class="fa fa-money"></i>
+    </div>
+  </ng-template>
+</div>

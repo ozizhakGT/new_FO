@@ -11,6 +11,7 @@ import {ManagementService} from "../../management.service";
 export class PublisherSitesTagsComponent implements OnInit {
   @Input() userState: Promise<any>;
   sites: Site[] = [];
+  displayedColumns: string[] = ['tag_name', 'tag_id', 'bi_live']
   constructor(private utilsService: UtilsService, private manageService: ManagementService) { }
 
   ngOnInit() {

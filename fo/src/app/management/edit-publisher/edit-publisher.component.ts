@@ -35,7 +35,7 @@ export class EditPublisherComponent implements OnInit {
   }
 
   async onGetuserStateDetails(id) {
-    let fetchPromiseArr: Promise<any>[] = []
+    let fetchPromiseArr: Promise<any>[] = [];
     this.utilsService.loader.next(true);
     // userState state Data structre
     let userState = {
@@ -81,7 +81,7 @@ export class EditPublisherComponent implements OnInit {
           response => {
             userState.paymentsHistory = response['message'].results;
           });
-      fetchPromiseArr.push(userState.paymentsHistory)
+      fetchPromiseArr.push(userState.paymentsHistory);
       userState.ownershipHistory = this.manageService.getOwnershipHistory(userState.details.publisher.id)
         .then(
           response => {
@@ -89,10 +89,11 @@ export class EditPublisherComponent implements OnInit {
           });
       fetchPromiseArr.push(userState.ownershipHistory);
 
-      this.getSiteTags(userState.sites);
-      fetchPromiseArr.push(userState.sites);
+      if (userState.sites.length > 0){
+        this.manageService.getSiteTags(userState.sites);
+        fetchPromiseArr.push(userState.sites);
+      }
       await Promise.all(fetchPromiseArr);
-
       this.isValidPublisher = true;
     }
     else {
@@ -100,15 +101,6 @@ export class EditPublisherComponent implements OnInit {
     }
     this.utilsService.loader.next(false);
     return userState;
-  }
-
-  getSiteTags(sites) {
-    sites.forEach(site => {
-      this.manageService.getTagsbySiteId(site._id)
-        .then(response => {
-          site['tags'] = response['message'].results;
-        });
-    });
   }
 
 }

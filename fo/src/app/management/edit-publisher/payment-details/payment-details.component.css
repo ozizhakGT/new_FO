@@ -2,10 +2,10 @@
   display: flex;
 }
 .mat-card {
-  margin-right: 3rem;
-  height: fit-content;
-  width: -webkit-fill-available;
-}
+    margin-right: 3rem;
+    height: fit-content;
+    width: -webkit-fill-available;
+  }
 .mat-card h2{
   margin-bottom: 2rem;
 }
@@ -38,4 +38,7 @@ form button {
 }
 .payment-history__details .payment-history__description {
   font-size: .9rem;
+}
+.fix-no-content {
+  align-items: normal;
 }

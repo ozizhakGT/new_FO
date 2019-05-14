@@ -1,3 +1,6 @@
+/*.wrapper {*/
+  /*margin: ;*/
+/*}*/
 mat-card {
   width: 50%;
 }
@@ -5,18 +8,9 @@ mat-panel-description {
   display: flex;
   justify-content: space-between;
 }
-
+.mat-elevation-z8 {
+  box-shadow: none;
+}
 table {
   width: 100%;
-}
-thead, tbody {
-  display: flex;
-  justify-content: space-between;
-}
-tbody {
-  flex-direction: column;
-}
-tr {
-  display: flex;
-  justify-content: space-between;
 }
