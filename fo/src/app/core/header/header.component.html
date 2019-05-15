@@ -4,18 +4,16 @@
     <h3 class="navbar__title-sub">Publisher</h3>
   </a>
   <div class="navbar__menu">
-    <button class="navbar__item" mat-button [matMenuTriggerFor]="sites">Sites</button>
-    <button class="navbar__item" mat-button [matMenuTriggerFor]="tags">Tags</button>
     <button class="navbar__item" mat-button [matMenuTriggerFor]="management">Management</button>
+    <button class="navbar__item" mat-button [matMenuTriggerFor]="tags">Tags</button>
+    <!--<button class="navbar__item" mat-button [matMenuTriggerFor]="costRules">Cost Rules</button>-->
 
-    <mat-menu #sites="matMenu">
-      <!--<button mat-menu-item [routerLink]="['sites']">All Sites</button>-->
-      <button mat-menu-item [routerLink]="['sites/new']">New Site</button>
-      <button mat-menu-item [routerLink]="['sites/edit']">Site Configuration</button>
-    </mat-menu>
+    <!--<mat-menu #costRules="matMenu">-->
+      <!--<button mat-menu-item [routerLink]="['costs/new']">New Site</button>-->
+      <!--<button mat-menu-item [routerLink]="['costs/edit']">Site Configuration</button>-->
+    <!--</mat-menu>-->
 
     <mat-menu #tags="matMenu">
-      <!--<button mat-menu-item [routerLink]="['tags']">All Tags</button>-->
       <button mat-menu-item [routerLink]="['tags','new', publisherId]">New Tag</button>
       <button mat-menu-item [routerLink]="['tags/edit']">Tag Configuration</button>
     </mat-menu>

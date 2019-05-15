@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from '../core/serviecs/api.service';
+import {UtilsService} from "../core/serviecs/utils.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagementService {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private utilsService: UtilsService) {}
 
   //GET REQUESTS
   getUser(publisherId): any {
@@ -35,14 +36,20 @@ export class ManagementService {
   getTagsbySiteId(siteId) {
     return this.apiService.getPublisherTagsBySiteId(siteId).toPromise();
   }
-
-  // CRUD REQUESTS
-  async updateUserDetails(publisherId, data) {
-    return await this.apiService.UserDetailRequests('put', publisherId, data).toPromise();
+  getSitesAndTags(publisherId) {
+    return this.apiService.getPublisherSitesAndTags(publisherId).toPromise();
+  }
+  getVerticals() {
+    return this.apiService.getVerticals();
   }
 
-  async updatePaymentMethod(publisherId, paymentMethodId, data) {
-    return await this.apiService.paymentMethods('put', publisherId, paymentMethodId, data).toPromise();
+  // CRUD REQUESTS
+   updateUserDetails(publisherId, data) {
+    return this.apiService.UserDetailRequests('put', publisherId, data).toPromise();
+  }
+
+   updatePaymentMethod(publisherId, paymentMethodId, data) {
+    return this.apiService.paymentMethods('put', publisherId, paymentMethodId, data).toPromise();
   }
   updateBILive(tagId, live) {
     return this.apiService.updateBILive(tagId,live);
@@ -52,13 +59,13 @@ export class ManagementService {
     return await this.apiService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
   }
 
-  async postTakeOwner(publisherId) {
-    return await this.apiService.updateOwnership(publisherId).toPromise();
+   postTakeOwner(publisherId) {
+    return this.apiService.updateOwnership(publisherId).toPromise();
   }
 
 //  DELETE REQUEST
-  async deleteUser(publisherId) {
-    return await this.apiService.UserDetailRequests('delete', publisherId).toPromise();
+   deleteUser(publisherId) {
+    return this.apiService.UserDetailRequests('delete', publisherId).toPromise();
   }
 
 
@@ -76,6 +83,7 @@ export class ManagementService {
     return report;
   }
 
+  //REMOVE DUPLICATES OWNERS ON HISTORY LOG
   removeDupicatesHistoryOwner(ownershipHistory) {
     let holder = {};
     let history = [];
@@ -89,6 +97,7 @@ export class ManagementService {
     return history
   }
 
+  // IF HAVE NO TAGS ON SITE ARRAY THIS FUNCTION WILL GET AND ORGANIZE THEM
   getSiteTags(sites) {
     sites.forEach(site => {
       this.getTagsbySiteId(site._id)
@@ -99,4 +108,6 @@ export class ManagementService {
         });
     });
   };
+
+
 }

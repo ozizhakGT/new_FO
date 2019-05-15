@@ -24,6 +24,11 @@ export class UtilsService {
     sessionStorage.removeItem(key)
   }
 
+  onSessionStorageCheckExistKey(key) {
+    for (let i = 0; i < sessionStorage.length; i++) {
+      return sessionStorage[i] === key;
+    }
+  }
   messageNotification(message, action, messagetype) {
     let textMessage: string;
     switch (messagetype) {

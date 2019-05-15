@@ -61,8 +61,14 @@ export class ApiService {
   getPublisherTagsBySiteId(siteId) {
     return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`)
   }
+  getPublisherSitesAndTags(publisherId) {
+    return this.http.get(`${this.baseUrl}query/sites_tags?publisher_id=${publisherId}&${this.token}`)
+  }
   getPaymentHistory(userId) {
     return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
+  }
+  getVerticals(): Promise<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}verticals?${this.token}`).toPromise()
   }
 
   // CRUD REQUEST

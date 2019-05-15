@@ -13,7 +13,7 @@ import {ManagementService} from "../management.service";
 export class EditPublisherComponent implements OnInit {
   isValidPublisher: boolean;
   userState: Promise<any>;
-
+  verticals;
   constructor(private utilsService: UtilsService,
               private manageService: ManagementService,
               private route: ActivatedRoute,
@@ -23,16 +23,27 @@ export class EditPublisherComponent implements OnInit {
     this.route.params
       .subscribe(
       (params: Params) => {
-        console.log(params['publisherId'])
         const id = params['publisherId'];
+        if (!this.utilsService.onSessionStorageCheckExistKey('publisherId')) {
+          this.utilsService.onSessionStorageSave('publisherId', id);
+        }
         if (id && id !== 'undefined') {
           this.userState = this.onGetuserStateDetails(id);
+          this.getVerticals();
           this.isValidPublisher = true;
         } else {
           this.router.navigate(['../'], {relativeTo:this.route});
           this.isValidPublisher = false;
         }
       });
+  }
+
+  getVerticals() {
+    this.manageService.getVerticals()
+      .then(
+        response => {
+          this.verticals = response['message'].results;
+        });
   }
 
   async onGetuserStateDetails(id) {
@@ -48,7 +59,7 @@ export class EditPublisherComponent implements OnInit {
       paymentsMethods: null,
       paymentsHistory: null,
       ownershipHistory: null,
-      sites: JSON.parse(this.utilsService.onSessionStorageLoad('publisherSites'))
+      sites: null
     };
     // get user request
     userState.details.publisher = await this.manageService.getUser(id);
@@ -90,16 +101,22 @@ export class EditPublisherComponent implements OnInit {
           });
       fetchPromiseArr.push(userState.ownershipHistory);
 
-      if (this.utilsService.onSessionStorageLoad('publisherSites') === undefined) {
-
-      }
-
-      if (userState.sites.length > 0) {
-        this.manageService.getSiteTags(userState.sites);
-        fetchPromiseArr.push(userState.sites);
+      if (this.utilsService.onSessionStorageLoad('publisherSites') !== undefined) {
+        userState.sites = JSON.parse(this.utilsService.onSessionStorageLoad('publisherSites'));
+        if (userState.sites.length > 0 && !userState.sites[0].hasOwnProperty('tags')) {
+          this.manageService.getSiteTags(userState.sites);
+        }
       } else {
-        userState.sites = []
+        userState.sites = this.manageService.getSitesAndTags(userState.details.publisher.id)
+          .then(
+            response => {
+              userState.sites = response['message'].results;
+              this.utilsService.onSessionStorageSave('publisherSites', JSON.stringify(userState.sites));
+            }
+          )
       }
+
+      fetchPromiseArr.push(userState.sites);
       await Promise.all(fetchPromiseArr);
       this.isValidPublisher = true;
     }
