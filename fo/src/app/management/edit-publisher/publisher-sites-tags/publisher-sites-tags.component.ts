@@ -23,7 +23,7 @@ export class PublisherSitesTagsComponent implements OnInit {
       .then(
         userState => {
           this.sites = userState.sites;
-          console.log(this.figureVerticals(this.sites,this.verticals))
+          this.figureVerticals(this.sites,this.verticals)
         });
   }
 

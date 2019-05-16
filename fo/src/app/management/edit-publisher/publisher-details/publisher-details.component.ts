@@ -193,6 +193,9 @@ export class PublisherDetailsComponent implements OnInit {
         .finally(() => this.spinner = false);
   }
 
+  /*
+  * TODO: NEED TO COMPARE CLIENT AND OWNER IF THEM THE SAME POP UP MESSAGE AND DONT SEND THIS REQUEST!
+  * */
   takeOwner(publisherId, username) {
     if (publisherId) {
       this.spinner = true;
@@ -200,7 +203,9 @@ export class PublisherDetailsComponent implements OnInit {
         this.manageService.postTakeOwner(publisherId)
           .then(response => {
             if (response['type'] === 'created') {
+              this.generalDetails.owner = 'Changing Owners!...';
               this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
+              this.onGetPresentOwner(publisherId)
             }
           })
           .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
@@ -209,5 +214,25 @@ export class PublisherDetailsComponent implements OnInit {
         this.spinner = false;
       }
     }
+  }
+
+  /*
+  * TODO: AFTER FINISHING MY AREA COMPONENT NEED TO TAKE NAME ADMIN AND PUT IT HERE
+  * !!!! NOT GOOD SOLUTION !!
+  * */
+  onGetPresentOwner(publisherId) {
+    this.manageService.getUser(publisherId)
+      .then(
+        response => {
+          if (typeof response['message'].results[0].account_manager_id === 'number') {
+            this.manageService.getUser(response['message'].results[0].account_manager_id)
+              .then(
+                response => {
+                  this.generalDetails.owner = response['message'].results[0].username;
+                }
+              )
+          }
+        }
+      )
   }
 }

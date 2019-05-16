@@ -5,16 +5,19 @@
       <mat-expansion-panel *ngFor="let site of sites">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{site.name}}
+            <h3 matTooltip="Site Name">{{site.name}}</h3>
           </mat-panel-title>
           <mat-panel-description>
-            <div>{{site.url}}</div>
+            <a href="{{site.url}}" target="_blank">{{site.url}}</a>
             <div *ngIf="site.enable; else disable" style="color: green">ON <i class="fa fa-thumbs-up"></i></div>
             <ng-template #disable><div style="color: red">OFF <i class="fa fa-thumbs-down"></i></div></ng-template>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div *ngIf="site.tags; else noTags" class="mat-elevation-z8">
-          <p>Vertical: {{site.vertical_name}}</p>
+          <div class="site__details">
+            <h3>Vertical: <span>{{site.vertical_name}}</span></h3>
+            <button mat-raised-button color="accent">Edit Site</button>
+          </div>
           <table mat-table [dataSource]="site.tags">
             <ng-container matColumnDef="tag_id">
               <th mat-header-cell *matHeaderCellDef> Tag ID </th>

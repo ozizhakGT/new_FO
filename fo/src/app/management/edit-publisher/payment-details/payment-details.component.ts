@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ManagementService} from "../../management.service";
 import {paymentMethodArray, paymentsMethodsStructure, paymentsPeriodStructure} from "../../enums/publisher-enums";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -43,6 +43,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   paymentMethodsOnInitForm(form) {
     this.paymentmethodsForm = new FormGroup({
+      'user_id': new FormControl(this.genearalDetails.user_id),
       'payment_method': new FormControl(form.payment_method || ''),
       'payment_email': new FormControl(form.payment_email || ''),
       'beneficiary_name': new FormControl(form.beneficiary_name || ''),
@@ -63,10 +64,19 @@ export class PaymentDetailsComponent implements OnInit {
       .then(
         response => {
           if (response['type'] === 'updated') {
-            this.utilsService.messageNotification('Payment Method Update!', null, 'success')
+            this.utilsService.messageNotification('Payment Method Update!', null, 'success');
+            this.onGetPaymentsHistory(this.genearalDetails.user_id)
           }
         })
       .catch(err => this.utilsService.messageNotification('Failed Update Payment Method!', null, 'failed'))
       .finally(() => this.spinner = false)
+  }
+  onGetPaymentsHistory(publisherId) {
+    this.manageService.getPaymentHistory(publisherId)
+      .then(
+        response => {
+          this.paymentsHistory = response['message'].results
+        }
+      )
   }
 }

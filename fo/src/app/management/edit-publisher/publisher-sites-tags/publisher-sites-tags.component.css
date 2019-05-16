@@ -4,13 +4,29 @@
 mat-card {
   width: 50%;
 }
+mat-card h2 {
+  margin-bottom: 2rem;
+}
 mat-panel-description {
   display: flex;
   justify-content: space-between;
+}
+mat-panel-description a:hover {
+  color: var(--primary-color-main);
 }
 .mat-elevation-z8 {
   box-shadow: none;
 }
 table {
   width: 100%;
+}
+.site__details {
+  display: flex;
+  justify-content: space-between;
+}
+.site__details h3 {
+  transform: translateX(21px);
+}
+.site__details h3 span {
+  font-weight: normal;
 }

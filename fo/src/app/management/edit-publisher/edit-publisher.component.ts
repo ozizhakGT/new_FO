@@ -126,5 +126,4 @@ export class EditPublisherComponent implements OnInit {
     this.utilsService.loader.next(false);
     return userState;
   }
-
 }
