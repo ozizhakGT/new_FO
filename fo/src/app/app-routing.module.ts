@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'manage', pathMatch: 'full'},
+  // {path: '', redirectTo: 'manage', pathMatch: 'full'},
+  {path: '', redirectTo: 'signin', pathMatch: 'full'},
   {path: 'tags', loadChildren: './tags/tags.module#TagsModule'},
   {path: 'manage', loadChildren: './management/management.module#ManagementModule'},
   {path: '**', redirectTo: 'welcome'}

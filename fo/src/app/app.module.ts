@@ -8,15 +8,15 @@ import {MatProgressBarModule} from "@angular/material";
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
+import {AuthModule} from "./auth/auth.module";
 
 // Components & Directives & Service
 import { AppComponent } from './app.component';
 import {EnvServiceProvider} from "./env.service.provider";
 
-
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +25,7 @@ import {EnvServiceProvider} from "./env.service.provider";
     FormsModule,
     AppRoutingModule,
     CoreModule,
+    AuthModule,
     MatProgressBarModule
   ],
   providers: [EnvServiceProvider],
