@@ -21,7 +21,7 @@ export class UtilsService {
   }
 
   onSessionStorageRemove(key) {
-    sessionStorage.removeItem(key)
+    sessionStorage.removeItem(key);
   }
 
   onSessionStorageCheckExistKey(key) {
@@ -34,6 +34,9 @@ export class UtilsService {
   }
   onLocalStorageGet(key: string) {
     return localStorage.getItem(key);
+  }
+  onLocalStorageRemove(key) {
+    localStorage.removeItem(key);
   }
   messageNotification(message, action, messagetype) {
     let textMessage: string;

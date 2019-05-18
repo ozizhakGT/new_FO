@@ -12,29 +12,26 @@ export class AuthComponent implements OnInit {
   constructor(private auth: LocalAuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit() {
-    let token = JSON.parse(this.utilsService.onLocalStorageGet('userLoggedIn'));
-    if (token.hasOwnProperty('token')) {
-      return this.router.navigate(['manage']);
-    }
-      this.auth.getAdminState()
-        .subscribe(response => {
-          if (response !== null) {
-            this.spinner = true;
-            let domain = response.email.split('@')[1];
-            if (this.auth.validateAuth(domain)) {
-              debugger;
-              console.log(response)
-              this.utilsService.messageNotification(`Welcome Back ${response.name}!`, null, 'success');
-              this.spinner = false;
-              this.router.navigate(['manage']);
-            } else {
-              this.utilsService.messageNotification('You Are not Admin User!', null, 'failed');
-            }
-          }
-        });
+    this.spinner = true;
+    // this.auth.getAdminState()
+    //   .subscribe(
+    //     userData => {
+    //       if (userData != null) {
+    //         debugger;
+    //         const domain = userData.email.split('@')[1];
+    //         if (this.auth.validateAuth(domain)) {
+    //           this.router.navigate(['manage']);
+    //         } else {
+    //           this.utilsService.messageNotification(`Your Email is Not Admin In This System !`, null, 'failed');
+    //           this.utilsService.onLocalStorageRemove('adminData');
+    //         }
+    //       } else {
+    //         this.spinner = false;
+    //       }
+    //     });
   }
   signIn() {
-    this.auth.socialSignIn();
+    this.auth.socialSignIn(this.spinner);
   }
 
 }

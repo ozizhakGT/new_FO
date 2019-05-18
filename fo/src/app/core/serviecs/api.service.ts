@@ -72,6 +72,9 @@ export class ApiService {
   }
 
   // CRUD REQUEST
+  postGoogleAthentication(tokenId) {
+    return this.http.post(`${this.baseUrl}auth_google`, tokenId);
+  }
   updateOwnership(publisherId) {
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}&${this.token}`, {}  );
   }

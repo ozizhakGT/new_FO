@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LocalAuthService} from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'FO';
+  constructor(private auth: LocalAuthService) {}
+
+  isAuthenticated() {
+    return this.auth.isAuthenticated();
+  }
 }

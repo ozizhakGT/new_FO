@@ -10,11 +10,11 @@ import {MatProgressBarModule} from "@angular/material";
 import { AppRoutingModule } from './app-routing.module';
 import {AuthModule} from "./auth/auth.module";
 
-// Components & Directives & Service
+// Components & Directives & Service & Guards
 import { AppComponent } from './app.component';
-import {EnvServiceProvider} from "./env.service.provider";
+import {EnvServiceProvider} from './env.service.provider';
 import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angular5-social-login';
-import {AuthGuard} from "./auth/auth.guard";
+import {AuthGuard} from './auth/auth.guard';
 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
