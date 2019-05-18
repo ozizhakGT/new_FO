@@ -1,3 +1,8 @@
-<p>
-  auth works!
-</p>
+<div class="auth__wrapper">
+  <img class="auth__pic" src="../../assets/logo.png" alt="logo">
+  <button class="auth__btn" mat-raised-button color="warn" (click)="signIn()"><i class="fa fa-google"></i> Sign In With Google</button>
+</div>
+<div *ngIf="spinner" class="screen-block__wrapper">
+  <div class="screen-block"></div>
+  <mat-spinner [diameter]="50" class="screen-block__spinner"></mat-spinner>
+</div>

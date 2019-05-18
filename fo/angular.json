@@ -60,7 +60,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "FO:build"
+            "browserTarget": "FO:build",
+            "port": 9001
           },
           "configurations": {
             "production": {

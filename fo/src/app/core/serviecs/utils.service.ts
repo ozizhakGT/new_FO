@@ -29,6 +29,12 @@ export class UtilsService {
       return sessionStorage[i] === key;
     }
   }
+  onLocalStorageSet(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+  onLocalStorageGet(key: string) {
+    return localStorage.getItem(key);
+  }
   messageNotification(message, action, messagetype) {
     let textMessage: string;
     switch (messagetype) {
