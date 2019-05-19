@@ -1,3 +1,34 @@
-<p>
-  account-manager-area works!
-</p>
+<div>
+  <mat-tab-group>
+    <mat-tab label="Publisher Settings">
+      <h1>Some Content</h1>
+    </mat-tab>
+    <mat-tab label="Payment Settings">
+      <div class="general-wrapper">
+        <mat-card>
+          <mat-card-title>My Publishers</mat-card-title>
+          <mat-card-content>
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="publishers">
+                <ng-container matColumnDef="username">
+                  <th mat-header-cell *matHeaderCellDef> Username  </th>
+                  <td mat-cell *matCellDef="let element"><a [routerLink]="['/manage/edit', element.id]">{{element.username}}</a> </td>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> ID </th>
+                  <td mat-cell #publisherId *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+                <ng-container stickyEnd="true" matColumnDef="mode">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let element">{{element.mode}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -64,6 +64,9 @@ export class ApiService {
   getPublisherSitesAndTags(publisherId) {
     return this.http.get(`${this.baseUrl}query/sites_tags?publisher_id=${publisherId}&${this.token}`)
   }
+  getPublisherByAccountManager(account_manager_id) {
+    return this.http.get(`${this.baseUrl}query/account_manager_publishers?account_manager_id=${account_manager_id}&${this.token}`)
+  }
   getPaymentHistory(userId) {
     return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
   }
@@ -72,8 +75,8 @@ export class ApiService {
   }
 
   // CRUD REQUEST
-  postGoogleAthentication(tokenId) {
-    return this.http.post(`${this.baseUrl}auth_google`, tokenId);
+  async postGoogleAuthentication(tokenId) {
+    return await this.http.post(`${this.baseUrl}auth_google`, tokenId).toPromise()
   }
   updateOwnership(publisherId) {
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}&${this.token}`, {}  );

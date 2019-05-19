@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Observable} from 'rxjs/Observable';
@@ -19,12 +19,13 @@ selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('search') searchQuery: ElementRef;
   keyupSubscription: Subscription;
   mouseupSubscription: Subscription;
   loaderSubscription: Subscription;
 
+  adminData = JSON.parse(localStorage.getItem('userDetails'));
   publisherId: string = this.utilsService.onSessionStorageLoad('publisherId');
   lastSearch: string;
   isNavbarLoading: boolean;
@@ -60,6 +61,12 @@ export class HeaderComponent implements OnInit {
       .subscribe(() => {
         this.onResetSearch();
       });
+  }
+
+  ngOnDestroy() {
+    this.loaderSubscription.unsubscribe();
+    this.keyupSubscription.unsubscribe();
+    this.mouseupSubscription.unsubscribe();
   }
 
   // Get Publisher function.

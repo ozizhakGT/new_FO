@@ -42,6 +42,9 @@ export class ManagementService {
   getVerticals() {
     return this.apiService.getVerticals();
   }
+  getAccountManagerPublishers(account_manager_id) {
+    return this.apiService.getPublisherByAccountManager(account_manager_id).toPromise()
+  }
 
   // CRUD REQUESTS
    updateUserDetails(publisherId, data) {

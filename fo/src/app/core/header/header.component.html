@@ -19,7 +19,6 @@
     </mat-menu>
 
     <mat-menu #management="matMenu">
-      <button mat-menu-item [routerLink]="['manage/my-area']">My Area</button>
       <button mat-menu-item [routerLink]="['manage/new']">New Publisher</button>
       <button mat-menu-item [routerLink]="['manage','edit', publisherId]">Publisher Configuration</button>
     </mat-menu>
@@ -39,5 +38,13 @@
     <div class="navbar__search--result no-results" *ngIf="isResults && publisherResult.length === 0">No results</div>
   </div>
   <img *ngIf="isNavbarLoading" src="../../../assets/search-loading.gif" alt="loading..." class="navbar__loading">
+  <button class="navbar__profile" [matMenuTriggerFor]="userDetails">
+    <img class="navbar__profile--pic" src="{{adminData.image}}">
+  </button>
+
+  <mat-menu #userDetails="matMenu">
+    <button mat-menu-item  [routerLink]="['manage/my-area']">My Area</button>
+    <button mat-menu-item>System Version</button>
+  </mat-menu>
 </mat-toolbar>
 <mat-progress-bar *ngIf="isAppLoading" mode="indeterminate"></mat-progress-bar>

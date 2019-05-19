@@ -5,7 +5,10 @@ import {LocalAuthService} from '../../auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminResolverService {
+export class AdminResolverService implements Resolve<any> {
 
-  constructor(private auth: LocalAuthService ) {}
+  constructor()  {}
+  resolve(route: ActivatedRouteSnapshot) {
+    return localStorage.getItem('adminData')
+  }
 }

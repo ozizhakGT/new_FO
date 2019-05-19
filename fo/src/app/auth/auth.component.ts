@@ -1,37 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LocalAuthService} from './auth.service';
 import {UtilsService} from '../core/serviecs/utils.service';
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
+  spinnerSubscription: Subscription;
   spinner: boolean = false;
   constructor(private auth: LocalAuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit() {
-    this.spinner = true;
-    // this.auth.getAdminState()
-    //   .subscribe(
-    //     userData => {
-    //       if (userData != null) {
-    //         debugger;
-    //         const domain = userData.email.split('@')[1];
-    //         if (this.auth.validateAuth(domain)) {
-    //           this.router.navigate(['manage']);
-    //         } else {
-    //           this.utilsService.messageNotification(`Your Email is Not Admin In This System !`, null, 'failed');
-    //           this.utilsService.onLocalStorageRemove('adminData');
-    //         }
-    //       } else {
-    //         this.spinner = false;
-    //       }
-    //     });
+    this.spinnerSubscription = this.auth.spinner.subscribe(
+      isLoading => {this.spinner = isLoading});
+    if (this.utilsService.onLocalStorageCheckExistKey('adminData')) {
+      this.router.navigate(['manage']);
+    }
   }
+  ngOnDestroy() {
+    this.spinnerSubscription.unsubscribe();
+  }
+
   signIn() {
-    this.auth.socialSignIn(this.spinner);
+    this.auth.socialSignIn();
   }
 
 }

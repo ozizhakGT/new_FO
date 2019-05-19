@@ -3,37 +3,35 @@ import {AuthService, GoogleLoginProvider} from "angular5-social-login";
 import {UtilsService} from "../core/serviecs/utils.service";
 import {Router} from "@angular/router";
 import {ApiService} from "../core/serviecs/api.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalAuthService {
+  spinner = new BehaviorSubject<boolean>(false);
   allowedDomains: string[] = ['web-pick.com', 'ad-maven.com'];
-  token;
   constructor(private socialAuthService: AuthService,
               private utilsService: UtilsService,
               private apiService: ApiService,
               private router: Router) { }
 
-  socialSignIn(spinner) {
-    spinner = true;
+  socialSignIn() {
+    this.spinner.next(true);
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
         let domain = userData.email.split('@')[1];
         if (this.validateAuth(domain)) {
-          this.getAdminDetails(userData.idToken);
-          this.router.navigate(['manage']);
-          this.utilsService.messageNotification(`Welcome Back ${userData.name}!`, null, 'success');
-          spinner = false;
+          this.getAdminDetails(userData.idToken, userData);
         } else {
-          this.utilsService.messageNotification(`Your Email is Not Admin In This System !`, null, 'failed');
+          this.utilsService.messageNotification(`This is Not Email Organization Allowd !`, null, 'failed');
         }
-      }
-    );
-  }
+        this.spinner.next(false);
+      });
+  };
 
-  getAdminState() {
-    return this.socialAuthService.authState;
+  getAdminData() {
+    return localStorage.getItem('adminData');
   }
 
   validateAuth(domain) {
@@ -41,32 +39,24 @@ export class LocalAuthService {
   }
 
   isAuthenticated() {
-    this.getAdminState()
-      .subscribe(
-        userData => {
-          if (userData != null) {
-            debugger;
-            const domain = userData.email.split('@')[1];
-            if (this.validateAuth(domain)) {
-              this.router.navigate(['manage']);
-            } else {
-              this.utilsService.messageNotification(`Your Email is Not Admin In This System !`, null, 'failed');
-              localStorage.removeItem('adminData');
-            }
-          } else {
-            localStorage.removeItem('adminData');
-            this.router.navigate(['login']);
-          }
-        });
+      const adminData = this.getAdminData();
+      return adminData !== null;
   }
 
-  getAdminDetails(tokenId) {
-    const admin = `token=${tokenId}`
-    this.apiService.postGoogleAthentication(admin).toPromise()
+  getAdminDetails(tokenId, userData) {
+    const admin = `token=${tokenId}`;
+    this.apiService.postGoogleAuthentication(admin)
       .then(response => {
-        if (response['type'] === 'created') {
-          this.utilsService.onLocalStorageSet('adminData', JSON.stringify(response['message']))
+        if (response['type'] === 'created' && response['message'].account_type == 0) {
+          localStorage.setItem('userDetails',JSON.stringify(userData));
+          this.utilsService.messageNotification(`Welcome Back ${userData.name}!`, null, 'success');
+          localStorage.setItem('adminData', JSON.stringify(response['message']));
+          this.router.navigate(['manage']);
         }
-      });
+      }).catch(err => {
+        if (err['status'] === 401) {
+          this.utilsService.messageNotification(`It's Look like You are not Admin !`, null, 'failed');
+        }
+    })
   }
 }

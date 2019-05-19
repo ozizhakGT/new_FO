@@ -83,7 +83,30 @@
 .navbar__search--result .navbar__search--result-item:nth-child(even):hover {
   background-color: var(--third-color-main);
 }
-
+.navbar__profile {
+  cursor: pointer;
+  position: absolute;
+  right: 23px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 40px;
+  background-color: var(--primary-color-main);
+  border: none;
+}
+.navbar__profile:focus {
+  outline: none;
+}
+.navbar__profile--pic {
+  width: 90%;
+  border-radius: 100%;
+  transition: .25s all;
+}
+.navbar__profile--pic:hover {
+  width: 100%;
+}
+.navbar__profile--pic:active {
+  width: 80%;
+}
 
 /*ANIMATION*/
 @keyframes slideDown {

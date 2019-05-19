@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from "@angular/material";
 import {BehaviorSubject, Subject} from "rxjs";
+import {hasOwnProperty} from "tslint/lib/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,8 @@ export class UtilsService {
       return sessionStorage[i] === key;
     }
   }
-  onLocalStorageSet(key: string, value: string) {
-    localStorage.setItem(key, value);
-  }
-  onLocalStorageGet(key: string) {
-    return localStorage.getItem(key);
-  }
-  onLocalStorageRemove(key) {
-    localStorage.removeItem(key);
+  onLocalStorageCheckExistKey(key) {
+    return (localStorage.getItem(key) !== undefined && localStorage.getItem(key) !== null);
   }
   messageNotification(message, action, messagetype) {
     let textMessage: string;

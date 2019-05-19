@@ -6,12 +6,10 @@ import {LocalAuthService} from './auth.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: LocalAuthService, private router: Router) {}
+  constructor(private auth: LocalAuthService, private router: Router) {
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (!this.auth.isAuthenticated()) {
-      return false;
-    }
-    return true;
+    return this.auth.isAuthenticated();
   }
 }
