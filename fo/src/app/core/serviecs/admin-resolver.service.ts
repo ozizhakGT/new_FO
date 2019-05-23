@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
-import {LocalAuthService} from '../../auth/auth.service';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {ApiService} from "./api.service";
+import {UtilsService} from "./utils.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminResolverService implements Resolve<any> {
-
-  constructor()  {}
-  resolve(route: ActivatedRouteSnapshot) {
-    return localStorage.getItem('adminData')
+  user;
+  constructor(private utilsService: UtilsService, private apiService: ApiService)  {}
+  admin = JSON.parse(localStorage.getItem('adminData'));
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    this.utilsService.loader.next(true);
+    this.user = await this.apiService.UserDetailRequests('get', this.admin['id']).toPromise()
+      .then( res => this.user = res['message'].results[0]);
+    return this.user
   }
 }
