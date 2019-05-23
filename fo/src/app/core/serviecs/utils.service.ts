@@ -26,6 +26,7 @@ export class UtilsService {
   }
 
   onSessionStorageCheckExistKey(key) {
+    debugger
     for (let i = 0; i < sessionStorage.length; i++) {
       return sessionStorage[i] === key;
     }

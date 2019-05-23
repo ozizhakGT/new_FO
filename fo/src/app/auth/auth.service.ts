@@ -16,17 +16,17 @@ export class LocalAuthService {
               private apiService: ApiService,
               private router: Router) { }
 
-  socialSignIn() {
+  async socialSignIn() {
     this.spinner.next(true);
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+   await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
         let domain = userData.email.split('@')[1];
         if (this.validateAuth(domain)) {
-          this.getAdminDetails(userData.idToken, userData);
+        this.getAdminDetails(userData.idToken, userData);
         } else {
           this.utilsService.messageNotification(`This is Not Email Organization Allowd !`, null, 'failed');
+          this.spinner.next(false);
         }
-        this.spinner.next(false);
       });
   };
 

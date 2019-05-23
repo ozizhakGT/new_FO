@@ -14,6 +14,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(private auth: LocalAuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit() {
+    this.spinner = true;
+    console.log(this.utilsService.onLocalStorageCheckExistKey('adminData'))
     this.spinnerSubscription = this.auth.spinner.subscribe(
       isLoading => {this.spinner = isLoading});
     if (this.utilsService.onLocalStorageCheckExistKey('adminData')) {
