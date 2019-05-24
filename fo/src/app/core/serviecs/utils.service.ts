@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from "@angular/material";
-import {BehaviorSubject, Subject} from "rxjs";
-import {hasOwnProperty} from "tslint/lib/utils";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +25,6 @@ export class UtilsService {
   }
 
   onSessionStorageCheckExistKey(key) {
-    debugger
     for (let i = 0; i < sessionStorage.length; i++) {
       return sessionStorage[i] === key;
     }

@@ -15,12 +15,13 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.spinner = true;
-    console.log(this.utilsService.onLocalStorageCheckExistKey('adminData'))
-    this.spinnerSubscription = this.auth.spinner.subscribe(
-      isLoading => {this.spinner = isLoading});
     if (this.utilsService.onLocalStorageCheckExistKey('adminData')) {
       this.router.navigate(['manage']);
     }
+    this.spinnerSubscription = this.auth.spinner.subscribe(
+      isLoading => {
+        this.spinner = isLoading;
+      });
   }
   ngOnDestroy() {
     this.spinnerSubscription.unsubscribe();

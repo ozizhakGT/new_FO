@@ -15,6 +15,6 @@ export class AdminResolverService implements Resolve<any> {
     this.utilsService.loader.next(true);
     this.user = await this.apiService.UserDetailRequests('get', this.admin['id']).toPromise()
       .then( res => this.user = res['message'].results[0]);
-    return this.user
+    return this.user;
   }
 }

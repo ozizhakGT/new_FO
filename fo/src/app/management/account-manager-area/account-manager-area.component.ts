@@ -19,6 +19,7 @@ export class AccountManagerAreaComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(res => {
       this.admin = res['adminDetails'];
+      console.log(this.admin)
     })
     this.manageService.getAccountManagerPublishers(this.admin['id'])
       .then(

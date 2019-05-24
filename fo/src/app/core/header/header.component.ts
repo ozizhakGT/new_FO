@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Observable} from 'rxjs/Observable';
@@ -19,7 +19,7 @@ selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('search') searchQuery: ElementRef;
   keyupSubscription: Subscription;
   mouseupSubscription: Subscription;
@@ -29,18 +29,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   publisherId: string = this.utilsService.onSessionStorageLoad('publisherId');
   lastSearch: string;
   isNavbarLoading: boolean;
-  isAppLoading: boolean;
+  isAppLoading = true;
   isResults: boolean;
   publisherResult: Publisher[] = [];
 
 
   constructor(private apiService: ApiService,
+              private cd: ChangeDetectorRef,
               private utilsService: UtilsService,
               private router: Router) { }
 
   ngOnInit() {
     this.loaderSubscription = this.utilsService.loader
-      .subscribe(value => this.isAppLoading = value);
+      .subscribe(value => {
+        this.isAppLoading = value;
+        this.cd.detectChanges();
+      });
 
     // subscribe search from by keyup wait 1.5 sec and then send request.
     this.keyupSubscription = Observable.fromEvent(this.searchQuery.nativeElement, 'keyup')
@@ -61,6 +65,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.onResetSearch();
       });
+  }
+  ngAfterViewInit() {
+    this.cd.detectChanges();
+
   }
 
   ngOnDestroy() {
