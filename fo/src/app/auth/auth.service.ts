@@ -3,13 +3,13 @@ import {AuthService, GoogleLoginProvider} from "angular5-social-login";
 import {UtilsService} from "../core/serviecs/utils.service";
 import {Router} from "@angular/router";
 import {ApiService} from "../core/serviecs/api.service";
-import {BehaviorSubject} from "rxjs";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalAuthService {
-  spinner = new BehaviorSubject<boolean>(false);
+  spinner = new Subject<boolean>();
   allowedDomains: string[] = ['web-pick.com', 'ad-maven.com'];
   constructor(private socialAuthService: AuthService,
               private utilsService: UtilsService,
@@ -28,7 +28,7 @@ export class LocalAuthService {
           this.spinner.next(false);
         }
       });
-  };
+  }
 
   getAdminData() {
     return localStorage.getItem('adminData');
@@ -57,6 +57,6 @@ export class LocalAuthService {
         if (err['status'] === 401) {
           this.utilsService.messageNotification(`It's Look like You are not Admin !`, null, 'failed');
         }
-    })
+    });
   }
 }

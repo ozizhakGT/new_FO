@@ -15,7 +15,12 @@ export const userStatusStructure: UserStructre[] = [
   {id: 2, type: 'Deactivated'},
   {id: 3, type: 'Suspend'},
 ];
-
+export const userStatusArray = [
+  'Pending Verification',
+  'Active',
+  'Deactivated',
+  'Suspend'
+];
 export const paymentsMethodsStructure: UserStructre[] = [
   {id: 1, type: 'Paypal'},
   {id: 2, type: 'Bank Account'},

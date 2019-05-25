@@ -1,13 +1,26 @@
 <div>
   <mat-tab-group>
-    <mat-tab label="Publisher Settings">
-      <h1>Some Content</h1>
-    </mat-tab>
-    <mat-tab label="Payment Settings">
+    <mat-tab label="My Settings">
       <div class="general-wrapper">
-        <mat-card>
-          <mat-card-title>My Publishers</mat-card-title>
-          <mat-card-content>
+        <mat-card class="form-card">
+          <form (ngSubmit)="onUpdate(myAreaForm)" #myAreaForm="ngForm">
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="First Name" [ngModel]="admin.first_name" name="first_name">
+          </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="First Name" [ngModel]="admin.last_name" name="last_name">
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary">Update my Details</button>
+            <div class="form-spinner" *ngIf="sendData">
+              <mat-spinner [diameter]="25"></mat-spinner>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="My Publishers">
+      <div class="general-wrapper">
             <div class="mat-elevation-z8">
               <table mat-table [dataSource]="publishers">
                 <ng-container matColumnDef="username">
@@ -20,14 +33,12 @@
                 </ng-container>
                 <ng-container stickyEnd="true" matColumnDef="mode">
                   <th mat-header-cell *matHeaderCellDef> Status </th>
-                  <td mat-cell *matCellDef="let element">{{element.mode}} </td>
+                  <td mat-cell *matCellDef="let element">{{userStatus[element.mode]}} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
             </div>
-          </mat-card-content>
-        </mat-card>
       </div>
     </mat-tab>
   </mat-tab-group>

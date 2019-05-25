@@ -51,6 +51,12 @@ animation: fadeIn 1s;
 .no-content h2 {
   margin-right: 1rem;
 }
+tr {
+  transition: .3s all;
+}
+tr:hover {
+  background-color: var(--third-color-sub);
+}
 
 /*SPINNERS*/
 .app_spinner {

@@ -10,16 +10,18 @@ import 'rxjs/add/observable/fromEvent';
 // SERVICE
 import {ApiService} from '../serviecs/api.service';
 import {UtilsService} from '../serviecs/utils.service';
+import {AuthService} from 'angular5-social-login';
 
 // INTERFACES
 import {Publisher} from '../../shared/interfaces/publisher.interface';
+import {LocalAuthService} from "../../auth/auth.service";
 
 @Component({
 selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('search') searchQuery: ElementRef;
   keyupSubscription: Subscription;
   mouseupSubscription: Subscription;
@@ -37,7 +39,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private apiService: ApiService,
               private cd: ChangeDetectorRef,
               private utilsService: UtilsService,
-              private router: Router) { }
+              private router: Router,
+              private authService: LocalAuthService) { }
 
   ngOnInit() {
     this.loaderSubscription = this.utilsService.loader
@@ -66,10 +69,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onResetSearch();
       });
   }
-  ngAfterViewInit() {
-    this.cd.detectChanges();
-
-  }
 
   ngOnDestroy() {
     this.loaderSubscription.unsubscribe();
@@ -92,7 +91,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isResults = true;
           this.isNavbarLoading = false;
       }
-    ); }
+    );
+  }
 
   //  Select Publisher from the search list and clear list and last search
   onPublisherSelect(publisher) {
@@ -112,5 +112,11 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     if (publisher) {
       this.searchQuery.nativeElement.value = '';
     }
+  }
+
+  onSignOut() {
+    localStorage.clear();
+    this.authService.spinner.next(false)
+    this.router.navigate(['login']);
   }
 }

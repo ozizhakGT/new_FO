@@ -10,13 +10,14 @@ import {Subscription} from "rxjs";
 })
 export class AuthComponent implements OnInit, OnDestroy {
   spinnerSubscription: Subscription;
-  spinner: boolean = false;
+  spinner = true;
   constructor(private auth: LocalAuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit() {
-    this.spinner = true;
     if (this.utilsService.onLocalStorageCheckExistKey('adminData')) {
       this.router.navigate(['manage']);
+    } else {
+      this.spinner = false;
     }
     this.spinnerSubscription = this.auth.spinner.subscribe(
       isLoading => {
@@ -30,5 +31,4 @@ export class AuthComponent implements OnInit, OnDestroy {
   signIn() {
     this.auth.socialSignIn();
   }
-
 }

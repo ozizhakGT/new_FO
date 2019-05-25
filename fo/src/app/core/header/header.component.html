@@ -45,6 +45,7 @@
   <mat-menu #userDetails="matMenu">
     <button mat-menu-item  [routerLink]="['manage/my-area']">My Area</button>
     <button mat-menu-item>System Version</button>
+    <button mat-menu-item (click)="onSignOut()">Sign Out</button>
   </mat-menu>
 </mat-toolbar>
 <mat-progress-bar mode="indeterminate" *ngIf="isAppLoading"></mat-progress-bar>

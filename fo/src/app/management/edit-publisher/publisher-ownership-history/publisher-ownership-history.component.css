@@ -1,5 +1,9 @@
+.mat-elevation-z8 {
+  width: 60%;
+  margin: 0 auto;
+}
 table {
-  width: 65%;
+  width: 100%;
   margin: 0 auto;
 }
 .mat-header-cell, .mat-cell {

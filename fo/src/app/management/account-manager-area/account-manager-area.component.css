@@ -1,5 +1,18 @@
+mat-card {
+  width: fit-content;
+}
+form > *:not(:last-child) {
+  margin-right: 2rem;
+}
 .mat-elevation-z8 {
-  width: 40%;
+  width: 60%;
+  margin: 0 auto;
+}
+tr {
+  transition: .3s all;
+}
+ tr:hover {
+  background-color: var(--third-color-sub);
 }
 table {
   width: 100%;
