@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 
 import {ActivatedRoute, Params, Router} from "@angular/router";
 
@@ -17,7 +17,8 @@ export class EditPublisherComponent implements OnInit {
   constructor(private utilsService: UtilsService,
               private manageService: ManagementService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private renderer: Renderer2) { }
 
   async ngOnInit() {
     this.route.params
@@ -36,6 +37,12 @@ export class EditPublisherComponent implements OnInit {
           this.isValidPublisher = false;
         }
       });
+  }
+
+  refreshAllPublisherData() {
+    this.renderer.addClass(document.getElementById('refreshData'), 'refresh')
+    const id = this.route.snapshot.params['publisherId']
+    this.userState = this.onGetuserStateDetails(id);
   }
 
   getVerticals() {
@@ -123,6 +130,7 @@ export class EditPublisherComponent implements OnInit {
     else {
       this.isValidPublisher = false;
     }
+    this.renderer.removeClass(document.getElementById('refreshData'), 'refresh')
     this.utilsService.loader.next(false);
     return userState;
   }

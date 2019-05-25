@@ -9,3 +9,22 @@
   font-size: 4rem;
   color: var(--primary-color-main);
 }
+.fa-refresh {
+  font-size: 1.8rem;
+  color: var(--primary-color-main);
+  position: absolute;
+  right: 7rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+.fa-refresh:hover {
+  color: darkred;
+}
+.refresh {
+  animation: rotate360 .8s;
+}
+
+@keyframes rotate360 {
+  0% {transform: rotate(0)}
+  100% {transform: rotate(360deg)}
+}

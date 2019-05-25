@@ -2,6 +2,7 @@
   <h1>Search For Publisher  <i class="fa fa-user-secret"></i></h1>
 </div>
 <div *ngIf="isValidPublisher">
+  <i id="refreshData" class="fa fa-refresh" (click)="refreshAllPublisherData()"></i>
   <mat-tab-group>
     <mat-tab label="Publisher Settings">
       <app-publisher-details *ngIf="userState | async" [userState]="userState"></app-publisher-details>
