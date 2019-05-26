@@ -1,0 +1,13 @@
+.form-content {
+  display: flex;
+  align-items: flex-end;
+}
+.form-content * {
+  margin-right: 2rem;
+}
+mat-slide-toggle {
+  align-self: center;
+}
+.actions {
+  float: right;
+}

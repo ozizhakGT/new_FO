@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Edit Site</h1>
+<form (ngSubmit)="onSentSiteUpdate(editSiteForm)" #editSiteForm="ngForm">
+  <div class="form-content" mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="Site Name" [ngModel]="data.site.name" name="name" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="URL" [ngModel]="data.site.url" name="url" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Vertical</mat-label>
+      <mat-select [ngModel]="data.site.vertical" name="vertical" required>
+        <mat-option *ngFor="let vertical of data.verticals" [value]="vertical.id">
+          {{vertical.vertical}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle [checked]="ngModel" [ngModel]="data.site.enable" name="enable">On Air</mat-slide-toggle>
+  </div>
+  <div class="actions" mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="editSiteForm.value" cdkFocusInitial>Update Site</button>
+  </div>
+</form>
