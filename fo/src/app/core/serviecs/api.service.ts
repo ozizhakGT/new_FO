@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from "../../env.service";
 import {Publisher} from "../../shared/interfaces/publisher.interface";
+import {Site} from "../../shared/interfaces/site.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,17 @@ export class ApiService {
         return this.http.put(`${paymentMethodUrl}/${paymentMethodId}?${this.token}`, data);
     }
   }
+  sitesDetails(method, siteId, data?: Site) {
+    const siteUrl = `${this.baseUrl}sites/${siteId}?${this.token}`;
+    switch (method) {
+      case 'get':
+        return this.http.get(siteUrl);
+        break;
+      case 'put':
+        return this.http.put(siteUrl, data);
+    }
+
+  }
 
   // GET REQUEST
   getPublishers(query) {
@@ -59,16 +71,16 @@ export class ApiService {
     return this.http.get( `${this.baseUrl}query/user_last_login?username=${username}`);
   }
   getPublisherTagsBySiteId(siteId) {
-    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`)
+    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`);
   }
   getPublisherSitesAndTags(publisherId) {
-    return this.http.get(`${this.baseUrl}query/sites_tags?publisher_id=${publisherId}&${this.token}`)
+    return this.http.get(`${this.baseUrl}query/sites_tags?publisher_id=${publisherId}&${this.token}`);
   }
   getPublisherByAccountManager(account_manager_id) {
-    return this.http.get(`${this.baseUrl}query/account_manager_publishers?account_manager_id=${account_manager_id}&${this.token}`)
+    return this.http.get(`${this.baseUrl}query/account_manager_publishers?account_manager_id=${account_manager_id}&${this.token}`);
   }
   getPaymentHistory(userId) {
-    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`)
+    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`);
   }
   getVerticals(): Promise<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}verticals?${this.token}`).toPromise()
@@ -76,12 +88,12 @@ export class ApiService {
 
   // CRUD REQUEST
   async postGoogleAuthentication(tokenId) {
-    return await this.http.post(`${this.baseUrl}auth_google`, tokenId).toPromise()
+    return await this.http.post(`${this.baseUrl}auth_google`, tokenId).toPromise();
   }
   updateOwnership(publisherId) {
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}&${this.token}`, {}  );
   }
   updateBILive(tagId,live) {
-    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}&${this.token}`,{})
+    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}&${this.token}`,{});
   }
 }

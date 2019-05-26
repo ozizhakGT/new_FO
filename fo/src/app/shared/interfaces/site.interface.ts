@@ -1,7 +1,8 @@
 export interface Site {
-  _id: number,
+  _id?: number,
   name: string,
   url: string,
-  enable: boolean
+  enable: boolean,
+  vertical?: number,
   tags?: []
 }

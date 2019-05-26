@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from '../core/serviecs/api.service';
 import {UtilsService} from "../core/serviecs/utils.service";
+import {Site} from "../shared/interfaces/site.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,9 @@ export class ManagementService {
   getAccountManagerPublishers(account_manager_id) {
     return this.apiService.getPublisherByAccountManager(account_manager_id).toPromise()
   }
+  getSitebyId(siteId) {
+    return this.apiService.sitesDetails('get', siteId).toPromise();
+  }
 
   // CRUD REQUESTS
    updateUserDetails(publisherId, data) {
@@ -57,6 +61,9 @@ export class ManagementService {
   updateBILive(tagId, live) {
     return this.apiService.updateBILive(tagId,live);
   }
+  updateSiteById(siteId, data: Site) {
+    return this.apiService.sitesDetails('put',siteId, data).toPromise()
+  }
 
   async postReportColumn(id, monitizationId, data) {
     return await this.apiService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
@@ -66,7 +73,6 @@ export class ManagementService {
     return this.apiService.updateOwnership(publisherId).toPromise();
   }
 
-//  DELETE REQUEST
    deleteUser(publisherId) {
     return this.apiService.UserDetailRequests('delete', publisherId).toPromise();
   }

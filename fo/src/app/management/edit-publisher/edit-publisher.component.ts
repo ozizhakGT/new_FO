@@ -108,21 +108,9 @@ export class EditPublisherComponent implements OnInit {
           });
       fetchPromiseArr.push(userState.ownershipHistory);
 
-      if (this.utilsService.onSessionStorageLoad('publisherSites') !== undefined) {
-        userState.sites = JSON.parse(this.utilsService.onSessionStorageLoad('publisherSites'));
-        if (userState.sites.length > 0 && !userState.sites[0].hasOwnProperty('tags')) {
-          this.manageService.getSiteTags(userState.sites);
-        }
-      } else {
-        userState.sites = this.manageService.getSitesAndTags(userState.details.publisher.id)
+      userState.sites = this.manageService.getSitesAndTags(userState.details.publisher.id)
           .then(
-            response => {
-              userState.sites = response['message'].results;
-              this.utilsService.onSessionStorageSave('publisherSites', JSON.stringify(userState.sites));
-            }
-          )
-      }
-
+            response => {userState.sites = response['message'].results;});
       fetchPromiseArr.push(userState.sites);
       await Promise.all(fetchPromiseArr);
       this.isValidPublisher = true;

@@ -2,7 +2,7 @@
   <mat-card *ngIf="sites.length > 0; else noSites">
     <h2>Sites and Tags List</h2>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let site of sites">
+      <mat-expansion-panel *ngFor="let site of sites; let i = index">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <h3 matTooltip="Site Name">{{site.name}}</h3>
@@ -16,7 +16,7 @@
         <div *ngIf="site.tags; else noTags" class="mat-elevation-z8">
           <div class="site__details">
             <h3>Vertical: <span>{{site.vertical_name}}</span></h3>
-            <button mat-raised-button color="accent">Edit Site</button>
+            <button mat-raised-button color="accent" (click)="openEditSiteModal(site)">Edit Site</button>
           </div>
           <table mat-table [dataSource]="site.tags">
             <ng-container matColumnDef="tag_id">
