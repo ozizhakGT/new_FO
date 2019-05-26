@@ -17,3 +17,10 @@ tr {
 table {
   width: 100%;
 }
+a {
+  transition: .4s all;
+}
+td > a:hover {
+  color: var(--primary-color-main);
+  font-size: 1.01rem;
+}
