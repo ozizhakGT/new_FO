@@ -32,6 +32,7 @@ export class NewPublisherComponent implements OnInit {
             period['user_id'] = id;
             console.log(period)
             this.manageService.createPaymentMethod(id, period).then(response => {
+              //TODO : ERROR AND SUCCESS HANDLER (NAVIGATE TO USER DETAILS!)
               console.log(response)
             })
           }
