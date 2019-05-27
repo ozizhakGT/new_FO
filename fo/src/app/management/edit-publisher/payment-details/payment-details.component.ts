@@ -31,6 +31,7 @@ export class PaymentDetailsComponent implements OnInit {
       this.userState.then(
         userState => {
           if (userState.paymentsMethods) {
+            console.log(userState.paymentsMethods)
             this.genearalDetails = {
               user_id: userState.paymentsMethods.user_id,
               payment_method_id: userState.paymentsMethods.id

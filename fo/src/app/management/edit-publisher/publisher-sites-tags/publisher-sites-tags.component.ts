@@ -25,8 +25,7 @@ export class PublisherSitesTagsComponent implements OnInit {
     this.userState
       .then(
         userState => {
-          this.sites = userState.sites;
-          this.figureVerticals(this.sites,this.verticals)
+          this.sites = this.figureVerticals(userState.sites,this.verticals)
         });
   }
 
@@ -54,15 +53,15 @@ export class PublisherSitesTagsComponent implements OnInit {
         }
       }
     });
+    return sites
   };
   onSentUpdate(site, editSite) {
     editSite['enable'] = editSite['enable'] ? 1 : 0;
     this.manageService.updateSiteById(site._id, editSite).then(response => {
       if (response['type'] === 'updated') {
         this.manageService.getSitesAndTags(sessionStorage.getItem('publisherId'))
-          .then(async response2 => {
-            this.sites = await response2['message'].results;
-            this.figureVerticals(this.sites, this.verticals);
+          .then(response2 => {
+            this.sites = this.figureVerticals(response2['message'].results, this.verticals);
             this.utilsService.messageNotification(`Site Edited Successfully!`, null, 'success');
             this.utilsService.loader.next(false);
           });

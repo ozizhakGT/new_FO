@@ -2,10 +2,25 @@
 <form (ngSubmit)="onSentSiteUpdate(editSiteForm)" #editSiteForm="ngForm">
   <div class="form-content" mat-dialog-content>
     <mat-form-field>
-      <input matInput placeholder="Site Name" [ngModel]="data.site.name" name="name" required>
+      <input matInput
+             placeholder="Site Name"
+             [ngModel]="data.site.name"
+             name="name"
+             required
+             #siteName
+             pattern="^(?!\s*$)[-a-zA-Z0-9_:,.\s]{3,100}$">
+      <mat-error *ngIf="siteName.pattern">Must be between 3-30 Characters!</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="URL" [ngModel]="data.site.url" name="url" required>
+      <input
+        matInput
+        placeholder="URL"
+        [ngModel]="data.site.url"
+        name="url"
+        required
+        pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+        #siteUrl>
+      <mat-error *ngIf="siteUrl.pattern">Must be A valid URL!</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Vertical</mat-label>
@@ -19,6 +34,6 @@
   </div>
   <div class="actions" mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="editSiteForm.value" cdkFocusInitial>Update Site</button>
+    <button mat-button [mat-dialog-close]="editSiteForm.value" [disabled]="!editSiteForm.valid" cdkFocusInitial>Update Site</button>
   </div>
 </form>

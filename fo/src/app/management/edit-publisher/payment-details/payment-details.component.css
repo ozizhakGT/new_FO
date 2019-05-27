@@ -15,6 +15,9 @@
 form {
   padding: 2rem;
 }
+.field {
+  display: flex;
+}
 form div .mat-form-field {
   margin: 0 2rem;
   width: 17rem;

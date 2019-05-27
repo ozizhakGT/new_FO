@@ -1,6 +1,7 @@
 .form-content {
   display: flex;
   align-items: flex-end;
+  overflow: hidden;
 }
 .form-content * {
   margin-right: 2rem;
