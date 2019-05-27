@@ -1,0 +1,23 @@
+.general-wrapper {
+  margin: 10rem 3rem;
+  width: fit-content;
+}
+mat-card-title i {
+  color: var(--primary-color-main);
+}
+.form-wrapper {
+  display: flex;
+}
+.row {
+  display: flex;
+  margin-right: 4rem;
+}
+.row > *:first-child {
+  margin-right: 4rem;
+}
+mat-slide-toggle {
+  align-self: center;
+}
+button {
+  margin: 1.7rem 2rem;
+}

@@ -41,8 +41,10 @@ export class UtilsService {
       case 'failed':
         textMessage = '✖ ';
         break;
+      case 'info':
+        textMessage = 'ⓘ '
     }
-    textMessage += message
+    textMessage += message;
     this.Notification.open(textMessage, action, {
       duration: 3500,
       panelClass: messagetype,

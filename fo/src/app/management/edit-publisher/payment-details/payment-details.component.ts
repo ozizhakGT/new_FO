@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ManagementService} from "../../management.service";
 import {paymentMethodArray, paymentsMethodsStructure, paymentsPeriodStructure} from "../../enums/publisher-enums";
 import {FormControl, FormGroup} from "@angular/forms";

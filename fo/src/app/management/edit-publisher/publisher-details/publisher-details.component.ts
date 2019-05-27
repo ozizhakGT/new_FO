@@ -188,6 +188,7 @@ export class PublisherDetailsComponent implements OnInit {
               this.utilsService.messageNotification('Report Created!', null, 'success');
             }})
         .catch(err => {
+              console.log(err);
               this.utilsService.messageNotification('Failed Create Report!', null, 'failed');
         })
         .finally(() => this.spinner = false);
@@ -197,21 +198,25 @@ export class PublisherDetailsComponent implements OnInit {
   * TODO: NEED TO COMPARE CLIENT AND OWNER IF THEM THE SAME POP UP MESSAGE AND DONT SEND THIS REQUEST!
   * */
   takeOwner(publisherId, username) {
+    let owner = JSON.parse(localStorage.getItem('adminData')).username;
     if (publisherId) {
-      this.spinner = true;
-      if (confirm(`are you sure you want taking ownership on ${username}`)) {
-        this.manageService.postTakeOwner(publisherId)
-          .then(response => {
-            if (response['type'] === 'created') {
-              this.generalDetails.owner = 'Changing Owners!...';
-              this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
-              this.onGetPresentOwner(publisherId)
-            }
-          })
-          .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
-          .finally(() => this.spinner = false);
+      if (this.generalDetails.owner === owner) {
+        this.utilsService.messageNotification(`You already Publisher's Owner!`, null, 'info')
       } else {
-        this.spinner = false;
+        this.spinner = true;
+        if (confirm(`are you sure you want taking ownership on ${username}`)) {
+          this.manageService.postTakeOwner(publisherId)
+            .then(response => {
+              if (response['type'] === 'created') {
+                this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
+                this.generalDetails.owner = owner;
+              }
+            })
+            .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
+            .finally(() => this.spinner = false);
+        } else {
+          this.spinner = false;
+        }
       }
     }
   }

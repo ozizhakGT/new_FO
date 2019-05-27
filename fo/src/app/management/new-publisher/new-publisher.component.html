@@ -1,3 +1,71 @@
-<p>
-  new-publisher works!
-</p>
+<div class="general-wrapper">
+  <mat-card>
+    <mat-card-title>Create New Publisher! <i class="fa fa-user-plus"></i></mat-card-title>
+    <form #newUserForm="ngForm" (ngSubmit)="createUser(newUserForm)">
+      <div class="form-wrapper">
+        <div>
+          <div class="row">
+            <mat-form-field>
+              <input matInput type="text" placeholder="First name" ngModel name="first_name" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" placeholder="Last name" ngModel name="first_name" required>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <input matInput type="email" placeholder="Email" ngModel name="username" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" placeholder="Password" ngModel name="password" required>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>User Type</mat-label>
+              <mat-select [ngModel]="1" name="account_type" required>
+                <mat-option *ngFor="let userType of userTypes" [value]="userType.id">
+                  {{userType.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>User Status</mat-label>
+              <mat-select [ngModel]="1" name="mode" required>
+                <mat-option *ngFor="let status of userStatus" [value]="status.id">
+                  {{status.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Max Sites" [ngModel]="2" name="max_sites" min="-1" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="number" placeholder="Max Tags" [ngModel]="2" name="max_tags_per_site" min="-1" required>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <input matInput type="text" placeholder="Outsource" ngModel name="outsource">
+            </mat-form-field>
+            <mat-slide-toggle ngModel name="israeli">Is Israeli</mat-slide-toggle>
+          </div>
+        </div>
+        <div class="divide-line"></div>
+        <div>
+          <mat-form-field>
+            <mat-label>Period Options</mat-label>
+            <mat-select ngModel name='payment_period' required>
+              <mat-option *ngFor="let type of periodTypes" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!newUserForm.valid">Create User</button>
+    </form>
+  </mat-card>
+</div>

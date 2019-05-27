@@ -119,6 +119,9 @@ tr:hover {
 .failed {
   background: #cd3301;
 }
+.info {
+  background: #00b0ff;
+}
 
 /*GENERAL ANIMATION*/
 @keyframes fadeIn {
