@@ -1,7 +1,7 @@
 <div class="general-wrapper">
   <mat-card>
     <mat-card-title>Create New Publisher! <i class="fa fa-user-plus"></i></mat-card-title>
-    <form #newUserForm="ngForm" (ngSubmit)="createUser(newUserForm)">
+    <form #newUserForm="ngForm" (ngSubmit)="onCreateUser(newUserForm)">
       <div class="form-wrapper">
         <div>
           <div class="row">
@@ -14,10 +14,10 @@
           </div>
           <div class="row">
             <mat-form-field>
-              <input matInput type="email" placeholder="Email" ngModel name="username" required>
+              <input matInput type="email" placeholder="Email" ngModel name="username" email required>
             </mat-form-field>
             <mat-form-field>
-              <input matInput type="text" placeholder="Password" ngModel name="password" required>
+              <input matInput type="text" placeholder="Password" [ngModel]="'Changeme123'" name="password" required>
             </mat-form-field>
           </div>
           <div class="row">
@@ -30,7 +30,7 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field>
-              <mat-label>User Status</mat-label>
+              <mat-label>User Mode</mat-label>
               <mat-select [ngModel]="1" name="mode" required>
                 <mat-option *ngFor="let status of userStatus" [value]="status.id">
                   {{status.type}}

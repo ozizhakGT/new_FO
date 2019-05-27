@@ -51,6 +51,15 @@ export class ManagementService {
   }
 
   // CRUD REQUESTS
+  createUser(sendVerification, data) {
+    return this.apiService.createUser(sendVerification, data).toPromise();
+  }
+  createPaymentMethod(publisherId, data) {
+    return this.apiService.paymentMethods('post', publisherId, null, data).toPromise()
+  }
+  postTakeOwner(publisherId) {
+    return this.apiService.updateOwnership(publisherId).toPromise();
+  }
    updateUserDetails(publisherId, data) {
     return this.apiService.UserDetailRequests('put', publisherId, data).toPromise();
   }
@@ -68,11 +77,6 @@ export class ManagementService {
   async postReportColumn(id, monitizationId, data) {
     return await this.apiService.ReportColumnsRequests('post', id, monitizationId, data).toPromise();
   }
-
-   postTakeOwner(publisherId) {
-    return this.apiService.updateOwnership(publisherId).toPromise();
-  }
-
    deleteUser(publisherId) {
     return this.apiService.UserDetailRequests('delete', publisherId).toPromise();
   }

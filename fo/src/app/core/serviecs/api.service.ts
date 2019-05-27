@@ -46,6 +46,8 @@ export class ApiService {
         return this.http.get(`${paymentMethodUrl}?${this.token}`);
       case 'put':
         return this.http.put(`${paymentMethodUrl}/${paymentMethodId}?${this.token}`, data);
+      case 'post':
+        return this.http.post(`${paymentMethodUrl}?${this.token}`, data);
     }
   }
   sitesDetails(method, siteId, data?: Site) {
@@ -95,5 +97,8 @@ export class ApiService {
   }
   updateBILive(tagId,live) {
     return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}&${this.token}`,{});
+  }
+  createUser(sendVerification, data) {
+    return this.http.post(`${this.baseUrl}createuser?verification=${sendVerification}&${this.token}`, data)
   }
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {UtilsService} from "../core/serviecs/utils.service";
-import {Publisher} from "../shared/interfaces/publisher.interface";
 
 @Component({
   selector: 'app-management',
@@ -8,7 +6,7 @@ import {Publisher} from "../shared/interfaces/publisher.interface";
   styleUrls: ['./management.component.css']
 })
 export class ManagementComponent implements OnInit {
-  constructor(private utilsService: UtilsService) { }
+  constructor() { }
 
   ngOnInit() {
   }
