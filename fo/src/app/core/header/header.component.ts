@@ -116,7 +116,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSignOut() {
     localStorage.clear();
-    this.authService.spinner.next(false)
+    sessionStorage.clear();
+    this.authService.spinner.next(false);
     this.router.navigate(['login']);
   }
 }
