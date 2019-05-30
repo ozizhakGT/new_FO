@@ -47,6 +47,7 @@ export class PublisherDetailsComponent implements OnInit {
   ngOnInit() {
     this.userState.then(
       userState => {
+        this.manageService.allowVirtualCoins.next(userState.details.publisher['bitcoin_allowed'] === 1);
         let publisher = userState.details.publisher;
         this.detailFormInit(publisher);
         this.generalDetails = {
@@ -70,6 +71,7 @@ export class PublisherDetailsComponent implements OnInit {
         'max_sites': new FormControl(publisher.max_sites, [Validators.required, Validators.min(-1)]),
         'max_tags_per_site': new FormControl(publisher.max_tags_per_site, [Validators.required, Validators.min(-1)]),
         'israeli': new FormControl(publisher.israeli),
+        'bitcoin_allowed': new FormControl(publisher.bitcoin_allowed),
         'cost_by_external': new FormControl(publisher.cost_by_external),
         'source_id': new FormControl(publisher.source_id),
       })
@@ -111,6 +113,7 @@ export class PublisherDetailsComponent implements OnInit {
     } else {
       form[fieldName] = (checked) ? 1 : 0;
     }
+    this.manageService.allowVirtualCoins.next(checked);
   }
 
   changeColorByStatus() {

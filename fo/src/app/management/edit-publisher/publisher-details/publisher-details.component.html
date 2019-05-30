@@ -79,19 +79,30 @@
                 israeli
               </mat-slide-toggle>
             </div>
-            <div class="form__slide-btn">
-              <mat-slide-toggle #costExternal
-                                [checked]="detailsForm.value.cost_by_external === 1"
-                                (change)="onToggle(detailsForm.value, 'cost_by_external', costExternal.checked)">
-                Is Cost External
+            <div class="row">
+              <div class="form__slide-btn">
+                <mat-slide-toggle #costExternal
+                                  [checked]="detailsForm.value.cost_by_external === 1"
+                                  (change)="onToggle(detailsForm.value, 'cost_by_external', costExternal.checked)">
+                  Is Cost External
+                </mat-slide-toggle>
+                <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
+              </div>
+              <mat-slide-toggle #bitcoinAllowed
+                                [checked]="detailsForm.value.bitcoin_allowed === 1"
+                                (change)="onToggle(detailsForm.value, 'bitcoin_allowed', bitcoinAllowed.checked)">
+                Allow Virtual Coins
               </mat-slide-toggle>
-              <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
             </div>
             <br>
             <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Update User</button>
-            <button class="actions-btn" type="button" mat-raised-button color="accent" [matMenuTriggerFor]="actions">ACTIONS</button>
+            <button class="actions-btn" type="button" mat-raised-button color="accent" [matMenuTriggerFor]="actions">
+              ACTIONS
+            </button>
             <mat-menu class="actions" #actions="matMenu">
-              <button mat-menu-item (click)="takeOwner(generalDetails.id, generalDetails.username)"><i class="fa fa-users actions"></i> Take Ownership</button>
+              <button mat-menu-item (click)="takeOwner(generalDetails.id, generalDetails.username)"><i
+                class="fa fa-users actions"></i> Take Ownership
+              </button>
               <button mat-menu-item (click)="deleteUser()"><i class="fa fa-user-times actions"></i> Delete User</button>
             </mat-menu>
           </form>
@@ -112,7 +123,9 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <form class="reports-form" [formGroup]="reportColumnsForm" *ngIf="reportColumnsForm && (columnsReportObs | async)" (ngSubmit)="saveReportColumn(reportColumnsForm)">
+          <form class="reports-form" [formGroup]="reportColumnsForm"
+                *ngIf="reportColumnsForm && (columnsReportObs | async)"
+                (ngSubmit)="saveReportColumn(reportColumnsForm)">
             <div>
               <mat-slide-toggle
                 #cpm
@@ -146,7 +159,9 @@
               </mat-form-field>
             </div>
             <br>
-            <button mat-raised-button color="primary" type="submit" [disabled]="!reportColumnsForm.valid">Create Report</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!reportColumnsForm.valid">Create
+              Report
+            </button>
           </form>
         </div>
       </mat-card-content>

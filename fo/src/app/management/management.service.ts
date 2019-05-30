@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from '../core/serviecs/api.service';
-import {UtilsService} from "../core/serviecs/utils.service";
 import {Site} from "../shared/interfaces/site.interface";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagementService {
-  constructor(private apiService: ApiService, private utilsService: UtilsService) {}
+  allowVirtualCoins = new Subject<boolean>();
+  constructor(private apiService: ApiService) {}
 
   //GET REQUESTS
   getUser(publisherId): any {

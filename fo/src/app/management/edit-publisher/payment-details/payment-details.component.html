@@ -7,7 +7,7 @@
         <mat-form-field>
           <mat-label>Payment Options</mat-label>
           <mat-select formControlName='payment_method'>
-            <mat-option *ngFor="let method of paymentsMethodOption" [value]="method.id">
+            <mat-option *ngFor="let method of paymentsMethodOption | slice: 0:limitVirtualCoins" [value]="method.id">
               {{method.type}}
             </mat-option>
           </mat-select>

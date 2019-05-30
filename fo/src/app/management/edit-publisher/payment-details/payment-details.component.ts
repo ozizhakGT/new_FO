@@ -22,6 +22,7 @@ export class PaymentDetailsComponent implements OnInit {
   genearalDetails =  {user_id: null, payment_method_id: null};
   paymentsHistory: any[] = [];
   page: number = 1;
+  limitVirtualCoins;
 
   spinner: boolean = false;
   constructor(private manageService: ManagementService,
@@ -40,6 +41,11 @@ export class PaymentDetailsComponent implements OnInit {
             this.paymentMethodsOnInitForm(userState.paymentsMethods);
           }
         });
+
+      this.manageService.allowVirtualCoins.subscribe(virtualCoinsAllow => {
+        this.limitVirtualCoins = virtualCoinsAllow ? this.paymentsMethodArray.length : 3;
+        console.log(this.limitVirtualCoins)
+      })
   };
 
   paymentMethodsOnInitForm(form) {

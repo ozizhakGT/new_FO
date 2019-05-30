@@ -68,3 +68,9 @@
 .fa-user-times {
   color: red;
 }
+.row {
+  display: flex;
+}
+.row > div:first-child {
+  margin-right: 4.4rem;
+}

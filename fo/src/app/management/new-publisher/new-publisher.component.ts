@@ -18,25 +18,36 @@ export class NewPublisherComponent implements OnInit {
   ngOnInit() {
     this.utilsService.loader.next(false)
   }
-
   onCreateUser(form) {
-    this.user['group_id'] = form.value['account_type'] === 0 ? -1 : 300;
-    const sendVerification = form.value.mode === 0;
+    let sendVerification = this.prapareObj(form);
     let period = {payment_period: form.value['payment_period'], payment_method: null};
     delete form.value['payment_period'];
     const user = {...this.user, ...form.value};
-
+    console.log(user, sendVerification)
     this.manageService.createUser(sendVerification, user).then(resolve => {
           if (resolve['type'] === 'created') {
             const id = resolve['message'][0];
             period['user_id'] = id;
-            console.log(period)
             this.manageService.createPaymentMethod(id, period).then(response => {
               //TODO : ERROR AND SUCCESS HANDLER (NAVIGATE TO USER DETAILS!)
               console.log(response)
             })
           }
       })
+  }
+
+  prapareObj(f) {
+    let form = f.value;
+    const properties = ['account_type', 'mode'];
+    for (let property of properties) {
+      if (property === 'account_type') {
+        form['group_id'] = form[property] === 0 ? -1 : 300;
+        continue;
+      }
+      if (property === 'mode') {
+        return form[property] === 0;
+      }
+    }
   }
 
 }
