@@ -5,7 +5,6 @@ import {Observable} from "rxjs";
 @Injectable()
 export class HttpInterseptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // debugger;
     if (req.url.includes('/auth_google')) {
       return next.handle(req);
     } else {
