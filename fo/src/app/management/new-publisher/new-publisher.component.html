@@ -1,5 +1,5 @@
 <div class="general-wrapper">
-  <mat-card>
+  <mat-card [ngClass]="{'blur': isSpinner}">
     <mat-card-title>Create New Publisher! <i class="fa fa-user-plus"></i></mat-card-title>
     <form #newUserForm="ngForm" (ngSubmit)="onCreateUser(newUserForm)">
       <div class="form-wrapper">
@@ -66,5 +66,8 @@
       </div>
       <button mat-raised-button type="submit" color="primary" [disabled]="!newUserForm.valid">Create User</button>
     </form>
+    <div *ngIf="isSpinner" class="spinner-wrapper">
+      <mat-spinner [diameter]="30" class="form-spinner"></mat-spinner>
+    </div>
   </mat-card>
 </div>

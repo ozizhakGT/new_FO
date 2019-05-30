@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UtilsService} from "../../core/serviecs/utils.service";
 import {paymentsPeriodStructure, userStatusStructure, userTypeStructure} from "../enums/publisher-enums";
 import {ManagementService} from "../management.service";
+import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-new-publisher',
   templateUrl: './new-publisher.component.html',
@@ -11,33 +12,49 @@ export class NewPublisherComponent implements OnInit {
   userTypes = userTypeStructure;
   userStatus = userStatusStructure;
   periodTypes = paymentsPeriodStructure;
-  user = {group_id: null, source_id: 'FO'};
+  isSpinner: boolean = false;
   constructor(private utilsService: UtilsService,
-              private manageService: ManagementService) { }
+              private manageService: ManagementService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.utilsService.loader.next(false)
   }
   onCreateUser(form) {
+    this.isSpinner = true;
     let sendVerification = this.prapareObj(form);
     let period = {payment_period: form.value['payment_period'], payment_method: null};
     delete form.value['payment_period'];
-    const user = {...this.user, ...form.value};
-    console.log(user, sendVerification)
-    this.manageService.createUser(sendVerification, user).then(resolve => {
+    const user = {...form.value};
+    console.log(user, sendVerification);
+    this.manageService.createUser(sendVerification, user).then(async resolve => {
           if (resolve['type'] === 'created') {
             const id = resolve['message'][0];
             period['user_id'] = id;
-            this.manageService.createPaymentMethod(id, period).then(response => {
+            this.manageService.postTakeOwner(id).catch(err => console.log(err));
+            await this.manageService.createPaymentMethod(id, period).then(response => {
               //TODO : ERROR AND SUCCESS HANDLER (NAVIGATE TO USER DETAILS!)
-              console.log(response)
+              if (resolve['type'] === 'created') {
+                this.utilsService.messageNotification(`Publisher Created Successfilly!`, null, 'success');
+                this.router.navigate(['../', 'edit', id], {relativeTo: this.route});
+              }
+            })
+            .catch(err => {
+              this.isSpinner = false;
+              this.utilsService.messageNotification(`Error Creating Payment Method for Publisher !`, null, 'failed')
             })
           }
+      })
+      .catch(err => {
+        console.log(err)
+        this.utilsService.messageNotification(`Error Creating Publisher !`, null, 'failed');
       })
   }
 
   prapareObj(f) {
     let form = f.value;
+    form['source_id'] = 'FO';
     const properties = ['account_type', 'mode'];
     for (let property of properties) {
       if (property === 'account_type') {

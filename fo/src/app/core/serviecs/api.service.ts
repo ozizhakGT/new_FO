@@ -8,7 +8,6 @@ import {Site} from "../../shared/interfaces/site.interface";
   providedIn: 'root'
 })
 export class ApiService {
-  token = 'authenticationToken=edd5eabf-73c8-4dda-b279-91563cc846a2';
   baseUrl = '';
 
   constructor(private env: EnvService, private http: HttpClient) {
@@ -20,7 +19,7 @@ export class ApiService {
 
   // COMBINED REQUESTS
   UserDetailRequests(request, publisherId, data?: {}) {
-    const userDetailsUrl = `${this.baseUrl}user/${publisherId}?${this.token}`;
+    const userDetailsUrl = `${this.baseUrl}user/${publisherId}`;
     switch (request) {
       case 'get':
         return this.http.get(userDetailsUrl);
@@ -31,7 +30,7 @@ export class ApiService {
     }
   }
   ReportColumnsRequests(request, userId, monetizationId , data?: {}) {
-    const reportsUrl = `${this.baseUrl}publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}&${this.token}`;
+    const reportsUrl = `${this.baseUrl}publisher_report_columns?user_id=${userId}&monetization_id=${monetizationId}`;
     switch (request) {
       case 'get':
         return this.http.get(reportsUrl);
@@ -43,15 +42,15 @@ export class ApiService {
     const paymentMethodUrl = `${this.baseUrl}user/${userId}/payment_method`;
     switch (request) {
       case 'get':
-        return this.http.get(`${paymentMethodUrl}?${this.token}`);
+        return this.http.get(`${paymentMethodUrl}`);
       case 'put':
-        return this.http.put(`${paymentMethodUrl}/${paymentMethodId}?${this.token}`, data);
+        return this.http.put(`${paymentMethodUrl}/${paymentMethodId}`, data);
       case 'post':
-        return this.http.post(`${paymentMethodUrl}?${this.token}`, data);
+        return this.http.post(`${paymentMethodUrl}`, data);
     }
   }
   sitesDetails(method, siteId, data?: Site) {
-    const siteUrl = `${this.baseUrl}sites/${siteId}?${this.token}`;
+    const siteUrl = `${this.baseUrl}sites/${siteId}`;
     switch (method) {
       case 'get':
         return this.http.get(siteUrl);
@@ -64,28 +63,28 @@ export class ApiService {
 
   // GET REQUEST
   getPublishers(query) {
-    return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}&${this.token}`);
+    return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}`);
   }
   getOwnershipHistory(publisherId) {
-    return this.http.get(`${this.baseUrl}query/ownership_history?publisher_id=${publisherId}&${this.token}`);
+    return this.http.get(`${this.baseUrl}query/ownership_history?publisher_id=${publisherId}`);
   }
   getPublisherLastLogin(username) {
     return this.http.get( `${this.baseUrl}query/user_last_login?username=${username}`);
   }
   getPublisherTagsBySiteId(siteId) {
-    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}&${this.token}`);
+    return this.http.get(`${this.baseUrl}query/site_tags?site_id=${siteId}`);
   }
   getPublisherSitesAndTags(publisherId) {
-    return this.http.get(`${this.baseUrl}query/sites_tags?publisher_id=${publisherId}&${this.token}`);
+    return this.http.get(`${this.baseUrl}query/sites_tags?publisher_id=${publisherId}`);
   }
   getPublisherByAccountManager(account_manager_id) {
-    return this.http.get(`${this.baseUrl}query/account_manager_publishers?account_manager_id=${account_manager_id}&${this.token}`);
+    return this.http.get(`${this.baseUrl}query/account_manager_publishers?account_manager_id=${account_manager_id}`);
   }
   getPaymentHistory(userId) {
-    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}&${this.token}`);
+    return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}`);
   }
   getVerticals(): Promise<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}verticals?${this.token}`).toPromise()
+    return this.http.get<any[]>(`${this.baseUrl}verticals`).toPromise()
   }
 
   // CRUD REQUEST
@@ -93,12 +92,12 @@ export class ApiService {
     return await this.http.post(`${this.baseUrl}auth_google`, tokenId).toPromise();
   }
   updateOwnership(publisherId) {
-    return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}&${this.token}`, {}  );
+    return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}`, {});
   }
   updateBILive(tagId,live) {
-    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}&${this.token}`,{});
+    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}`,{});
   }
   createUser(sendVerification, data) {
-    return this.http.post(`${this.baseUrl}createuser?verification=${sendVerification}&${this.token}`, data)
+    return this.http.post(`${this.baseUrl}createuser?verification=${sendVerification}`, data)
   }
 }
