@@ -10,7 +10,6 @@ export class HttpInterseptorService implements HttpInterceptor {
     } else {
       const token = 'authenticationToken='+JSON.parse(localStorage.getItem('adminData')).token;
       let currentUrl = req.url.includes('?') ? req.url+'&'+token : req.url+'?'+token;
-      console.log(currentUrl);
       const httpRequest = new HttpRequest(<any>req.method,currentUrl);
       req = Object.assign(req, httpRequest);
       return next.handle(req);
