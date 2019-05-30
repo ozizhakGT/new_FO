@@ -29,7 +29,7 @@
           <form [formGroup]="detailsForm" (ngSubmit)="saveUserDetails(detailsForm)">
             <h2>Publisher Settings</h2>
             <div>
-              <mat-form-field class="example-full-width">
+              <mat-form-field>
                 <input matInput placeholder="First Name" formControlName='first_name' required>
                 <mat-error>Need Provide First Name</mat-error>
               </mat-form-field>
@@ -69,30 +69,30 @@
                 <mat-error>Minimum Tags is -1(unlimited tags)</mat-error>
               </mat-form-field>
             </div>
-            <div>
+            <div class="row">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="Outsource" formControlName='outsource'>
               </mat-form-field>
-              <mat-slide-toggle #israeli
-                                [checked]="detailsForm.value.israeli === 1"
-                                (change)="onToggle(detailsForm.value, 'israeli', israeli.checked)">
-                israeli
-              </mat-slide-toggle>
-            </div>
-            <div class="row">
-              <div class="form__slide-btn">
-                <mat-slide-toggle #costExternal
-                                  [checked]="detailsForm.value.cost_by_external === 1"
-                                  (change)="onToggle(detailsForm.value, 'cost_by_external', costExternal.checked)">
-                  Is Cost External
+              <div>
+                <mat-slide-toggle class="example-full-width" #israeli
+                                  [checked]="detailsForm.value.israeli === 1"
+                                  (change)="onToggle(detailsForm.value, 'israeli', israeli.checked)">
+                  israeli
                 </mat-slide-toggle>
-                <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
+                <mat-slide-toggle class="example-full-width" #bitcoinAllowed
+                                  [checked]="detailsForm.value.bitcoin_allowed === 1"
+                                  (change)="onToggle(detailsForm.value, 'bitcoin_allowed', bitcoinAllowed.checked)">
+                  Allow Virtual Coins
+                </mat-slide-toggle>
+                <div class="form__slide-btn">
+                  <mat-slide-toggle #costExternal
+                                    [checked]="detailsForm.value.cost_by_external === 1"
+                                    (change)="onToggle(detailsForm.value, 'cost_by_external', costExternal.checked)">
+                    Is Cost External
+                  </mat-slide-toggle>
+                  <mat-hint *ngIf="costExternal.checked">Activated from: {{generalDetails.costExternalDate}}</mat-hint>
+                </div>
               </div>
-              <mat-slide-toggle #bitcoinAllowed
-                                [checked]="detailsForm.value.bitcoin_allowed === 1"
-                                (change)="onToggle(detailsForm.value, 'bitcoin_allowed', bitcoinAllowed.checked)">
-                Allow Virtual Coins
-              </mat-slide-toggle>
             </div>
             <br>
             <button mat-raised-button color="primary" type="submit" [disabled]="!detailsForm.valid">Update User</button>

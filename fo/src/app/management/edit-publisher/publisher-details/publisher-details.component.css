@@ -70,7 +70,9 @@
 }
 .row {
   display: flex;
+  align-items: center;
 }
-.row > div:first-child {
-  margin-right: 4.4rem;
+.row > div {
+  display: flex;
+  flex-direction: column;
 }
