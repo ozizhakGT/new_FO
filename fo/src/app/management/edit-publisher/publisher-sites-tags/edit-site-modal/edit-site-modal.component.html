@@ -25,8 +25,8 @@
     <mat-form-field>
       <mat-label>Vertical</mat-label>
       <mat-select [ngModel]="data.site.vertical" name="vertical" required>
-        <mat-option *ngFor="let vertical of data.verticals" [value]="vertical.id">
-          {{vertical.vertical}}
+        <mat-option *ngFor="let vertical of data.verticals; let i = index" [value]="i+100">
+          {{vertical}}
         </mat-option>
       </mat-select>
     </mat-form-field>

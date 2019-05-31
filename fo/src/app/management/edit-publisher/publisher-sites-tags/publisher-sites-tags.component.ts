@@ -22,13 +22,20 @@ export class PublisherSitesTagsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.verticals = this.serialzeVerticalsArr(this.verticals);
     this.userState
       .then(
         userState => {
           this.sites = this.figureVerticals(userState.sites,this.verticals)
         });
   }
-
+  serialzeVerticalsArr(arr) {
+    let holder = []
+    arr.forEach(obj => {
+      holder.push(obj['vertical'])
+    })
+    return holder
+  }
   onChangeBILive(tag_id, value) {
     let live = value ? 'Enable' : 'Disable';
     this.manageService.updateBILive(tag_id, value)
@@ -45,15 +52,9 @@ export class PublisherSitesTagsComponent implements OnInit {
 
   figureVerticals(sites,verticals) {
     sites.forEach(site => {
-      for (let i = 0; i < verticals.length; i++) {
-        let id = verticals[i].id;
-        let name = verticals[i].vertical;
-        if (site.vertical === id) {
-          return site['vertical_name'] = name;
-        }
-      }
+      site['vertical_name'] = verticals[site['vertical'] - 100];
     });
-    return sites
+    return sites;
   };
   onSentUpdate(site, editSite) {
     editSite['enable'] = editSite['enable'] ? 1 : 0;
@@ -81,6 +82,7 @@ export class PublisherSitesTagsComponent implements OnInit {
     });
     dialogRef.beforeClosed().toPromise().then(async result => {
       if (result != undefined) {
+          console.log(result)
           this.utilsService.loader.next(true);
           await this.onSentUpdate(site, result);
 

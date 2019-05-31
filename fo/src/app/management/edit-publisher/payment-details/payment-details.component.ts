@@ -44,8 +44,7 @@ export class PaymentDetailsComponent implements OnInit {
 
       this.manageService.allowVirtualCoins.subscribe(virtualCoinsAllow => {
         this.limitVirtualCoins = virtualCoinsAllow ? this.paymentsMethodArray.length : 3;
-        console.log(this.limitVirtualCoins)
-      })
+      });
   };
 
   paymentMethodsOnInitForm(form) {

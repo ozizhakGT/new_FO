@@ -8,9 +8,9 @@ export class HttpInterseptorService implements HttpInterceptor {
     if (req.url.includes('/auth_google')) {
       return next.handle(req);
     } else {
-      const token = 'authenticationToken='+JSON.parse(localStorage.getItem('adminData')).token;
-      let currentUrl = req.url.includes('?') ? req.url+'&'+token : req.url+'?'+token;
-      const httpRequest = new HttpRequest(<any>req.method,currentUrl);
+      const token = 'authenticationToken='+ JSON.parse(localStorage.getItem('adminData')).token;
+      const currentUrl = req.url.includes('?') ? req.url + '&' + token : req.url+ '?' + token;
+      const httpRequest = new HttpRequest<any>(req.method, currentUrl, req.body);
       req = Object.assign(req, httpRequest);
       return next.handle(req);
     }
