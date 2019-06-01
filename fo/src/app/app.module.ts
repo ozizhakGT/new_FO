@@ -2,13 +2,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CoreModule} from './core/core.module';
-import {MatProgressBarModule} from "@angular/material";
+import {MatProgressBarModule} from '@angular/material';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
-import {AuthModule} from "./auth/auth.module";
+import {AuthModule} from './auth/auth.module';
 
 // Components & Directives & Service & Guards
 import { AppComponent } from './app.component';
@@ -17,7 +17,7 @@ import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angular
 import {AuthGuard} from './auth/auth.guard';
 
 export function getAuthServiceConfigs() {
-  let config = new AuthServiceConfig(
+  const config = new AuthServiceConfig(
     [
       {
         id: GoogleLoginProvider.PROVIDER_ID,

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {EnvService} from "../../env.service";
-import {Publisher} from "../../shared/interfaces/publisher.interface";
-import {Site} from "../../shared/interfaces/site.interface";
+import {EnvService} from '../../env.service';
+import {Publisher} from '../../shared/interfaces/publisher.interface';
+import {Site} from '../../shared/interfaces/site.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +84,7 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}payment_method_history?user_id=${userId}`);
   }
   getVerticals(): Promise<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}verticals`).toPromise()
+    return this.http.get<any[]>(`${this.baseUrl}verticals`).toPromise();
   }
 
   // CRUD REQUEST
@@ -94,10 +94,10 @@ export class ApiService {
   updateOwnership(publisherId) {
     return this.http.post(`${this.baseUrl}publisher_account_manager_association?publisher_id=${publisherId}`, {});
   }
-  updateBILive(tagId,live) {
-    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}`,{});
+  updateBILive(tagId, live) {
+    return this.http.put(`${this.baseUrl}bi_manual_data_live?tag_id=${tagId}&live=${live}`, {});
   }
   createUser(sendVerification, data) {
-    return this.http.post(`${this.baseUrl}createuser?verification=${sendVerification}`, data)
+    return this.http.post(`${this.baseUrl}createuser?verification=${sendVerification}`, data);
   }
 }
