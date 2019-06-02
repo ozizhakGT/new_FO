@@ -31,13 +31,14 @@ export class NewPublisherComponent implements OnInit {
     this.manageService.createUser(sendVerification, user).then(async resolve => {
           if (resolve['type'] === 'created') {
             const id = resolve['message'][0];
+            sessionStorage.setItem('publisherId', id);
             period['user_id'] = id;
             this.manageService.postTakeOwner(id).catch(err => console.log(err));
             await this.manageService.createPaymentMethod(id, period).then(response => {
               //TODO : ERROR AND SUCCESS HANDLER (NAVIGATE TO USER DETAILS!)
               if (resolve['type'] === 'created') {
                 this.utilsService.messageNotification(`Publisher Created Successfilly!`, null, 'success');
-                this.router.navigate(['../', 'edit', id], {relativeTo: this.route});
+                this.router.navigate(['publisher/edit', id]);
               }
             })
             .catch(err => {
