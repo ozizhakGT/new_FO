@@ -42,8 +42,8 @@ export class PaymentDetailsComponent implements OnInit {
         if (paymentMethods.length > 0) {
           this.paymentMethodsOnInitForm(paymentMethods[0]);
           this.paymentsHistory = res[1]['message'].results;
-          this.isPaymentsExist = true;
         }
+        this.isPaymentsExist = true;
         this.utilsService.loader.next(false);
       })
       .catch(err => {
