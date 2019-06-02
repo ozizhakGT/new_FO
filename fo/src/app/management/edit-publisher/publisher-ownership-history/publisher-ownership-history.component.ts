@@ -4,22 +4,13 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {ActivatedRoute} from "@angular/router";
 import {UtilsService} from "../../../core/serviecs/utils.service";
 
-interface ownershipHistory {
-  id: number,
-  placement_id: number,
-  publisher_id: number,
-  timestamp: string,
-  user_id: number,
-  owner_name: string
-}
-
 @Component({
   selector: 'app-publisher-ownership-history',
   templateUrl: './publisher-ownership-history.component.html',
   styleUrls: ['./publisher-ownership-history.component.css']
 })
 export class PublisherOwnershipHistoryComponent implements OnInit {
-  ownerHistory: ownershipHistory[];
+  ownerHistory: any[];
   displayedColumns: string[] = ['timestamp', 'hour', 'owner'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private manageService: ManagementService,
@@ -28,15 +19,29 @@ export class PublisherOwnershipHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.utilsService.loader.next(true);
-    console.log()
     this.manageService.getOwnershipHistory(this.route.snapshot.params['publisherId'])
       .then(res => {
-        this.ownerHistory = res['message'].results
-        this.utilsService.loader.next(false);
+        let holderArr = [];
+        if (res['message'].results.length > 0) {
+          let holder = 0;
+          res['message'].results.forEach((line,i) => {
+            if (i === 0) {
+              return holderArr.push(line);
+            }
+            if (res['message'].results[holder]['username'] !== line['username']) {
+              holder = i;
+              return holderArr.push(line);
+            }
+          });
+          this.ownerHistory = holderArr;
+        } else {
+          this.ownerHistory = [];
+        }
+        this.utilsService.loader.next(false)
       })
       .catch(err => {
         console.log(err);
-        this.utilsService.messageNotification(`Cannot get Data!`, null, 'failed')
+        this.utilsService.messageNotification(`Cannot get Data!`, null, 'failed');
         this.utilsService.loader.next(false);
       });
   }
