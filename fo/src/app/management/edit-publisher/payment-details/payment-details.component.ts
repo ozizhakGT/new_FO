@@ -19,7 +19,7 @@ export class PaymentDetailsComponent implements OnInit {
   paymentPeriodOption = paymentsPeriodStructure;
   paymentsHistory: any[] = [];
   page: number = 1;
-
+  isVirtualCoinsAllowed: number;
   spinner: boolean = false;
   constructor(private manageService: ManagementService,
               private utilsService: UtilsService,
@@ -27,6 +27,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   ngOnInit() {
     //TODO: need sending bitcoin_allowed to update array in payment methods! ! ! !
+    console.log(this.route.snapshot.params['publisherId'])
     this.getPaymentDetails(this.route.snapshot.params['publisherId']);
   }
 
@@ -35,6 +36,7 @@ export class PaymentDetailsComponent implements OnInit {
     let promiseArr = [this.manageService.getPaymentMethod(publisherId), this.manageService.getPaymentHistory(publisherId)];
     await Promise.all(promiseArr)
       .then(res => {
+        this.isVirtualCoinsAllowed = res[0]['message'].results[0]['bitcoin_allowed'] === 1 ? this.paymentsMethodOption.length : 3;
         const paymentMethods = res[0]['message'].results[0].payment_methods.results;
         if (paymentMethods.length > 0) {
           this.paymentMethodsOnInitForm(paymentMethods[0]);

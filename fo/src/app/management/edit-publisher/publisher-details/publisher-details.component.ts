@@ -56,7 +56,8 @@ export class PublisherDetailsComponent implements OnInit {
         this.detailFormInit(publisherDetails);
         this.generalDetails = {
           username: publisherDetails.username,
-          id: publisherDetails.id
+          id: publisherDetails.id,
+          owner_id: publisherDetails.account_manager_id
         };
         this.utilsService.loader.next(false);
       })
@@ -120,21 +121,6 @@ export class PublisherDetailsComponent implements OnInit {
       form[fieldName] = (checked) ? 1 : 0;
     }
   }
-
-  changeColorByStatus() {
-    const status = this.detailsForm.value.mode;
-    switch (status) {
-      case 0:
-        return 'orange';
-      case 1:
-        return 'green';
-      case 2:
-        return 'red';
-      case 3:
-        return 'grey';
-    }
-  }
-
   onGetReportColumns(monetizationId) {
     if (monetizationId) {
       this.columnsReportObs = this.manageService.getReportColumns(this.generalDetails.id, monetizationId);
@@ -154,7 +140,7 @@ export class PublisherDetailsComponent implements OnInit {
       this.manageService.deleteUser(this.generalDetails.id)
         .then(
           response => {
-            if (response.type === 'deleted') {
+            if (response['type'] === 'deleted') {
               this.utilsService.messageNotification('User Deleted', null, 'success');
               this.utilsService.onSessionStorageRemove('publisherId');
               this.router.navigate(['../'], {relativeTo: this.route});
@@ -174,7 +160,7 @@ export class PublisherDetailsComponent implements OnInit {
     this.manageService.updateUserDetails(this.generalDetails.id, form.value)
       .then(
         response => {
-          if (response.type === 'updated') {
+          if (response['type'] === 'updated') {
               this.utilsService.messageNotification('User Updated!', null, 'success');
           }
         }
@@ -191,7 +177,7 @@ export class PublisherDetailsComponent implements OnInit {
       this.manageService.postReportColumn(finalReport.user_id, finalReport.monetization_id, finalReport)
         .then(
           response => {
-            if (response.type === 'created') {
+            if (response['type'] === 'created') {
               this.utilsService.messageNotification('Report Created!', null, 'success');
             }})
         .catch(err => {
@@ -201,22 +187,25 @@ export class PublisherDetailsComponent implements OnInit {
         .finally(() => this.spinner = false);
   }
 
+  sendNewMode(mode) {
+    this.manageService.modeStatus.next(mode);
+  }
+
   /*
   * TODO: NEED TO COMPARE CLIENT AND OWNER IF THEM THE SAME POP UP MESSAGE AND DONT SEND THIS REQUEST!
   * */
   takeOwner(publisherId, username) {
-    const owner = JSON.parse(localStorage.getItem('adminData')).username;
+    const ownerId = JSON.parse(localStorage.getItem('adminData')).id;
     if (publisherId) {
-      if (this.generalDetails.owner === owner) {
+      if (this.generalDetails.owner_id == ownerId) {
         this.utilsService.messageNotification(`You already Publisher's Owner!`, null, 'info');
       } else {
         this.spinner = true;
         if (confirm(`are you sure you want taking ownership on ${username}`)) {
           this.manageService.postTakeOwner(publisherId)
             .then(response => {
-              if (response.type === 'created') {
+              if (response['type'] === 'created') {
                 this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
-                this.generalDetails.owner = owner;
               }
             })
             .catch(() => this.utilsService.messageNotification(`Couldn't take Ownership`, null, 'failed'))
@@ -226,25 +215,5 @@ export class PublisherDetailsComponent implements OnInit {
         }
       }
     }
-  }
-
-  /*
-  * TODO: AFTER FINISHING MY AREA COMPONENT NEED TO TAKE NAME ADMIN AND PUT IT HERE
-  * !!!! NOT GOOD SOLUTION !!
-  * */
-  onGetPresentOwner(publisherId) {
-    this.manageService.getUser(publisherId)
-      .then(
-        response => {
-          if (typeof response.message.results[0].account_manager_id === 'number') {
-            this.manageService.getUser(response.message.results[0].account_manager_id)
-              .then(
-                response => {
-                  this.generalDetails.owner = response.message.results[0].username;
-                }
-              );
-          }
-        }
-      );
   }
 }

@@ -47,3 +47,20 @@ export const paymentsPeriodStructure: string[] = [
   'bi weekly',
   'makolet',
 ];
+
+export class GeneralDetails {
+  id: number;
+  mode: number;
+  username: string;
+  login_timestamp: string;
+  country: string;
+  owner: string;
+  constructor(id: number, mode: number, username: string, login_timestamp: string, country: string, owner: string) {
+    this.id = id;
+    this.mode = mode;
+    this.username = username;
+    this.login_timestamp = login_timestamp;
+    this.country = country;
+    this.owner = owner;
+  }
+}

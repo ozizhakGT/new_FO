@@ -51,7 +51,7 @@ export class LocalAuthService {
           localStorage.setItem('userDetails',JSON.stringify(userData));
           this.utilsService.messageNotification(`Welcome Back ${userData.name}!`, null, 'success');
           localStorage.setItem('adminData', JSON.stringify(response['message']));
-          this.router.navigate(['manage']);
+          this.router.navigate(['publisher']);
         }
       }).catch(err => {
         if (err['status'] === 401) {

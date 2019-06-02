@@ -1,5 +1,5 @@
 <!--98819 id for checking errors! -->
-<div class="general-wrapper">
+<div class="general-wrapper" *ngIf="paymentmethodsForm">
   <mat-card *ngIf="paymentmethodsForm; else noPaymentMethod" class="form-wrapper" [ngClass]="{'blur': spinner}">
     <h2>Payments Methods</h2>
     <form [formGroup]="paymentmethodsForm" (ngSubmit)="onUpdatePaymentMethod(paymentmethodsForm)">
@@ -7,7 +7,7 @@
         <mat-form-field>
           <mat-label>Payment Options</mat-label>
           <mat-select formControlName='payment_method'>
-            <mat-option *ngFor="let method of paymentsMethodOption | slice: 0:limitVirtualCoins" [value]="method.id">
+            <mat-option *ngFor="let method of paymentsMethodOption | slice: 0:isVirtualCoinsAllowed" [value]="method.id">
               {{method.type}}
             </mat-option>
           </mat-select>

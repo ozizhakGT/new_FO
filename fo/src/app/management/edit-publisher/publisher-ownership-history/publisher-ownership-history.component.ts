@@ -28,6 +28,7 @@ export class PublisherOwnershipHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.utilsService.loader.next(true);
+    console.log()
     this.manageService.getOwnershipHistory(this.route.snapshot.params['publisherId'])
       .then(res => {
         this.ownerHistory = res['message'].results

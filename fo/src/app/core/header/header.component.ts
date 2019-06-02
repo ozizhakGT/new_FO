@@ -98,6 +98,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onPublisherSelect(publisher) {
 
     this.publisherId = publisher._id.toString();
+    console.log(this.publisherId)
     this.utilsService.onSessionStorageSave('publisherId', this.publisherId);
     this.utilsService.onSessionStorageSave('publisherSites', JSON.stringify(publisher['sites']));
     this.router.navigate(['publisher/edit', this.publisherId]);

@@ -9,21 +9,39 @@
   font-size: 4rem;
   color: var(--primary-color-main);
 }
-.fa-refresh {
-  font-size: 1.8rem;
-  color: var(--primary-color-main);
-  position: absolute;
-  right: 7rem;
-  cursor: pointer;
-  z-index: 1000;
+.publisher-detail__card {
+  width: fit-content;
+  transition: .4s all;
 }
-.fa-refresh:hover {
-  color: darkred;
+.mat-card-title {
+  display: flex;
+  /*align-items: center;*/
 }
-.refresh {
-  animation: rotate360 .8s;
+.mat-card-title span {
+  margin-right: .6rem;
 }
-
+.publisher-detail__pic {
+  width: 1.3rem;
+}
+.publisher-detail__item {
+  display: flex;
+  margin-top: 1rem;
+}
+.publisher-detail__item div {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+.publisher-detail__item div i {
+  font-size: 1.5rem;
+}
+.publisher-detail__item div p {
+  margin-left: .4rem;
+}
+.publisher-detail__item div span {
+  transform: scaleX(1.3);
+}
 @keyframes rotate360 {
   0% {transform: rotate(0)}
   100% {transform: rotate(360deg)}

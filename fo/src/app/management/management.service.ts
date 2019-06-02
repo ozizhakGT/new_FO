@@ -7,6 +7,7 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class ManagementService {
+  modeStatus = new Subject<number>();
   constructor(private apiService: ApiService) {}
 
   //GET REQUESTS
