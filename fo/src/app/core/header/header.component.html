@@ -19,8 +19,8 @@
     </mat-menu>
 
     <mat-menu #management="matMenu">
-      <button mat-menu-item [routerLink]="['manage/new']">New Publisher</button>
-      <button mat-menu-item [routerLink]="['manage','edit', publisherId]">Publisher Configuration</button>
+      <button mat-menu-item [routerLink]="['publisher/new']">New Publisher</button>
+      <button mat-menu-item [routerLink]="['publisher','edit']">Publisher Configuration</button>
     </mat-menu>
   </div>
   <div class="navbar__search">
@@ -43,7 +43,7 @@
   </button>
 
   <mat-menu #userDetails="matMenu">
-    <button mat-menu-item  [routerLink]="['manage/my-area']">My Area</button>
+    <button mat-menu-item  [routerLink]="['publisher/my-area']">My Area</button>
     <button mat-menu-item>System Version</button>
     <button mat-menu-item (click)="onSignOut()">Sign Out</button>
   </mat-menu>

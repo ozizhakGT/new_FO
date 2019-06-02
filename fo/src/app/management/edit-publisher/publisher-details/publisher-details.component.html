@@ -1,26 +1,26 @@
-<div class="general-wrapper" *ngIf="userState | async">
-  <mat-card class="publisher-detail__card">
-    <mat-card-title>
-      <i class="fa fa-plug" [ngStyle]="{color: changeColorByStatus()}" matTooltip="User Status"></i>
-      <span matTooltip="Username">{{generalDetails.username}}</span>
-      <span>&#9996;</span>
-      <span matTooltip="User ID">{{generalDetails.id}}</span>
-    </mat-card-title>
-    <mat-card-content class="publisher-detail__item">
-      <div matTooltip="Current Owner">
-        <i class="fa fa-reddit-square"></i>
-        <p>{{generalDetails.owner}}</p>
-      </div>
-      <div *ngIf="generalDetails.login_timestamp" matTooltip="Publisher Last Seen In Panel">
-        <img class="publisher-detail__pic" src="../../../../assets/last-login.jpg" alt="lastSeenPic">
-        <p>{{generalDetails.login_timestamp}}</p>
-      </div>
-      <div *ngIf="generalDetails.country && generalDetails.country !== '-1'" matTooltip="Last Check-In">
-        <span class="flag-icon flag-icon-{{generalDetails.country | lowercase}}"></span>
-        <p>{{generalDetails.country}}</p>
-      </div>
-    </mat-card-content>
-  </mat-card>
+<div class="general-wrapper" *ngIf="detailsForm">
+  <!--<mat-card class="publisher-detail__card">-->
+    <!--<mat-card-title>-->
+      <!--<i class="fa fa-plug" [ngStyle]="{color: changeColorByStatus()}" matTooltip="User Status"></i>-->
+      <!--<span matTooltip="Username">{{generalDetails.username}}</span>-->
+      <!--<span>&#9996;</span>-->
+      <!--<span matTooltip="User ID">{{generalDetails.id}}</span>-->
+    <!--</mat-card-title>-->
+    <!--<mat-card-content class="publisher-detail__item">-->
+      <!--<div matTooltip="Current Owner">-->
+        <!--<i class="fa fa-reddit-square"></i>-->
+        <!--<p>{{generalDetails.owner}}</p>-->
+      <!--</div>-->
+      <!--<div *ngIf="generalDetails.login_timestamp" matTooltip="Publisher Last Seen In Panel">-->
+        <!--<img class="publisher-detail__pic" src="../../../../assets/last-login.jpg" alt="lastSeenPic">-->
+        <!--<p>{{generalDetails.login_timestamp}}</p>-->
+      <!--</div>-->
+      <!--<div *ngIf="generalDetails.country && generalDetails.country !== '-1'" matTooltip="Last Check-In">-->
+        <!--<span class="flag-icon flag-icon-{{generalDetails.country | lowercase}}"></span>-->
+        <!--<p>{{generalDetails.country}}</p>-->
+      <!--</div>-->
+    <!--</mat-card-content>-->
+  <!--</mat-card>-->
 
   <div class="forms-wrapper">
     <mat-card [ngClass]="{'blur': spinner}">

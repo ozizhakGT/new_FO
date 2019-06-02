@@ -15,7 +15,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.utilsService.onLocalStorageCheckExistKey('adminData')) {
-      this.router.navigate(['manage']);
+      this.router.navigate(['publisher']);
     } else {
       this.spinner = false;
     }

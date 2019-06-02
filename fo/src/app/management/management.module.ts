@@ -13,26 +13,20 @@ import { DialogChangePasswordComponent } from './edit-publisher/publisher-detail
 import { PublisherOwnershipHistoryComponent } from './edit-publisher/publisher-ownership-history/publisher-ownership-history.component';
 import { PublisherSitesTagsComponent } from './edit-publisher/publisher-sites-tags/publisher-sites-tags.component';
 import { EditSiteModalComponent } from './edit-publisher/publisher-sites-tags/edit-site-modal/edit-site-modal.component';
+import {EditPublisherModule} from "./edit-publisher/edit-publisher.module";
 
 @NgModule({
   declarations: [
     ManagementComponent,
     NewPublisherComponent,
-    EditPublisherComponent,
-    AccountManagerAreaComponent,
-    PublisherDetailsComponent,
-    PaymentDetailsComponent,
-    PublisherOwnershipHistoryComponent,
-    PublisherSitesTagsComponent,
-    DialogChangePasswordComponent,
-    EditSiteModalComponent
+    AccountManagerAreaComponent
   ],
   imports: [
     CommonModule,
     CoreModule,
     SharedModule,
-    ManagementRoutingModule
-  ],
-  entryComponents: [DialogChangePasswordComponent, EditSiteModalComponent]
+    ManagementRoutingModule,
+    EditPublisherModule
+  ]
 })
 export class ManagementModule { }

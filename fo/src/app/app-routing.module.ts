@@ -7,7 +7,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: AuthComponent},
   {path: 'tags', loadChildren: './tags/tags.module#TagsModule', canActivate: [AuthGuard]},
-  {path: 'manage', loadChildren: './management/management.module#ManagementModule', canActivate: [AuthGuard]},
+  {path: 'publisher', loadChildren: './management/management.module#ManagementModule', canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'welcome'}
 ];
 

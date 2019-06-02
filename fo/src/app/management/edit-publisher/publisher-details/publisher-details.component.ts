@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog} from "@angular/material";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {MatDialog} from '@angular/material';
 
-import {ManagementService} from "../../management.service";
-import {UtilsService} from "../../../core/serviecs/utils.service";
+import {ManagementService} from '../../management.service';
+import {UtilsService} from '../../../core/serviecs/utils.service';
 
-import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-change-password.component";
+import {DialogChangePasswordComponent} from './dialog-change-password/dialog-change-password.component';
 
-import {userStatusStructure, userTypeStructure} from "../../enums/publisher-enums";
-import {operationcategoriesArray} from "../../../core/general-enums/operation_categories";
+import {userStatusStructure, userTypeStructure} from '../../enums/publisher-enums';
+import {operationcategoriesArray} from '../../../core/general-enums/operation_categories';
 
 
 @Component({
@@ -18,9 +18,7 @@ import {operationcategoriesArray} from "../../../core/general-enums/operation_ca
   styleUrls: ['./publisher-details.component.css']
 })
 export class PublisherDetailsComponent implements OnInit {
-  // PROMISE FOR GETTING USER STATE
   // MERGE SOME DATA FOR GENERAL DETAILS
-  @Input() userState: Promise<any>;
   generalDetails;
 
   // OBSERVABLE FOR GETTING RELEVANT COLUMN REPORT BY MONETIZATION ID
@@ -31,11 +29,11 @@ export class PublisherDetailsComponent implements OnInit {
   monetizations = operationcategoriesArray;
 
   // Local Spinner
-  spinner: boolean = false;
+  spinner = false;
 
   // FORMS OBJECTS
-  detailsForm       : FormGroup;
-  reportColumnsForm : FormGroup;
+  detailsForm: FormGroup;
+  reportColumnsForm: FormGroup;
 
 
   constructor(public dialog: MatDialog,
@@ -45,53 +43,61 @@ export class PublisherDetailsComponent implements OnInit {
               private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.userState.then(
-      userState => {
-        this.manageService.allowVirtualCoins.next(userState.details.publisher['bitcoin_allowed'] === 1);
-        let publisher = userState.details.publisher;
-        this.detailFormInit(publisher);
+      this.route.params.subscribe((params: Params) => {
+        this.detailsForm = undefined;
+        this.utilsService.loader.next(true);
+        this.getUser(params['publisherId'])
+      });
+  }
+  getUser(publisherId) {
+    this.manageService.getUser(publisherId).then(
+      publisher => {
+        const publisherDetails = publisher.message.results[0];
+        this.detailFormInit(publisherDetails);
         this.generalDetails = {
-          ...userState.details.lastLogin,
-          owner: userState.details.owner,
-          username: publisher.username,
-          id: publisher.id,
-          costExternalDate: publisher.cost_by_external_from_date
+          username: publisherDetails.username,
+          id: publisherDetails.id
         };
+        this.utilsService.loader.next(false);
+      })
+      .catch(err => {
+        console.log(err)
+        this.utilsService.messageNotification(`Cannot get Data!`, null, 'failed')
+        this.utilsService.loader.next(false);
+      });
+  }
+  detailFormInit(publisher) {
+      this.detailsForm = new FormGroup({
+        first_name: new FormControl(publisher.first_name),
+        last_name: new FormControl(publisher.last_name),
+        password: new FormControl(publisher.password),
+        account_type: new FormControl(publisher.account_type, Validators.required),
+        mode: new FormControl(publisher.mode, Validators.required),
+        outsource: new FormControl(publisher.outsource),
+        max_sites: new FormControl(publisher.max_sites, [Validators.required, Validators.min(-1)]),
+        max_tags_per_site: new FormControl(publisher.max_tags_per_site, [Validators.required, Validators.min(-1)]),
+        israeli: new FormControl(publisher.israeli),
+        bitcoin_allowed: new FormControl(publisher.bitcoin_allowed),
+        cost_by_external: new FormControl(publisher.cost_by_external),
+        source_id: new FormControl(publisher.source_id),
       });
   }
 
-  detailFormInit(publisher) {
-      this.detailsForm = new FormGroup({
-        'first_name': new FormControl(publisher.first_name),
-        'last_name': new FormControl(publisher.last_name),
-        'password': new FormControl(publisher.password),
-        'account_type': new FormControl(publisher.account_type, Validators.required),
-        'mode': new FormControl(publisher.mode, Validators.required),
-        'outsource': new FormControl(publisher.outsource),
-        'max_sites': new FormControl(publisher.max_sites, [Validators.required, Validators.min(-1)]),
-        'max_tags_per_site': new FormControl(publisher.max_tags_per_site, [Validators.required, Validators.min(-1)]),
-        'israeli': new FormControl(publisher.israeli),
-        'bitcoin_allowed': new FormControl(publisher.bitcoin_allowed),
-        'cost_by_external': new FormControl(publisher.cost_by_external),
-        'source_id': new FormControl(publisher.source_id),
-      })
-  }
-
   reportColumnsFormInit(report) {
-    let cpm = report.columns.includes('cpm');
-    let impressions = report.columns.includes('impressions');
-    let country_code = report.columns.includes('country_code');
+    const cpm = report.columns.includes('cpm');
+    const impressions = report.columns.includes('impressions');
+    const country_code = report.columns.includes('country_code');
 
     this.reportColumnsForm = new FormGroup({
-      'columns': new FormGroup({
-        'cpm': new FormControl(cpm, Validators.required),
-        'impressions': new FormControl(impressions, Validators.required),
-        'country_code': new FormControl(country_code, Validators.required)
+      columns: new FormGroup({
+        cpm: new FormControl(cpm, Validators.required),
+        impressions: new FormControl(impressions, Validators.required),
+        country_code: new FormControl(country_code, Validators.required)
       }),
-      'user_id': new FormControl(parseInt(report.user_id)),
-      'monetization_id': new FormControl(parseInt(report.monetization_id)),
-      'show_100_percent_revenue': new FormControl(report.show_100_percent_revenue),
-      'impressions_shaving_percent': new FormControl(report.impressions_shaving_percent, [Validators.required, Validators.min(0), Validators.max(100)])
+      user_id: new FormControl(parseInt(report.user_id)),
+      monetization_id: new FormControl(parseInt(report.monetization_id)),
+      show_100_percent_revenue: new FormControl(report.show_100_percent_revenue),
+      impressions_shaving_percent: new FormControl(report.impressions_shaving_percent, [Validators.required, Validators.min(0), Validators.max(100)])
     });
   }
 
@@ -103,7 +109,7 @@ export class PublisherDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.detailsForm.value.password = result;
-      console.log(this.detailsForm.value)
+      console.log(this.detailsForm.value);
     });
   }
 
@@ -113,11 +119,10 @@ export class PublisherDetailsComponent implements OnInit {
     } else {
       form[fieldName] = (checked) ? 1 : 0;
     }
-    this.manageService.allowVirtualCoins.next(checked);
   }
 
   changeColorByStatus() {
-    let status = this.detailsForm.value.mode;
+    const status = this.detailsForm.value.mode;
     switch (status) {
       case 0:
         return 'orange';
@@ -135,7 +140,7 @@ export class PublisherDetailsComponent implements OnInit {
       this.columnsReportObs = this.manageService.getReportColumns(this.generalDetails.id, monetizationId);
       this.columnsReportObs.subscribe(
         report => {
-          this.reportColumnsFormInit(report['message'].results[0]);
+          this.reportColumnsFormInit(report.message.results[0]);
         });
     } else {
       this.reportColumnsForm.reset();
@@ -145,11 +150,11 @@ export class PublisherDetailsComponent implements OnInit {
 
   deleteUser() {
     this.spinner = true;
-    if(confirm(`Are you sure you want Deleting ${this.generalDetails.username} ?`)) {
+    if (confirm(`Are you sure you want Deleting ${this.generalDetails.username} ?`)) {
       this.manageService.deleteUser(this.generalDetails.id)
         .then(
           response => {
-            if (response['type'] === 'deleted') {
+            if (response.type === 'deleted') {
               this.utilsService.messageNotification('User Deleted', null, 'success');
               this.utilsService.onSessionStorageRemove('publisherId');
               this.router.navigate(['../'], {relativeTo: this.route});
@@ -158,19 +163,18 @@ export class PublisherDetailsComponent implements OnInit {
         .catch(err => {
           this.utilsService.messageNotification('Failed Deleting User!', null, 'failed');
         })
-        .finally(() => this.spinner = false)
-    }
-    else {
+        .finally(() => this.spinner = false);
+    } else {
       this.spinner = false;
     }
   }
 
   saveUserDetails(form) {
     this.spinner = true;
-     this.manageService.updateUserDetails(this.generalDetails.id, form.value)
+    this.manageService.updateUserDetails(this.generalDetails.id, form.value)
       .then(
         response => {
-          if (response['type'] === 'updated') {
+          if (response.type === 'updated') {
               this.utilsService.messageNotification('User Updated!', null, 'success');
           }
         }
@@ -183,11 +187,11 @@ export class PublisherDetailsComponent implements OnInit {
 
   saveReportColumn(form) {
       this.spinner = true;
-      let finalReport = this.manageService.fixReportColumn(form.value);
+      const finalReport = this.manageService.fixReportColumn(form.value);
       this.manageService.postReportColumn(finalReport.user_id, finalReport.monetization_id, finalReport)
         .then(
           response => {
-            if (response['type'] === "created") {
+            if (response.type === 'created') {
               this.utilsService.messageNotification('Report Created!', null, 'success');
             }})
         .catch(err => {
@@ -201,16 +205,16 @@ export class PublisherDetailsComponent implements OnInit {
   * TODO: NEED TO COMPARE CLIENT AND OWNER IF THEM THE SAME POP UP MESSAGE AND DONT SEND THIS REQUEST!
   * */
   takeOwner(publisherId, username) {
-    let owner = JSON.parse(localStorage.getItem('adminData')).username;
+    const owner = JSON.parse(localStorage.getItem('adminData')).username;
     if (publisherId) {
       if (this.generalDetails.owner === owner) {
-        this.utilsService.messageNotification(`You already Publisher's Owner!`, null, 'info')
+        this.utilsService.messageNotification(`You already Publisher's Owner!`, null, 'info');
       } else {
         this.spinner = true;
         if (confirm(`are you sure you want taking ownership on ${username}`)) {
           this.manageService.postTakeOwner(publisherId)
             .then(response => {
-              if (response['type'] === 'created') {
+              if (response.type === 'created') {
                 this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
                 this.generalDetails.owner = owner;
               }
@@ -232,15 +236,15 @@ export class PublisherDetailsComponent implements OnInit {
     this.manageService.getUser(publisherId)
       .then(
         response => {
-          if (typeof response['message'].results[0].account_manager_id === 'number') {
-            this.manageService.getUser(response['message'].results[0].account_manager_id)
+          if (typeof response.message.results[0].account_manager_id === 'number') {
+            this.manageService.getUser(response.message.results[0].account_manager_id)
               .then(
                 response => {
-                  this.generalDetails.owner = response['message'].results[0].username;
+                  this.generalDetails.owner = response.message.results[0].username;
                 }
-              )
+              );
           }
         }
-      )
+      );
   }
 }

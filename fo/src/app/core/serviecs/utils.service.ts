@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from "@angular/material";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+  publisherId = new Subject<string>();
   loader = new BehaviorSubject<boolean>(false);
   constructor(private Notification: MatSnackBar) { }
 

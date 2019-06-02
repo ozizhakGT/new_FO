@@ -3,6 +3,7 @@ import {ManagementService} from "../../management.service";
 import {paymentMethodArray, paymentsMethodsStructure, paymentsPeriodStructure} from "../../enums/publisher-enums";
 import {FormControl, FormGroup} from "@angular/forms";
 import {UtilsService} from "../../../core/serviecs/utils.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-payment-details',
@@ -10,78 +11,84 @@ import {UtilsService} from "../../../core/serviecs/utils.service";
   styleUrls: ['./payment-details.component.css']
 })
 export class PaymentDetailsComponent implements OnInit {
-  @Input() userState: Promise<any>;
 
   paymentmethodsForm: FormGroup;
 
   paymentsMethodOption = paymentsMethodsStructure;
   paymentsMethodArray = paymentMethodArray;
   paymentPeriodOption = paymentsPeriodStructure;
-
-
-  genearalDetails =  {user_id: null, payment_method_id: null};
   paymentsHistory: any[] = [];
   page: number = 1;
-  limitVirtualCoins;
 
   spinner: boolean = false;
   constructor(private manageService: ManagementService,
-              private utilsService: UtilsService) { };
+              private utilsService: UtilsService,
+              private route: ActivatedRoute) { };
 
   ngOnInit() {
-      this.userState.then(
-        userState => {
-          if (userState.paymentsMethods) {
-            console.log(userState.paymentsMethods)
-            this.genearalDetails = {
-              user_id: userState.paymentsMethods.user_id,
-              payment_method_id: userState.paymentsMethods.id
-            };
-            this.paymentsHistory = userState.paymentsHistory;
-            this.paymentMethodsOnInitForm(userState.paymentsMethods);
-          }
-        });
+    //TODO: need sending bitcoin_allowed to update array in payment methods! ! ! !
+    this.getPaymentDetails(this.route.snapshot.params['publisherId']);
+  }
 
-      this.manageService.allowVirtualCoins.subscribe(virtualCoinsAllow => {
-        this.limitVirtualCoins = virtualCoinsAllow ? this.paymentsMethodArray.length : 3;
+  async getPaymentDetails(publisherId) {
+    this.utilsService.loader.next(true);
+    let promiseArr = [this.manageService.getPaymentMethod(publisherId), this.manageService.getPaymentHistory(publisherId)];
+    await Promise.all(promiseArr)
+      .then(res => {
+        const paymentMethods = res[0]['message'].results[0].payment_methods.results;
+        if (paymentMethods.length > 0) {
+          this.paymentMethodsOnInitForm(paymentMethods[0]);
+          this.paymentsHistory = res[1]['message'].results;
+        }
+        this.utilsService.loader.next(false);
+      })
+      .catch(err => {
+        console.log(err)
+        this.utilsService.messageNotification(`Cannot get Data!`, null, 'failed')
+        this.utilsService.loader.next(false);
       });
-  };
+  }
 
-  paymentMethodsOnInitForm(form) {
+  paymentMethodsOnInitForm(paymentDetails) {
     this.paymentmethodsForm = new FormGroup({
-      'user_id': new FormControl(this.genearalDetails.user_id),
-      'payment_method': new FormControl(form.payment_method || ''),
-      'payment_email': new FormControl(form.payment_email || ''),
-      'beneficiary_name': new FormControl(form.beneficiary_name || ''),
-      'beneficiary_address': new FormControl(form.beneficiary_address || ''),
-      'bank_name': new FormControl(form.bank_name || ''),
-      'bank_address': new FormControl(form.bank_address || ''),
-      'swift_code': new FormControl(form.swift_code || ''),
-      'iban_number': new FormControl(form.iban_number || ''),
-      'account_number': new FormControl(form.account_number || ''),
-      'payment_period': new FormControl(form.payment_period || ''),
-      'comment': new FormControl(form.comment || ''),
+      'payment_id': new FormControl(paymentDetails.id),
+      'user_id': new FormControl(paymentDetails.user_id),
+      'payment_method': new FormControl(paymentDetails.payment_method || ''),
+      'payment_email': new FormControl(paymentDetails.payment_email || ''),
+      'beneficiary_name': new FormControl(paymentDetails.beneficiary_name || ''),
+      'beneficiary_address': new FormControl(paymentDetails.beneficiary_address || ''),
+      'bank_name': new FormControl(paymentDetails.bank_name || ''),
+      'bank_address': new FormControl(paymentDetails.bank_address || ''),
+      'swift_code': new FormControl(paymentDetails.swift_code || ''),
+      'iban_number': new FormControl(paymentDetails.iban_number || ''),
+      'account_number': new FormControl(paymentDetails.account_number || ''),
+      'payment_period': new FormControl(paymentDetails.payment_period || ''),
+      'comment': new FormControl(paymentDetails.comment || ''),
     });
   };
 
   onUpdatePaymentMethod(form) {
     this.spinner = true;
-    this.manageService.updatePaymentMethod(this.genearalDetails.user_id, this.genearalDetails.payment_method_id, form.value)
+    this.manageService.updatePaymentMethod(form.value.user_id, form.value.payment_id, form.value)
       .then(
-        response => {
+        async response => {
           if (response['type'] === 'updated') {
             this.utilsService.messageNotification('Payment Method Update!', null, 'success');
-            this.onGetPaymentsHistory(this.genearalDetails.user_id)
+            await this.onGetPaymentsHistory(form.value.user_id)
+            this.spinner = false;
           }
         })
-      .catch(err => this.utilsService.messageNotification('Failed Update Payment Method!', null, 'failed'))
-      .finally(() => this.spinner = false)
+      .catch(err => {
+        console.log(err);
+        this.utilsService.messageNotification('Failed Update Payment Method!', null, 'failed')
+        this.spinner = false;
+      })
   }
   onGetPaymentsHistory(publisherId) {
     this.manageService.getPaymentHistory(publisherId)
       .then(
         response => {
-          this.paymentsHistory = response['message'].results
+          this.paymentsHistory = response['message'].results;
         }
       )
   }

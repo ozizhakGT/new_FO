@@ -7,7 +7,6 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class ManagementService {
-  allowVirtualCoins = new Subject<boolean>();
   constructor(private apiService: ApiService) {}
 
   //GET REQUESTS

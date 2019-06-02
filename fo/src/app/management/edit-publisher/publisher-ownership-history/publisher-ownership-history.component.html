@@ -1,5 +1,5 @@
-<div class="general-wrapper">
-  <div *ngIf="(userState | async) && ownerHistory.length > 0; else noHistory" class="mat-elevation-z8">
+<div class="general-wrapper" *ngIf="ownerHistory">
+  <div *ngIf="ownerHistory.length > 0; else noHistory" class="mat-elevation-z8">
     <table mat-table [dataSource]="ownerHistory">
       <ng-container matColumnDef="timestamp">
         <th mat-header-cell *matHeaderCellDef> Changed Date </th>
