@@ -21,6 +21,7 @@ export class PaymentDetailsComponent implements OnInit {
   page: number = 1;
   isVirtualCoinsAllowed: number;
   spinner: boolean = false;
+  isPaymentsExist: boolean = false;
   constructor(private manageService: ManagementService,
               private utilsService: UtilsService,
               private route: ActivatedRoute) { };
@@ -41,6 +42,7 @@ export class PaymentDetailsComponent implements OnInit {
         if (paymentMethods.length > 0) {
           this.paymentMethodsOnInitForm(paymentMethods[0]);
           this.paymentsHistory = res[1]['message'].results;
+          this.isPaymentsExist = true;
         }
         this.utilsService.loader.next(false);
       })

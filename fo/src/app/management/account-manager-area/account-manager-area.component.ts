@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {ManagementService} from '../management.service';
 import {UtilsService} from '../../core/serviecs/utils.service';
@@ -17,7 +17,10 @@ export class AccountManagerAreaComponent implements OnInit {
   userStatus = userStatusArray;
   displayedColumns: string[] = ['username', 'id', 'mode'];
   sendData = false;
-  constructor(private utilsService: UtilsService, private manageService: ManagementService, private route: ActivatedRoute) {
+  constructor(private utilsService: UtilsService,
+              private manageService: ManagementService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -48,5 +51,10 @@ export class AccountManagerAreaComponent implements OnInit {
       this.utilsService.messageNotification('There was Problem Update Details', null, 'failed');
       this.sendData = false;
     });
+  }
+
+  navigateTo(id) {
+    sessionStorage.setItem('publisherId', id)
+    this.router.navigate(['publisher/edit', id])
   }
 }

@@ -1,5 +1,5 @@
 <!--98819 id for checking errors! -->
-<div class="general-wrapper" *ngIf="paymentmethodsForm">
+<div class="general-wrapper" *ngIf="isPaymentsExist">
   <mat-card *ngIf="paymentmethodsForm; else noPaymentMethod" class="form-wrapper" [ngClass]="{'blur': spinner}">
     <h2>Payments Methods</h2>
     <form [formGroup]="paymentmethodsForm" (ngSubmit)="onUpdatePaymentMethod(paymentmethodsForm)">
