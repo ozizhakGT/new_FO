@@ -5,16 +5,22 @@ import {TagsRoutingModule} from "./tags-routing.module";
 import { NewTagComponent } from './new-tag/new-tag.component';
 import { EditTagComponent } from './edit-tag/edit-tag.component';
 import {TagsComponent} from "./tags.component";
+import {CoreModule} from "../core/core.module";
+import {SharedModule} from "../shared/shared.module";
+import {EditTagModule} from "./edit-tag/edit-tag.module";
 
 @NgModule({
   declarations: [
     TagsComponent,
     NewTagComponent,
-    EditTagComponent
+
   ],
   imports: [
     CommonModule,
-    TagsRoutingModule
+    CoreModule,
+    SharedModule,
+    TagsRoutingModule,
+    EditTagModule
   ]
 })
 export class TagsModule { }

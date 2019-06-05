@@ -1,3 +1,26 @@
-<p>
-  edit-tag works!
-</p>
+<div class="tag-search">
+<mat-form-field class="tag-search__field">
+    <mat-label>Search Tag</mat-label>
+    <input
+           #query
+           type="search"
+           placeholder="ID / Name / Site name"
+           matInput
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let tag of tagsSearch" (click)="onSelectTag(tag.id)">
+        <div *ngIf="hasTagsResults; else noTagsResults">
+        <span>{{tag.name}} - {{tag.id}} | </span>
+        <small>{{tag.site_name}}</small>
+      </div>
+      <ng-template #noTagsResults> No Results</ng-template>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+<hr class="sparede-line">
+<div *ngIf="hasTag; else noTag"></div>
+<ng-template #noTag>
+<h1>Search for Some Tag <i class="fa fa-tag"></i></h1>
+</ng-template>
+<router-outlet></router-outlet>

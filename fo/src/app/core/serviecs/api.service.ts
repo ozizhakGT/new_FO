@@ -62,6 +62,8 @@ export class ApiService {
   }
 
   // GET REQUEST
+
+  // PUBLISHERS GET REQUEST
   getPublishers(query) {
     return this.http.get<Publisher[]>(this.baseUrl + `publishers_search?&q=${query}`);
   }
@@ -85,6 +87,14 @@ export class ApiService {
   }
   getVerticals(): Promise<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}verticals`).toPromise();
+  }
+
+  // TAGS GET REQUEST
+  getTags(query) {
+    return this.http.get(`${this.baseUrl}tags_search?q=${query}`);
+  }
+  getTag(tagId) {
+    return this.http.get(`${this.baseUrl}get_tag?tag_id=${tagId}`);
   }
 
   // CRUD REQUEST
