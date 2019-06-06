@@ -5,11 +5,11 @@ import {PopComponent} from "./components-opretion/pop/pop.component";
 
 const editTagRouting: Routes = [
   {path: '', component: EditTagComponent, children: [
-      {path: 'operation', children: [
+      {path: ':tagId/operation', children: [
           {path: '2', component: PopComponent}
         ]}
     ]}
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(editTagRouting)],
