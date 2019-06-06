@@ -19,8 +19,11 @@
   </mat-form-field>
 </div>
 <hr class="sparede-line">
-<div *ngIf="hasTag; else noTag"></div>
+<div *ngIf="hasTag; else noTag">
+  <mat-menu>
+
+  </mat-menu>
+</div>
 <ng-template #noTag>
 <h1>Search for Some Tag <i class="fa fa-tag"></i></h1>
 </ng-template>
-<router-outlet></router-outlet>

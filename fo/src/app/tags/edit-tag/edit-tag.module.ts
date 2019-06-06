@@ -4,10 +4,12 @@ import {SharedModule} from "../../shared/shared.module";
 import {CoreModule} from "../../core/core.module";
 import {EditTagComponent} from "./edit-tag.component";
 import {EditTagRoutingModule} from "./edit-tag-routing.module";
+import { PopComponent } from './components-opretion/pop/pop.component';
 
 @NgModule({
   declarations: [
-    EditTagComponent
+    EditTagComponent,
+    PopComponent
   ],
   imports: [
     CommonModule,
