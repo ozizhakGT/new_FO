@@ -72,8 +72,7 @@ export class EditPublisherComponent implements OnInit, OnDestroy {
     }
 
     this.modeSubscription = this.manageService.modeStatus.subscribe(mode => {
-        this.statusColor = this.changeColorByStatus(mode);
-        this.statusStyle = {'color': this.statusColor, 'animation': 'scaleAnime .7s, running'}
+        this.statusStyle = {'color': this.changeColorByStatus(mode), 'animation': 'scaleAnime .7s, running'}
 
         setTimeout(() => {
           this.statusStyle = {'animation-play-state': 'paused'}
@@ -84,6 +83,7 @@ export class EditPublisherComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.publisherIdSubscription.unsubscribe();
     this.modeSubscription.unsubscribe();
+    this.ownerSubscription.unsubscribe();
   }
 
   async getGeneralDetails(publisherId) {
@@ -112,7 +112,7 @@ export class EditPublisherComponent implements OnInit, OnDestroy {
           generalDetailsHolder.country,
           generalDetailsHolder.owner
         );
-        this.statusColor = this.changeColorByStatus(publisher['mode']);
+        this.statusStyle = {'color': this.changeColorByStatus(publisher['mode'])}
         this.isGeneralDetailsValid = true;
       });
     })
