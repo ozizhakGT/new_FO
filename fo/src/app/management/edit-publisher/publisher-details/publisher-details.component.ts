@@ -205,6 +205,7 @@ export class PublisherDetailsComponent implements OnInit {
           this.manageService.postTakeOwner(publisherId)
             .then(response => {
               if (response['type'] === 'created') {
+                this.manageService.repalceOwner.next(JSON.parse(localStorage.getItem('adminData')).username);
                 this.utilsService.messageNotification(`You take Ownership on ${username} successfully!`, null, 'success');
               }
             })

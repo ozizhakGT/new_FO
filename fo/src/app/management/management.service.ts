@@ -8,6 +8,7 @@ import {Subject} from "rxjs";
 })
 export class ManagementService {
   modeStatus = new Subject<number>();
+  repalceOwner = new Subject<number>();
   constructor(private apiService: ApiService) {}
 
   //GET REQUESTS

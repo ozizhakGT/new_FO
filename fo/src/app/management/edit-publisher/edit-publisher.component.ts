@@ -17,9 +17,10 @@ export class EditPublisherComponent implements OnInit, OnDestroy {
   navLinks: any[];
   activeLinkIndex = -1;
   publisherIdSubscription: Subscription;
+  ownerSubscription: Subscription;
+  modeSubscription: Subscription;
   statusColor: string;
   statusStyle;
-  modeSubscription: Subscription;
   isValidPublisher: boolean = false;
   isGeneralDetailsValid: boolean = false;
   id = sessionStorage.getItem('publisherId');
@@ -78,6 +79,7 @@ export class EditPublisherComponent implements OnInit, OnDestroy {
           this.statusStyle = {'animation-play-state': 'paused'}
         }, 1000)
     })
+    this.ownerSubscription = this.manageService.repalceOwner.subscribe( owner => {this.generalDetails['owner'] = owner })
   }
   ngOnDestroy() {
     this.publisherIdSubscription.unsubscribe();
