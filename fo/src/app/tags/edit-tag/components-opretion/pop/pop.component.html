@@ -1,3 +1,43 @@
-<p>
-  pop works!
-</p>
+<div *ngIf="tagForm">
+  {{tag | json}}
+  <form [formGroup]="tagForm" (ngSubmit)="onSaveTag(tagForm)">
+    <div class="row">
+      <mat-form-field>
+        <input
+          type="text" placeholder="Tag name" matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Show Parent Tag" formControlName="show_parent_tag">
+          <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
+              {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" placeholder="Parent Tag ID" matInput formControlName="parent_tag">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select #showParentTag placeholder="Activity" formControlName="activity">
+          <mat-option *ngFor="let activity of activitySelection" [value]="activity.id">
+            {{activity.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Enchantment In S2S" formControlName="s2s_without_enchantment">
+          <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Storage Mode" formControlName="storageMode">
+          <mat-option *ngFor="let mode of storageModeSelection" [value]="mode.id">
+            {{mode.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-button>Save Basic Configuration Tag</button>
+  </form>
+</div>

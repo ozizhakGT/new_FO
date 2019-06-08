@@ -1,13 +1,33 @@
 .tag-search {
+  display: flex;
+  align-items: center;
   width: 600px !important;
 }
 .tag-search__field {
   width: 100%;
 }
+.search-rotate {
+  animation: rotate360 2s infinite;
+}
 hr.sparede-line {
   border-top: 1px dotted var(--primary-color-main);
-  margin-bottom: 3rem;
 }
 h1 i.fa {
   color: var(--primary-color-main);
+}
+mat-card {
+  width: fit-content;
+  margin: 2rem 0;
+}
+.tag__general-details {
+  display: flex;
+}
+.tag__general-details p:not(:last-child) {
+  margin-right: 2rem
+}
+@keyframes rotate360 {
+  0% {transform: rotate(0)}
+  40% {transform: rotate(360deg)}
+  50% {transform: scale(1.7)}
+  100% {transform: rotate(0) scale(1)}
 }

@@ -17,20 +17,37 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <i [ngClass]="{'search-rotate': searchingTags}" class="fa fa-search"></i>
 </div>
 <hr class="sparede-line">
-<div *ngIf="hasTag; else noTag">
-  <mat-tab-group>
-    <mat-tab label="basic View">
-      <h1>Some tab content</h1>
-      <p>...</p>
-    </mat-tab>
-    <mat-tab label="">
-      <h1>Some more tab content</h1>
-      <p>...</p>
-    </mat-tab>
-  </mat-tab-group>
+<div *ngIf="!loading; else isLoading">
+  <div *ngIf="hasTag; else noTag">
+    <mat-tab-group>
+      <mat-tab class="basic-conf" label="basic Configuration">
+        <mat-card>
+          <mat-card-title>Tag General Details</mat-card-title>
+          <div class="tag__general-details">
+            <p><b>ID:</b> {{tagGeneralDetails.id}}</p>
+            <p><b>Creation Date:</b> {{tagGeneralDetails.created_on | date}}</p>
+            <p><b>Last Updated:</b> {{(tagGeneralDetails.last_update != null) ? (tagGeneralDetails.last_update | date) : 'Never Updated'}}</p>
+          </div>
+        </mat-card>
+        <router-outlet></router-outlet>
+      </mat-tab>
+      <mat-tab label="Advanced Configuration">
+        <h1>ADVANCED CONFIGURATION</h1>
+        <p>...</p>
+      </mat-tab>
+      <mat-tab label="Piggy Bank">
+        <h1>PIGGY BANK</h1>
+        <p>...</p>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <ng-template #noTag>
+    <h1>Search for Some Tag <i class="fa fa-tag"></i></h1>
+  </ng-template>
 </div>
-<ng-template #noTag>
-<h1>Search for Some Tag <i class="fa fa-tag"></i></h1>
+<ng-template #isLoading>
+    <mat-spinner class="app_spinner" [diameter]="38"></mat-spinner>
 </ng-template>

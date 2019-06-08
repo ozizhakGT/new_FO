@@ -1,7 +1,7 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
-import {EditTagComponent} from "./edit-tag.component";
-import {PopComponent} from "./components-opretion/pop/pop.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {EditTagComponent} from './edit-tag.component';
+import {PopComponent} from './components-opretion/pop/pop.component';
 
 const editTagRouting: Routes = [
   {path: '', component: EditTagComponent, children: [
