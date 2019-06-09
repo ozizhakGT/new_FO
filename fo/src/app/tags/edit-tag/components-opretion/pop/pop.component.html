@@ -37,6 +37,13 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Serving Method" formControlName="serving_method_id">
+          <mat-option *ngFor="let method of servingMethodsSelection" [value]="method.id">
+            {{method.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <button mat-button>Save Basic Configuration Tag</button>
   </form>

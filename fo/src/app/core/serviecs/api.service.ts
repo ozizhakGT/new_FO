@@ -96,6 +96,9 @@ export class ApiService {
   getTag(tagId) {
     return this.http.get(`${this.baseUrl}get_tag?tag_id=${tagId}`);
   }
+  async getEnums() {
+    return await this.http.get(`http://fo.algo.web-pick.com/api/adserver/display/collections/enums`).toPromise();
+  }
 
   // CRUD REQUEST
   async postGoogleAuthentication(tokenId) {

@@ -14,6 +14,7 @@ export class PopComponent implements OnInit {
   selectOptions = SelectOptions;
   activitySelection = Activity;
   storageModeSelection = StorageMode;
+  servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
   constructor(private tagService: TagService,
@@ -36,6 +37,7 @@ export class PopComponent implements OnInit {
       activity: new FormControl(tag.activity),
       s2s_without_enchantment: new FormControl(tag.s2s_without_enchantment || null),
       storageMode: new FormControl(this.tagService.getStorageMode('null',{session: tag['session_storage'], refresh: tag['refresg_storage']})),
+      serving_method_id: new FormControl(tag.serving_method_id)
     });
   }
 
