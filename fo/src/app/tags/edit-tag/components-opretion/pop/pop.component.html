@@ -7,16 +7,6 @@
           type="text" placeholder="Tag name" matInput formControlName="name">
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Show Parent Tag" formControlName="show_parent_tag">
-          <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
-              {{option.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" placeholder="Parent Tag ID" matInput formControlName="parent_tag">
-      </mat-form-field>
-      <mat-form-field>
         <mat-select #showParentTag placeholder="Activity" formControlName="activity">
           <mat-option *ngFor="let activity of activitySelection" [value]="activity.id">
             {{activity.name}}
@@ -43,6 +33,27 @@
             {{method.name}}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Show Parent Tag" formControlName="show_parent_tag">
+          <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
+              {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" placeholder="Parent Tag ID" matInput formControlName="parent_tag">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <input type="number" min="0" max="100" placeholder="Cpa Minimum Winning Percent" matInput formControlName="cpa_minimum_winning_percent">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" min="1" placeholder="Cap" matInput formControlName="cap">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" min="1" placeholder="Cap Per Page" matInput formControlName="cap_per_url">
       </mat-form-field>
     </div>
     <button mat-button>Save Basic Configuration Tag</button>

@@ -1,5 +1,5 @@
 export const SelectOptions = [
-  {id: null, boolean: null, name: 'No Coshen'},
+  // {id: null, boolean: null, name: 'No Coshen'},
   {id: 0 , boolean: false, name: 'Disable'},
   {id: 1, boolean: true,  name: 'Enable'}
 ];

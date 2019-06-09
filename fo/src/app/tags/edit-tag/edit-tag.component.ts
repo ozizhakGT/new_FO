@@ -71,6 +71,8 @@ export class EditTagComponent implements OnInit, OnDestroy {
         tagId = '_' + param;
         this.onSelectTag(tagId);
         break;
+      } else {
+        this.utilsService.loader.next(false);
       }
     }
     if (tagId == null) {
