@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from "../core/serviecs/api.service";
+import {UtilsService} from "../core/serviecs/utils.service";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import {ApiService} from "../core/serviecs/api.service";
 export class TagService {
   tag;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private utilsService: UtilsService) {
   }
 
   getSearchTags(query) {
@@ -91,11 +92,27 @@ export class TagService {
     delete form[unitField];
   }
 
-  getAdditionalTag(tagsObj) {
-    console.log(tagsObj);
-    Object.keys(tagsObj).forEach((tag,i) => {
-      console.log(tag[i])
-    })
+  getAdditionalTag(type, tagsObj) {
+    if (type === 'load') {
+      if (tagsObj) {
+        let array = [];
+        try {
+          Object.entries(tagsObj).forEach((tag) => {
+            array.push({id: tag[0], boolean: tag[1]});
+          })
+        } catch (e) {
+          this.utilsService.messageNotification(`Was some Error with Additional Tags Section, please report to Developer!`, null , 'failed')
+          console.error(e);
+        }
+        return array;
+      }
+    } else {
+      const obj = {};
+      for (let key of tagsObj) {
+        obj[key['id']] = key['boolean']
+      }
+      return obj
+    }
   }
 }
 

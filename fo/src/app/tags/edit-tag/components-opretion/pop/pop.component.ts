@@ -18,6 +18,7 @@ export class PopComponent implements OnInit {
   workHoursSelection = WorkHours;
   adblockTrafficSelection = AdBlockTraffic;
   capTypeSelection = CapType;
+  additionalTags: any[] | {} = [];
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
@@ -54,19 +55,24 @@ export class PopComponent implements OnInit {
       adblock_traffic_only: new FormControl(tag.adblock_traffic_only),
       cap_type: new FormControl(tag.cap_type),
       show_in_ss: new FormControl(tag.show_in_ss),
-      additional_tags: new FormControl(this.tagService.getAdditionalTag(tag.additional_tags)),
+      additional_tags: new FormControl(tag.additional_tags || null),
     });
+    this.additionalTags = this.tagService.getAdditionalTag('load', tag.additional_tags);
   }
   prapareForm(form) {
     this.tagService.getStorageMode('save', null, form.value);
     this.tagService.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form.value, 'interval', 'interval_TimeUnit');
     this.tagService.getTimeUnit('multiple', null, this.timeUnitsSelection, form.value, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
-
+    form.value['additional_tags'] = this.tagService.getAdditionalTag('save', this.additionalTags);
   }
   onSaveTag(form) {
     this.prapareForm(form);
     const finalTag = {...this.tag, ...form.value};
     console.log(finalTag);
+  }
+
+  onDelete(arr, i) {
+    arr.splice(i, 1);
   }
 
 }

@@ -124,8 +124,12 @@
           <!--SEARCH INPUT-->
         <mat-card-content>
           <mat-list>
-            <mat-list-item >
-
+            <mat-list-item *ngFor="let tag of additionalTags; let i = index">
+              <div class="tag__additional-btn">
+                {{tag.id}}
+                <mat-slide-toggle checked="{{tag.boolean}}" (change)="tag.boolean = $event.checked"></mat-slide-toggle>
+                <i class="fa fa-trash" (click)="onDelete(additionalTags, i)"></i>
+              </div>
               <mat-divider></mat-divider>
             </mat-list-item>
           </mat-list>
