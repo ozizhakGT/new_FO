@@ -15,4 +15,12 @@ export const StorageMode = [
   {id: 1, name: 'Session Storage'},
   {id: 2, name: 'Refresh Storage'},
   {id: 3, name: 'Local Storage'},
-]
+];
+
+export const TimeUnits = [
+  {id: null, name: '', calculate: null},
+  {id: 1, name: 'Days', calculate: 86400000},
+  {id: 2, name: 'Hours', calculate: 3600000},
+  {id: 3, name: 'Minutes', calculate: 60000},
+  {id: 4, name: 'Seconds', calculate: 1000}
+];

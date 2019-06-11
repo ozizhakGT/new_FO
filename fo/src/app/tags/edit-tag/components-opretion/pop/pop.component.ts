@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TagService} from '../../../tag.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {FormControl, FormGroup, Validator, Validators} from '@angular/forms';
-import {Activity, SelectOptions, StorageMode} from '../operation-enums';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Activity, SelectOptions, StorageMode, TimeUnits} from '../operation-enums';
 
 
 @Component({
@@ -14,6 +14,7 @@ export class PopComponent implements OnInit {
   selectOptions = SelectOptions;
   activitySelection = Activity;
   storageModeSelection = StorageMode;
+  timeUnits = TimeUnits;
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
@@ -41,11 +42,20 @@ export class PopComponent implements OnInit {
       cpa_minimum_winning_percent: new FormControl(tag.cpa_minimum_winning_percent, [Validators.required, Validators.min(0), Validators.max(100)]),
       cap: new FormControl(tag.cap, [Validators.required, Validators.min(0)]),
       cap_per_url: new FormControl(tag.cap_per_url, [Validators.required, Validators.min(0)]),
+      interval: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnits)[0], [Validators.required, Validators.min(0)]),
+      interval_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnits)[1]),
+      cap_reset_seconds: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnits)[0], [Validators.required, Validators.min(0)]),
+      cap_reset_seconds_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnits)[1]),
     });
   }
+  prapareForm(form) {
+    this.tagService.getStorageMode('save', null, form.value);
+    this.tagService.getTimeUnit('multiple-mili', null, this.timeUnits, form.value, 'interval', 'interval_TimeUnit');
+    this.tagService.getTimeUnit('multiple', null, this.timeUnits, form.value, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
 
+  }
   onSaveTag(form) {
-    this.tagService.getStorageMode('save', null, form.value)
+    this.prapareForm(form);
     const finalTag = {...this.tag, ...form.value};
     console.log(finalTag);
   }

@@ -49,7 +49,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
                 this.searchingTags = false;
               } else {
                 this.tagsSearch = [null];
-                this.hasTagsResults = false
+                this.hasTagsResults = false;
                 this.searchingTags = false;
               }
             });

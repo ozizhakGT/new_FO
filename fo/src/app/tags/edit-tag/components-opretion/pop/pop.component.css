@@ -2,3 +2,11 @@
   display: flex;
   justify-content: space-between;
 }
+.input_select--fields {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.input_select--fields *:last-child {
+  width: 20%;
+}

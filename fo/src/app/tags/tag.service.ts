@@ -65,5 +65,29 @@ export class TagService {
     }
     return servingMethodsArray;
   }
+
+  /*
+  * divide will take field value before view and detect time unit and divide by the time unit
+  * divide-milli by millisecond and only divide by seconds
+  * multiple will take field value before view and detect time unit and multiple by the time unit
+  * multiple-milli by millisecond and only multiple by seconds
+  * */
+  getTimeUnit(type, currentTime, timeUnits, form?, fieldProp?, unitField?) {
+    let timeHolder;
+    let id;
+    if (type.includes('divide')) {
+      for (let i = 0; i < timeUnits.length; i++) {
+        timeHolder = (type === 'divide-milli') ? currentTime / timeUnits[i].calculate : (currentTime / timeUnits[i].calculate) * 1000;
+        if (timeHolder % 1 === 0) {
+          id = timeUnits[i].id;
+          return [timeHolder, id]
+        }
+      }
+    }
+    if (type.includes('multiple')) {
+      form[fieldProp] = (type === 'multiple-mili') ? form[fieldProp] * timeUnits[form[unitField]].calculate :
+        (form[fieldProp] * timeUnits[form[unitField]].calculate) / 1000;
+    }
+  }
 }
 

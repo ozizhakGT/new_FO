@@ -39,7 +39,7 @@
   </div>
   <img *ngIf="isNavbarLoading" src="../../../assets/search-loading.gif" alt="loading..." class="navbar__loading">
   <button class="navbar__profile" [matMenuTriggerFor]="userDetails">
-    <img class="navbar__profile--pic" src="{{adminData.image}}">
+    <img class="navbar__profile--pic" [src]="adminData.image || '../../../assets/agent-pic.png'">
   </button>
 
   <mat-menu #userDetails="matMenu">

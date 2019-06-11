@@ -37,7 +37,7 @@
       <mat-form-field>
         <mat-select placeholder="Show Parent Tag" formControlName="show_parent_tag">
           <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
-              {{option.name}}
+            {{option.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -47,7 +47,8 @@
     </div>
     <div class="row">
       <mat-form-field>
-        <input type="number" min="0" max="100" placeholder="Cpa Minimum Winning Percent" matInput formControlName="cpa_minimum_winning_percent">
+        <input type="number" min="0" max="100" placeholder="Cpa Minimum Winning Percent" matInput
+               formControlName="cpa_minimum_winning_percent">
       </mat-form-field>
       <mat-form-field>
         <input type="number" min="1" placeholder="Cap" matInput formControlName="cap">
@@ -55,6 +56,30 @@
       <mat-form-field>
         <input type="number" min="1" placeholder="Cap Per Page" matInput formControlName="cap_per_url">
       </mat-form-field>
+      <div class="input_select--fields">
+        <mat-form-field>
+          <input type="number" min="1" placeholder="Cap Interval" matInput formControlName="interval">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="interval_TimeUnit">
+            <mat-option *ngFor="let unit of timeUnits | slice:1" [value]="unit.id">
+              {{unit.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input_select--fields">
+        <mat-form-field>
+          <input type="number" min="1" placeholder="Cap Reset Frequency" matInput formControlName="cap_reset_seconds">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="cap_reset_seconds_TimeUnit">
+            <mat-option *ngFor="let unit of timeUnits | slice:1" [value]="unit.id">
+              {{unit.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <button mat-button>Save Basic Configuration Tag</button>
   </form>
