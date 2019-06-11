@@ -40,6 +40,9 @@ animation: fadeIn .4s;
 .ngx-pagination .current {
   background: var(--primary-color-main) !important;
 }
+.center {
+  text-align: center;
+}
 .no-content {
   display: flex !important;
   align-items: center;

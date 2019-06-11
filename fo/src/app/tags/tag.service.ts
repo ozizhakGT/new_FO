@@ -88,6 +88,14 @@ export class TagService {
       form[fieldProp] = (type === 'multiple-mili') ? form[fieldProp] * timeUnits[form[unitField]].calculate :
         (form[fieldProp] * timeUnits[form[unitField]].calculate) / 1000;
     }
+    delete form[unitField];
+  }
+
+  getAdditionalTag(tagsObj) {
+    console.log(tagsObj);
+    Object.keys(tagsObj).forEach((tag,i) => {
+      console.log(tag[i])
+    })
   }
 }
 

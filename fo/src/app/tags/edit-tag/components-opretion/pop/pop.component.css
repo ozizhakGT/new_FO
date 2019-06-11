@@ -1,12 +1,24 @@
 .row {
+  width: fit-content;
   display: flex;
   justify-content: space-between;
 }
+.row *:not(:last-child) {
+  margin-right: 4rem;
+}
 .input_select--fields {
+  margin-right: -40px !important;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
 }
+.input_select--fields *:first-child {
+  margin-right: 0;
+  text-align: center;
+}
 .input_select--fields *:last-child {
-  width: 20%;
+  width: 23%;
+}
+.tag__additional-tag {
+  margin: 3rem 6rem;
 }

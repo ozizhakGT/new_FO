@@ -18,7 +18,13 @@ import {
   MatSnackBarModule,
   MatTableModule,
   MatExpansionModule,
-  MatPaginatorModule, MatBadgeModule, MatSliderModule
+  MatPaginatorModule,
+  MatBadgeModule,
+  MatSliderModule,
+  MatChipsModule,
+  MatIconModule,
+  MatDividerModule,
+  MatListModule
 } from '@angular/material';
 import {NgxPaginationModule} from 'ngx-pagination';
 
@@ -46,7 +52,11 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatExpansionModule,
     NgxPaginationModule,
     MatBadgeModule,
-    MatSliderModule
+    MatSliderModule,
+    MatChipsModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule
   ],
   exports: [
     FormsModule,
@@ -71,7 +81,11 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatExpansionModule,
     NgxPaginationModule,
     MatBadgeModule,
-    MatSliderModule
+    MatSliderModule,
+    MatChipsModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class SharedModule { }

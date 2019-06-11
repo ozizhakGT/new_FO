@@ -47,6 +47,36 @@
     </div>
     <div class="row">
       <mat-form-field>
+        <mat-select placeholder="Work Hours" formControlName="work_hours" multiple>
+          <mat-option *ngFor="let hour of workHoursSelection" [value]="hour.id">
+            {{hour.hour}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="BLOCK JAVASCRIPT" formControlName="block">
+          <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
+            {{option.name == 'Enable' ? 'Block' : 'Unblock'}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="AdBlock Traffic" formControlName="adblock_traffic_only">
+          <mat-option *ngFor="let option of adblockTrafficSelection" [value]="option.id">
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Show In Self Service" formControlName="show_in_ss">
+          <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
         <input type="number" min="0" max="100" placeholder="Cpa Minimum Winning Percent" matInput
                formControlName="cpa_minimum_winning_percent">
       </mat-form-field>
@@ -62,7 +92,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="interval_TimeUnit">
-            <mat-option *ngFor="let unit of timeUnits | slice:1" [value]="unit.id">
+            <mat-option *ngFor="let unit of timeUnitsSelection | slice:1" [value]="unit.id">
               {{unit.name}}
             </mat-option>
           </mat-select>
@@ -74,12 +104,33 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="cap_reset_seconds_TimeUnit">
-            <mat-option *ngFor="let unit of timeUnits | slice:1" [value]="unit.id">
+            <mat-option *ngFor="let unit of timeUnitsSelection | slice:1" [value]="unit.id">
               {{unit.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+      <mat-form-field>
+        <mat-select placeholder="Cap Type" formControlName="cap_type">
+          <mat-option *ngFor="let option of capTypeSelection" [value]="option.id">
+            {{option.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-card class="tag__additional-tag">
+        <mat-card-title>Additional Tags</mat-card-title>
+          <!--SEARCH INPUT-->
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item >
+
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
     </div>
     <button mat-button>Save Basic Configuration Tag</button>
   </form>

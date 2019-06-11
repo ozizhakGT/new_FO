@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TagService} from '../../../tag.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Activity, SelectOptions, StorageMode, TimeUnits} from '../operation-enums';
+import {Activity, AdBlockTraffic, CapType, SelectOptions, StorageMode, TimeUnits, WorkHours} from '../operation-enums';
 
 
 @Component({
@@ -14,7 +14,10 @@ export class PopComponent implements OnInit {
   selectOptions = SelectOptions;
   activitySelection = Activity;
   storageModeSelection = StorageMode;
-  timeUnits = TimeUnits;
+  timeUnitsSelection = TimeUnits;
+  workHoursSelection = WorkHours;
+  adblockTrafficSelection = AdBlockTraffic;
+  capTypeSelection = CapType;
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
@@ -42,16 +45,22 @@ export class PopComponent implements OnInit {
       cpa_minimum_winning_percent: new FormControl(tag.cpa_minimum_winning_percent, [Validators.required, Validators.min(0), Validators.max(100)]),
       cap: new FormControl(tag.cap, [Validators.required, Validators.min(0)]),
       cap_per_url: new FormControl(tag.cap_per_url, [Validators.required, Validators.min(0)]),
-      interval: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnits)[0], [Validators.required, Validators.min(0)]),
-      interval_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnits)[1]),
-      cap_reset_seconds: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnits)[0], [Validators.required, Validators.min(0)]),
-      cap_reset_seconds_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnits)[1]),
+      interval: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnitsSelection)[0], [Validators.required, Validators.min(0)]),
+      interval_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnitsSelection)[1]),
+      cap_reset_seconds: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnitsSelection)[0], [Validators.required, Validators.min(0)]),
+      cap_reset_seconds_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnitsSelection)[1]),
+      work_hours: new FormControl(tag.work_hours),
+      block: new FormControl(tag.block),
+      adblock_traffic_only: new FormControl(tag.adblock_traffic_only),
+      cap_type: new FormControl(tag.cap_type),
+      show_in_ss: new FormControl(tag.show_in_ss),
+      additional_tags: new FormControl(this.tagService.getAdditionalTag(tag.additional_tags)),
     });
   }
   prapareForm(form) {
     this.tagService.getStorageMode('save', null, form.value);
-    this.tagService.getTimeUnit('multiple-mili', null, this.timeUnits, form.value, 'interval', 'interval_TimeUnit');
-    this.tagService.getTimeUnit('multiple', null, this.timeUnits, form.value, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
+    this.tagService.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form.value, 'interval', 'interval_TimeUnit');
+    this.tagService.getTimeUnit('multiple', null, this.timeUnitsSelection, form.value, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
 
   }
   onSaveTag(form) {
