@@ -1,4 +1,5 @@
 export const operationcategoriesArray = [
+  null,
   {id: 1, name: "Banner"},
   {id: 2, name: "Pop"},
   {id: 8, name: "Lightbox"},

@@ -24,14 +24,28 @@
   <div *ngIf="hasTag; else noTag">
     <mat-tab-group>
       <mat-tab class="basic-conf" label="basic Configuration">
-        <mat-card>
-          <mat-card-title>Tag General Details</mat-card-title>
-          <div class="tag__general-details">
-            <p><b>ID:</b> {{tagGeneralDetails.id}}</p>
-            <p><b>Creation Date:</b> {{tagGeneralDetails.created_on | date}}</p>
-            <p><b>Last Updated:</b> {{(tagGeneralDetails.last_update != null) ? (tagGeneralDetails.last_update | date) : 'Never Updated'}}</p>
-          </div>
-        </mat-card>
+        <div class="general-details">
+          <mat-card>
+            <mat-card-title class="tag__general-title">
+              <span>Tag General Details</span>
+              <mat-card [ngStyle]="{'background-color': onPaintLabel(tagGeneralDetails.type), 'color': 'white'}">{{tagGeneralDetails.type}}</mat-card>
+            </mat-card-title>
+            <div class="tag__general-details">
+              <p><b>ID:</b> {{tagGeneralDetails.id}}</p>
+              <p><b>Creation Date:</b> {{tagGeneralDetails.created_on | date}}</p>
+              <p><b>Last Updated:</b> {{(tagGeneralDetails.last_update != null) ? (tagGeneralDetails.last_update | date) : 'Never Updated'}}</p>
+            </div>
+          </mat-card>
+          <mat-card *ngIf="!tagGeneralDetails.noPublisher">
+            <mat-card-title>Publisher General Details</mat-card-title>
+            <div class="tag__general-details">
+              <p><b>Publisher ID:</b> {{tagGeneralDetails.publisher_id}}</p>
+              <p><b>Site Id:</b> {{tagGeneralDetails.site_id}}</p>
+              <p><b>Site Name:</b> {{tagGeneralDetails.site_name}}</p>
+              <p><b>Owner:</b> {{tagGeneralDetails.owner}}</p>
+            </div>
+          </mat-card>
+        </div>
         <router-outlet></router-outlet>
       </mat-tab>
       <mat-tab label="Advanced Configuration">

@@ -5,7 +5,8 @@ import 'rxjs-compat/add/operator/debounceTime';
 import 'rxjs-compat/add/operator/map';
 import 'rxjs-compat/add/operator/do';
 import {UtilsService} from '../../core/serviecs/utils.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {operationcategoriesArray} from "../../core/general-enums/operation_categories";
 
 interface TagSearch {
   id: string;
@@ -25,6 +26,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
   loading =  true;
   searchingTags = false;
   tagGeneralDetails;
+  operationTypes = operationcategoriesArray
   @ViewChild('query') searchTagQuery: ElementRef;
   searchQuerySubscription: Subscription;
   constructor(private tagService: TagService,
@@ -33,6 +35,9 @@ export class EditTagComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    if (this.router.url.endsWith('edit')) {
+      sessionStorage.removeItem('tagId')
+    }
     this.detectingTagIDUrl();
     this.searchQuerySubscription = Observable.fromEvent(this.searchTagQuery.nativeElement, 'keyup')
       .do(() => this.tagsSearch = null)
@@ -79,20 +84,25 @@ export class EditTagComponent implements OnInit, OnDestroy {
       this.loading = false;
     }
   }
-  onSelectTag(tagId) {
+  async onSelectTag(tagId) {
     if (sessionStorage.getItem('tagId') != tagId)  {
       if (tagId.toString().startsWith('_')) { console.log(tagId = tagId.substring(1)); }
       this.loading = true;
       this.utilsService.loader.next(true);
-      this.tagService.getTag(tagId).toPromise()
+      await this.tagService.getTag(tagId).toPromise()
         .then(
-          _tag => {
+          async _tag => {
             const tag = _tag['message'];
             this.tagGeneralDetails = {
+              type: this.operationTypes[tag['operation_id']].name,
               id: tag['_id'],
               created_on: new Date(tag['created_on']),
-              last_update: tag['created_on'] !== tag['updated_on'] ?  new Date(tag['updated_on']) : null
+              last_update: tag['created_on'] !== tag['updated_on'] ?  new Date(tag['updated_on']) : null,
+              publisher_id: tag['publisher_id'],
+              site_id: tag['site_id'],
             };
+            await this.tagService.getTagGeneralDetails(this.tagGeneralDetails);
+            console.log(this.tagGeneralDetails);
             sessionStorage.setItem('tagId', tag['_id']);
             this.tagService.onGetTagToService(tag);
             this.router.navigate(['./', tag._id , 'operation', tag.operation_id], {relativeTo: this.route});
@@ -104,6 +114,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
         .catch(err => {
           if (err.status === 500) {
             this.utilsService.messageNotification(`Tag Not Found!`, null, 'failed');
+            sessionStorage.removeItem('tagId');
             this.utilsService.loader.next(false);
             this.hasTag = false;
             this.loading = false;
@@ -113,6 +124,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
       this.utilsService.messageNotification(`You try to look for same Tag!`, null, 'info');
     }
   }
-
-
+  onPaintLabel(oparetionName) {
+   return this.tagService.getLabelColor(oparetionName);
+  }
 }

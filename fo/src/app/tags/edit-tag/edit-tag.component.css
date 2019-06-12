@@ -15,6 +15,12 @@ hr.sparede-line {
 h1 i.fa {
   color: var(--primary-color-main);
 }
+.general-details {
+  display: flex;
+}
+.general-details > *:not(:last-child) {
+  margin-right: 4rem;
+}
 mat-card {
   width: fit-content;
   margin: 2rem 0;
@@ -24,6 +30,16 @@ mat-card {
 }
 .tag__general-details p:not(:last-child) {
   margin-right: 2rem
+}
+.tag__general-title {
+  display: flex;
+}
+
+.tag__general-title mat-card {
+  margin: 0;
+  font-size: 1rem;
+  padding: 9px;
+  transform: translateX(20px);
 }
 @keyframes rotate360 {
   0% {transform: rotate(0)}

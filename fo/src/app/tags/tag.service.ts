@@ -10,6 +10,30 @@ export class TagService {
 
   constructor(private apiService: ApiService, private utilsService: UtilsService) {
   }
+  async getUser(userId) {
+    if (userId) {
+      return this.apiService.UserDetailRequests('get', userId).toPromise();
+    } else {
+      return 'No User'
+    }
+  }
+  getTagGeneralDetails(generalDetails) {
+    return this.getUser(generalDetails['publisher_id']).then(async publisherDetails => {
+      if (publisherDetails['message'].results.length > 0) {
+        await Promise.all([
+          this.getUser(publisherDetails['message'].results[0].account_manager_id),
+          this.apiService.sitesDetails('get', generalDetails['site_id']).toPromise()
+        ]).then(res => {
+          console.log(res)
+          generalDetails['owner'] = typeof res[0] !== 'string' ? res[0]['message'].results[0].username : 'No Owner';
+          generalDetails['site_name'] = res[1]['message'].results[0].name;
+        })
+      } else {
+        generalDetails['noPublisher'] = true;
+        this.utilsService.messageNotification(`Note: This Publisher is Deleted!`, null , 'info')
+      }
+    });
+  }
 
   getSearchTags(query) {
     return this.apiService.getTags(query);
@@ -112,6 +136,13 @@ export class TagService {
         obj[key['id']] = key['boolean']
       }
       return obj
+    }
+  }
+
+  getLabelColor(operationName) {
+    switch (operationName) {
+      case 'Pop':
+        return '#8383ff';
     }
   }
 }
