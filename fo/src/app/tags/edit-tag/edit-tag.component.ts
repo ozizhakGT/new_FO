@@ -26,7 +26,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
   loading =  true;
   searchingTags = false;
   tagGeneralDetails;
-  operationTypes = operationcategoriesArray
+  operationTypes = operationcategoriesArray;
   @ViewChild('query') searchTagQuery: ElementRef;
   searchQuerySubscription: Subscription;
   constructor(private tagService: TagService,
