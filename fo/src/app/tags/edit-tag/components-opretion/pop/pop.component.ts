@@ -41,7 +41,7 @@ export class PopComponent implements OnInit {
       parent_tag: new FormControl(tag.parent_tag || null),
       activity: new FormControl(tag.activity),
       s2s_without_enchantment: new FormControl(tag.s2s_without_enchantment || null),
-      storageMode: new FormControl(this.tagService.getStorageMode('null',{session: tag['session_storage'], refresh: tag['refresg_storage']}), [Validators.required]),
+      storageMode: new FormControl(this.tagService.getStorageMode('null',{session: tag['session_storage'], refresh: tag['refresh_storage']}), [Validators.required]),
       serving_method_id: new FormControl(tag.serving_method_id, [Validators.required]),
       cpa_minimum_winning_percent: new FormControl(tag.cpa_minimum_winning_percent, [Validators.required, Validators.min(0), Validators.max(100)]),
       cap: new FormControl(tag.cap, [Validators.required, Validators.min(0)]),
@@ -60,19 +60,23 @@ export class PopComponent implements OnInit {
     this.additionalTags = this.tagService.getAdditionalTag('load', tag.additional_tags);
   }
   prapareForm(form) {
-    this.tagService.getStorageMode('save', null, form.value);
-    this.tagService.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form.value, 'interval', 'interval_TimeUnit');
-    this.tagService.getTimeUnit('multiple', null, this.timeUnitsSelection, form.value, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
-    form.value['additional_tags'] = this.tagService.getAdditionalTag('save', this.additionalTags);
+    this.tagService.getStorageMode('save', null, form);
+    this.tagService.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form, 'interval', 'interval_TimeUnit');
+    this.tagService.getTimeUnit('multiple', null, this.timeUnitsSelection, form, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
+    form['additional_tags'] = this.tagService.getAdditionalTag('save', this.additionalTags);
   }
-  onSaveTag(form) {
-    this.prapareForm(form);
-    const finalTag = {...this.tag, ...form.value};
-    console.log(finalTag);
+
+  addNewAdditionalTag(newTag) {
+    this.tagService.onAddAdditionalTag(this.additionalTags, newTag);
   }
 
   onDelete(arr, i) {
     arr.splice(i, 1);
   }
 
+  onSaveTag(form) {
+    const finalTag = {...this.tag, ...form.value}
+    this.prapareForm(finalTag);
+    console.log(finalTag);
+  }
 }

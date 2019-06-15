@@ -121,7 +121,7 @@
     <div class="row">
       <mat-card class="tag__additional-tag">
         <mat-card-title>Additional Tags</mat-card-title>
-          <app-additional-tag-search></app-additional-tag-search>
+          <app-additional-tag-search (tagChosen)="addNewAdditionalTag($event)"></app-additional-tag-search>
         <mat-card-content>
           <mat-list>
             <mat-list-item *ngFor="let tag of additionalTags; let i = index">

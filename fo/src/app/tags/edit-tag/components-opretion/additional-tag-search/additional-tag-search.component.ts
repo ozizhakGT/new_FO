@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
 import {Observable, Subscription} from 'rxjs';
 import 'rxjs-compat/add/operator/debounceTime';
 import 'rxjs-compat/add/operator/map';
@@ -14,6 +14,7 @@ import {TagService} from "../../../tag.service";
 export class AdditionalTagSearchComponent implements OnInit {
   @ViewChild('addAdditional') query: ElementRef;
   tags: any = [];
+  @Output() tagChosen = new EventEmitter<any>();
   constructor(private tagService: TagService) {}
   ngOnInit() {
       Observable.fromEvent(this.query.nativeElement, 'keyup')
@@ -29,10 +30,14 @@ export class AdditionalTagSearchComponent implements OnInit {
               if (results.length > 0) {
                 this.tags = results;
               } else {
-                this.tags = [{id: 'No Results'}]
+                this.tags = [{id: 'No Results'}];
               }
-            })
+            });
           }
-        })
+        });
+  }
+
+  getTag(tagId) {
+    this.tagChosen.emit({id: tagId.toString(), boolean: true});
   }
 }

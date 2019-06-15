@@ -1,7 +1,7 @@
 <mat-form-field class="example-full-width">
-    <input #addAdditional type="number" placeholder="Add Additional Tag" matInput [matAutocomplete]="auto">
+    <input #addAdditional type="text" placeholder="Add Additional Tag" matInput [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let tag of tags" [value]="tag.id">
+      <mat-option *ngFor="let tag of tags" [value]="tag.id" (click)="getTag(tag.id)">
         {{tag.id}}
       </mat-option>
     </mat-autocomplete>

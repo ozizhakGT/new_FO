@@ -139,6 +139,10 @@ export class TagService {
     }
   }
 
+  onAddAdditionalTag(additionalTagsObj, newTag) {
+    additionalTagsObj.push(newTag);
+  }
+
   getLabelColor(operationName) {
     switch (operationName) {
       case 'Pop':
