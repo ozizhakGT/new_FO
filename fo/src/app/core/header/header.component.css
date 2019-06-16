@@ -18,6 +18,9 @@
 .navbar__title-main {
   font-size: 2rem;
 }
+.navbar__title-main > img {
+  width: 28px;
+}
 
 /* MENU */
 .navbar__item {

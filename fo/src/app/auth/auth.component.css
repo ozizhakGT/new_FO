@@ -28,6 +28,7 @@
   opacity: .5;
 }
 .screen-block__spinner {
+  width: 110px;
   position: fixed;
   top: 50%;
   left: 50%;
