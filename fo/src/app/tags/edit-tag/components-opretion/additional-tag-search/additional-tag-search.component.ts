@@ -4,6 +4,7 @@ import 'rxjs-compat/add/operator/debounceTime';
 import 'rxjs-compat/add/operator/map';
 import 'rxjs-compat/add/operator/do';
 import {TagService} from "../../../tag.service";
+import {operationcategoriesArray} from "../../../../core/general-enums/operation_categories";
 
 @Component({
   selector: 'app-additional-tag-search>',
@@ -13,6 +14,7 @@ import {TagService} from "../../../tag.service";
 
 export class AdditionalTagSearchComponent implements OnInit {
   @ViewChild('addAdditional') query: ElementRef;
+  operationTypes = operationcategoriesArray;
   tags: any = [];
   @Output() tagChosen = new EventEmitter<any>();
   constructor(private tagService: TagService) {}
@@ -28,6 +30,7 @@ export class AdditionalTagSearchComponent implements OnInit {
           if (getQuery.length >= 3) {
             this.tagService.getSearchTags(getQuery).subscribe((results: any) => {
               if (results.length > 0) {
+                console.log(results)
                 this.tags = results;
               } else {
                 this.tags = [{id: 'No Results'}];
@@ -39,5 +42,8 @@ export class AdditionalTagSearchComponent implements OnInit {
 
   getTag(tagId) {
     this.tagChosen.emit({id: tagId.toString(), boolean: true});
+  }
+  onPaintLabel(operationId) {
+    return this.tagService.getLabelColor(operationId);
   }
 }

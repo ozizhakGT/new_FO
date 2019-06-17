@@ -63,6 +63,12 @@ tr:hover {
 .fade-in {
   animation: fadeIn .4s;
 }
+.label__search {
+  padding: .3rem;
+  border-radius: 6px;
+  font-size: 11px;
+  margin-right: 1rem;
+}
 /*SPINNERS*/
 .app_spinner {
   margin: 15rem auto;

@@ -10,6 +10,7 @@
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let tag of tagsSearch" (click)="onSelectTag(tag.id)">
         <div *ngIf="hasTagsResults; else noTagsResults">
+        <span class="label__search" [ngStyle]="{'background-color': onPaintLabel(tag.operation_id), 'color': 'white'}">{{operationTypes[tag.operation_id].name}}</span>
         <span>{{tag.name}} - {{tag.id}} | </span>
         <small>{{tag.site_name}}</small>
       </div>
@@ -28,7 +29,7 @@
           <mat-card>
             <mat-card-title class="tag__general-title">
               <span>Tag General Details</span>
-              <mat-card [ngStyle]="{'background-color': onPaintLabel(tagGeneralDetails.type), 'color': 'white'}">{{tagGeneralDetails.type}}</mat-card>
+              <mat-card [ngStyle]="{'background-color': onPaintLabel(tagGeneralDetails.operation_id), 'color': 'white'}">{{tagGeneralDetails.type}}</mat-card>
             </mat-card-title>
             <div class="tag__general-details">
               <p><b>ID:</b> {{tagGeneralDetails.id}}</p>

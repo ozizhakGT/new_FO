@@ -84,14 +84,14 @@ export class PopComponent implements OnInit {
   }
 
   onSaveTag(form, adminForm) {
-    const adminProperties = {}
+    let adminProperties = {};
     if (adminForm && Object.keys(adminForm.value).length > 0) {
       adminProperties = {...adminForm.value}
       this.prapareForm(adminProperties)
       form.value['usedSettings'] = {...adminProperties};
     }
     console.log(form.value);
-    const finalTag = {...this.tag, ...form.value}
+    const finalTag = {...this.tag, ...form.value};
     this.prapareForm(finalTag);
     console.log(finalTag);
   }

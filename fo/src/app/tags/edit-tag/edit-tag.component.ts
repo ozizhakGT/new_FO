@@ -49,6 +49,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
           this.tagService.getSearchTags(query).toPromise()
             .then((tags: TagSearch[]) => {
               if (tags.length > 0) {
+                console.log(tags)
                 this.hasTagsResults = true;
                 this.tagsSearch = tags;
                 this.searchingTags = false;
@@ -94,8 +95,9 @@ export class EditTagComponent implements OnInit, OnDestroy {
           async _tag => {
             const tag = _tag['message'];
             this.tagGeneralDetails = {
-              type: this.operationTypes[tag['operation_id']].name,
               id: tag['_id'],
+              operation_id: tag['operation_id'],
+              type: this.operationTypes[tag['operation_id']].name,
               created_on: new Date(tag['created_on']),
               last_update: tag['created_on'] !== tag['updated_on'] ?  new Date(tag['updated_on']) : null,
               publisher_id: tag['publisher_id'],

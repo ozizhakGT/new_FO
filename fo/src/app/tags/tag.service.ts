@@ -143,9 +143,9 @@ export class TagService {
     additionalTagsObj.push(newTag);
   }
 
-  getLabelColor(operationName) {
-    switch (operationName) {
-      case 'Pop':
+  getLabelColor(operationId) {
+    switch (operationId) {
+      case 2:
         return '#8383ff';
     }
   }
