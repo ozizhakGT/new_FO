@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from "../core/serviecs/api.service";
 import {UtilsService} from "../core/serviecs/utils.service";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
   tag;
+  layerSelection = new Subject<string>();
 
   constructor(private apiService: ApiService, private utilsService: UtilsService) {
   }
@@ -148,6 +150,12 @@ export class TagService {
       case 2:
         return '#8383ff';
     }
+  }
+
+  onUpdateTag(tagId, data) {
+    this.apiService.updateTag(tagId,data).toPromise().then(res => {
+      console.log(res)
+    })
   }
 }
 

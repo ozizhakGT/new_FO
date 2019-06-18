@@ -47,6 +47,10 @@
             </div>
           </mat-card>
         </div>
+        <div class="btns__mode">
+          <button (click)="onSelectLayer(layerSelected.publisher)" mat-raised-button color="primary" [disabled]="layerSelected.publisher.enable">Publisher Layer</button>
+          <button (click)="onSelectLayer(layerSelected.admin)" mat-raised-button color="accent" [disabled]="layerSelected.admin.enable">Admin Layer</button>
+        </div>
         <router-outlet></router-outlet>
       </mat-tab>
       <mat-tab label="Advanced Configuration">

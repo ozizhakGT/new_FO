@@ -5,8 +5,9 @@ import 'rxjs-compat/add/operator/debounceTime';
 import 'rxjs-compat/add/operator/map';
 import 'rxjs-compat/add/operator/do';
 import {UtilsService} from '../../core/serviecs/utils.service';
-import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {operationcategoriesArray} from "../../core/general-enums/operation_categories";
+import {SelectMode} from "./components-opretion/operation-enums";
 
 interface TagSearch {
   id: string;
@@ -27,6 +28,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
   searchingTags = false;
   tagGeneralDetails;
   operationTypes = operationcategoriesArray;
+  layerSelected = SelectMode;
   @ViewChild('query') searchTagQuery: ElementRef;
   searchQuerySubscription: Subscription;
   constructor(private tagService: TagService,
@@ -93,6 +95,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
       await this.tagService.getTag(tagId).toPromise()
         .then(
           async _tag => {
+            console.log(_tag['message'])
             const tag = _tag['message'];
             this.tagGeneralDetails = {
               id: tag['_id'],
@@ -128,5 +131,11 @@ export class EditTagComponent implements OnInit, OnDestroy {
   }
   onPaintLabel(oparetionName) {
    return this.tagService.getLabelColor(oparetionName);
+  }
+  onSelectLayer(selection) {
+    for (let layer in this.layerSelected) {
+      this.layerSelected[layer].enable = this.layerSelected[layer].name === selection['name'];
+    }
+    this.tagService.layerSelection.next(selection['prop']);
   }
 }

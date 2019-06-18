@@ -22,8 +22,6 @@ export class PopComponent implements OnInit {
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
-  adminTagForm: FormGroup;
-  adminMode = false;
   constructor(private tagService: TagService,
               private route: ActivatedRoute) { }
   ngOnInit() {
@@ -34,6 +32,10 @@ export class PopComponent implements OnInit {
             this.tagForm = this.tagFormInit(this.tag);
         }
       });
+
+    this.tagService.layerSelection.subscribe(layerPropery => {
+      console.log(layerPropery)
+    })
   }
 
   tagFormInit(tag) {
@@ -72,27 +74,14 @@ export class PopComponent implements OnInit {
     this.tagService.onAddAdditionalTag(this.additionalTags, newTag);
   }
 
-  showAdminPropeties() {
-    this.adminMode = !this.adminMode;
-    if (!this.adminTagForm) {
-      this.adminTagForm = this.tagFormInit(this.tag.usedSettings);
-    }
-  }
-
   onDelete(arr, i) {
     arr.splice(i, 1);
   }
 
-  onSaveTag(form, adminForm) {
-    let adminProperties = {};
-    if (adminForm && Object.keys(adminForm.value).length > 0) {
-      adminProperties = {...adminForm.value}
-      this.prapareForm(adminProperties)
-      form.value['usedSettings'] = {...adminProperties};
-    }
-    console.log(form.value);
+  onSaveTag(form) {
     const finalTag = {...this.tag, ...form.value};
     this.prapareForm(finalTag);
-    console.log(finalTag);
+
+    this.tagService.onUpdateTag(finalTag._id, finalTag);
   }
 }

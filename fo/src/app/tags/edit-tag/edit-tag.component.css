@@ -41,6 +41,14 @@ mat-card {
   padding: 9px;
   transform: translateX(20px);
 }
+.btns__mode {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+.btns__mode button:not(:last-child) {
+  margin-right: .7rem;
+}
 @keyframes rotate360 {
   0% {transform: rotate(0)}
   40% {transform: rotate(360deg)}

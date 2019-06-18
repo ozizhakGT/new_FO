@@ -100,7 +100,7 @@ export class ApiService {
     return await this.http.get(`http://fo.algo.web-pick.com/api/adserver/display/collections/enums`).toPromise();
   }
 
-  // CRUD REQUEST
+  // PUBLISHER CRUD REQUEST
   async postGoogleAuthentication(tokenId) {
     return await this.http.post(`${this.baseUrl}auth_google`, tokenId).toPromise();
   }
@@ -113,4 +113,10 @@ export class ApiService {
   createUser(sendVerification, data) {
     return this.http.post(`${this.baseUrl}createuser?verification=${sendVerification}`, data);
   }
+
+  // TAG CRUD REQUEST
+  updateTag(tagId, data) {
+    return this.http.put(`${this.baseUrl}tag?tag_id=${tagId}`, data);
+  }
+
 }
