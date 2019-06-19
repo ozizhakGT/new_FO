@@ -1,6 +1,6 @@
 export const SelectMode = {
-  publisher: {enable: true, name: 'publisher', prop: null},
-  admin: {enable: false, name: 'admin', prop: 'usedSettings'},
+  publisher: {enable: true, name: 'publisher', prop: 'publisherSettings', color: '#e5e5ff'},
+  admin: {enable: false, name: 'admin', prop: 'usedSettings', color: 'pink'},
 };
 export const SelectOptions = [
   {id: 0 , boolean: false, name: 'Disable'},

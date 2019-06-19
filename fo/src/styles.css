@@ -94,6 +94,8 @@ tr:hover {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  padding: 1.5rem;
+  border-radius: 5px;
 }
 .tag__form--wrapper > button {
   align-self: flex-start;

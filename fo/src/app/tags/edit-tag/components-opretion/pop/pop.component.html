@@ -1,6 +1,6 @@
 <div *ngIf="tagForm">
   <!--{{tag | json}}-->
-  <div class="tag__form--wrapper">
+  <div class="tag__form--wrapper" [ngStyle]="{'background': currentLayerOption.color}">
     <form [formGroup]="tagForm" (ngSubmit)="onSaveTag(tagForm)">
       <div class="tag__inputs-row">
         <mat-form-field>

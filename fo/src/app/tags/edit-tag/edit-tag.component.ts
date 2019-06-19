@@ -136,6 +136,6 @@ export class EditTagComponent implements OnInit, OnDestroy {
     for (let layer in this.layerSelected) {
       this.layerSelected[layer].enable = this.layerSelected[layer].name === selection['name'];
     }
-    this.tagService.layerSelection.next(selection['prop']);
+    this.tagService.layerSelection.next(selection);
   }
 }

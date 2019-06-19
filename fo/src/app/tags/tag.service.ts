@@ -2,12 +2,14 @@ import {Injectable} from '@angular/core';
 import {ApiService} from "../core/serviecs/api.service";
 import {UtilsService} from "../core/serviecs/utils.service";
 import {Subject} from "rxjs";
+import {TimeUnits} from "./edit-tag/components-opretion/operation-enums";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
   tag;
+  timeUnitsSelection = TimeUnits;
   layerSelection = new Subject<string>();
 
   constructor(private apiService: ApiService, private utilsService: UtilsService) {
@@ -117,7 +119,6 @@ export class TagService {
     }
     delete form[unitField];
   }
-
   getAdditionalTag(type, tagsObj) {
     if (type === 'load') {
       if (tagsObj) {
@@ -140,16 +141,33 @@ export class TagService {
       return obj
     }
   }
-
   onAddAdditionalTag(additionalTagsObj, newTag) {
     additionalTagsObj.push(newTag);
   }
-
   getLabelColor(operationId) {
     switch (operationId) {
       case 2:
         return '#8383ff';
     }
+  }
+  prapareForm(form, additionalTags) {
+    this.getStorageMode('save', null, form);
+    this.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form, 'interval', 'interval_TimeUnit');
+    this.getTimeUnit('multiple', null, this.timeUnitsSelection, form, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
+    form['additional_tags'] = this.getAdditionalTag('save', additionalTags);
+
+    return form;
+  }
+  
+  onSaveTag(tag, form, currentLayer, additionalTags) {
+    let finalTag = tag;
+    if (currentLayer.hasOwnProperty('prop') && currentLayer['prop'] !== 'publisherSettings') {
+      debugger
+      finalTag[currentLayer['prop']] = this.prapareForm(form, additionalTags);
+    } else {
+      finalTag = this.prapareForm(form, additionalTags)
+    }
+    console.log(finalTag)
   }
 
   onUpdateTag(tagId, data) {

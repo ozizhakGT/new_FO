@@ -22,6 +22,7 @@ export class PopComponent implements OnInit {
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
+  currentLayerOption = {color: '#e5e5ff'};
   constructor(private tagService: TagService,
               private route: ActivatedRoute) { }
   ngOnInit() {
@@ -33,8 +34,10 @@ export class PopComponent implements OnInit {
         }
       });
 
-    this.tagService.layerSelection.subscribe(layerPropery => {
-      console.log(layerPropery)
+    this.tagService.layerSelection.subscribe((layer: {}) => {
+        this.tagForm = (layer['enable'] && layer['prop'] !== 'publisherSettings') ? this.tagFormInit(this.tag[layer['prop']]) : this.tagFormInit(this.tag);
+        console.log(this.tagForm.value)
+        this.currentLayerOption = {...this.currentLayerOption, ...layer};
     })
   }
 
@@ -68,6 +71,8 @@ export class PopComponent implements OnInit {
     this.tagService.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form, 'interval', 'interval_TimeUnit');
     this.tagService.getTimeUnit('multiple', null, this.timeUnitsSelection, form, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
     form['additional_tags'] = this.tagService.getAdditionalTag('save', this.additionalTags);
+
+    return form;
   }
 
   addNewAdditionalTag(newTag) {
@@ -79,9 +84,6 @@ export class PopComponent implements OnInit {
   }
 
   onSaveTag(form) {
-    const finalTag = {...this.tag, ...form.value};
-    this.prapareForm(finalTag);
-
-    this.tagService.onUpdateTag(finalTag._id, finalTag);
+    this.tagService.onSaveTag(this.tag, form.value, this.currentLayerOption, this.additionalTags);
   }
 }
