@@ -28,7 +28,6 @@ export class TagService {
           this.getUser(publisherDetails['message'].results[0].account_manager_id),
           this.apiService.sitesDetails('get', generalDetails['site_id']).toPromise()
         ]).then(res => {
-          console.log(res)
           generalDetails['owner'] = typeof res[0] !== 'string' ? res[0]['message'].results[0].username : 'No Owner';
           generalDetails['site_name'] = res[1]['message'].results[0].name;
         })
@@ -119,30 +118,25 @@ export class TagService {
     }
     delete form[unitField];
   }
-  getAdditionalTag(type, tagsObj) {
+  onGenerateAdditionalTag(type, additionalTags) {
+    let obj = {};
     if (type === 'load') {
-      if (tagsObj) {
-        let array = [];
-        try {
-          Object.entries(tagsObj).forEach((tag) => {
-            array.push({id: tag[0], boolean: tag[1]});
-          })
-        } catch (e) {
-          this.utilsService.messageNotification(`Was some Error with Additional Tags Section, please report to Developer!`, null , 'failed')
-          console.error(e);
-        }
-        return array;
+      let arr = [];
+      for (let key in additionalTags) {
+        obj['id'] = key;
+        obj['enable'] = additionalTags[key];
+        arr.push(obj)
       }
+      return arr;
     } else {
-      const obj = {};
-      for (let key of tagsObj) {
-        obj[key['id']] = key['boolean']
-      }
-      return obj
+      additionalTags.forEach(tag => {
+        obj[tag['id']] = tag['enable']
+      });
+      return obj;
     }
   }
-  onAddAdditionalTag(additionalTagsObj, newTag) {
-    additionalTagsObj.push(newTag);
+  onDelete(arr, i) {
+    arr.splice(i,1);
   }
   getLabelColor(operationId) {
     switch (operationId) {
@@ -150,30 +144,30 @@ export class TagService {
         return '#8383ff';
     }
   }
-  prapareForm(form, additionalTags) {
+  prapareForm(form) {
     this.getStorageMode('save', null, form);
     this.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form, 'interval', 'interval_TimeUnit');
     this.getTimeUnit('multiple', null, this.timeUnitsSelection, form, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
-    form['additional_tags'] = this.getAdditionalTag('save', additionalTags);
-
+    delete form['additional_tags_generator'];
     return form;
   }
   
-  onSaveTag(tag, form, currentLayer, additionalTags) {
+  onSaveTag(tag, form, currentLayer) {
     let finalTag = tag;
-    if (currentLayer.hasOwnProperty('prop') && currentLayer['prop'] !== 'publisherSettings') {
-      debugger
-      finalTag[currentLayer['prop']] = this.prapareForm(form, additionalTags);
+    if (currentLayer['prop'] !== 'publisherSettings') {
+      finalTag[currentLayer['prop']] = this.prapareForm(form);
     } else {
-      finalTag = this.prapareForm(form, additionalTags)
+      finalTag = this.prapareForm({...finalTag, ...form});
     }
-    console.log(finalTag)
+    this.onUpdateTag(finalTag._id, finalTag);
+    return finalTag;
   }
 
   onUpdateTag(tagId, data) {
     this.apiService.updateTag(tagId,data).toPromise().then(res => {
       console.log(res)
     })
+      .catch(err => console.log(err))
   }
 }
 

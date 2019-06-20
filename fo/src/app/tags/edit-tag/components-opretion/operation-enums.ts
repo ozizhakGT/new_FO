@@ -1,4 +1,4 @@
-export const SelectMode = {
+export const SelectLayer = {
   publisher: {enable: true, name: 'publisher', prop: 'publisherSettings', color: '#e5e5ff'},
   admin: {enable: false, name: 'admin', prop: 'usedSettings', color: 'pink'},
 };

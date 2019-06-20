@@ -2,7 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {TagService} from '../../../tag.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Activity, AdBlockTraffic, CapType, SelectOptions, StorageMode, TimeUnits, WorkHours} from '../operation-enums';
+import {
+  Activity,
+  AdBlockTraffic,
+  CapType,
+  SelectLayer,
+  SelectOptions,
+  StorageMode,
+  TimeUnits,
+  WorkHours
+} from '../operation-enums';
 
 
 @Component({
@@ -18,11 +27,11 @@ export class PopComponent implements OnInit {
   workHoursSelection = WorkHours;
   adblockTrafficSelection = AdBlockTraffic;
   capTypeSelection = CapType;
-  additionalTags: any[] | {} = [];
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
-  currentLayerOption = {color: '#e5e5ff'};
+  cap
+  currentLayerOption = SelectLayer['publisher'];
   constructor(private tagService: TagService,
               private route: ActivatedRoute) { }
   ngOnInit() {
@@ -30,13 +39,14 @@ export class PopComponent implements OnInit {
       (params: Params) => {
         if (params.tagId) {
             this.tag = this.tagService.getTagToOperation();
+            console.log(this.tag)
             this.tagForm = this.tagFormInit(this.tag);
         }
       });
 
     this.tagService.layerSelection.subscribe((layer: {}) => {
         this.tagForm = (layer['enable'] && layer['prop'] !== 'publisherSettings') ? this.tagFormInit(this.tag[layer['prop']]) : this.tagFormInit(this.tag);
-        console.log(this.tagForm.value)
+        console.log(this.tagForm.value);
         this.currentLayerOption = {...this.currentLayerOption, ...layer};
     })
   }
@@ -62,28 +72,21 @@ export class PopComponent implements OnInit {
       adblock_traffic_only: new FormControl(tag.adblock_traffic_only),
       cap_type: new FormControl(tag.cap_type),
       show_in_ss: new FormControl(tag.show_in_ss),
+      additional_tags_generator: new FormControl(this.tagService.onGenerateAdditionalTag('load', tag.additional_tags) || null),
       additional_tags: new FormControl(tag.additional_tags || null),
     });
-    this.additionalTags = this.tagService.getAdditionalTag('load', tag.additional_tags);
-  }
-  prapareForm(form) {
-    this.tagService.getStorageMode('save', null, form);
-    this.tagService.getTimeUnit('multiple-mili', null, this.timeUnitsSelection, form, 'interval', 'interval_TimeUnit');
-    this.tagService.getTimeUnit('multiple', null, this.timeUnitsSelection, form, 'cap_reset_seconds', 'cap_reset_seconds_TimeUnit');
-    form['additional_tags'] = this.tagService.getAdditionalTag('save', this.additionalTags);
-
-    return form;
-  }
-
-  addNewAdditionalTag(newTag) {
-    this.tagService.onAddAdditionalTag(this.additionalTags, newTag);
-  }
-
-  onDelete(arr, i) {
-    arr.splice(i, 1);
   }
 
   onSaveTag(form) {
-    this.tagService.onSaveTag(this.tag, form.value, this.currentLayerOption, this.additionalTags);
+    (this.currentLayerOption.prop === 'publisherSettings')
+      ?
+      this.tag = this.tagService.onSaveTag(this.tag, form.value, this.currentLayerOption)
+      :
+      this.tagService.onSaveTag(this.tag, form.value, this.currentLayerOption);
+    console.log(this.tag)
+  }
+  example(test) {
+    console.log(this.tagForm.value.additional_tags)
+    console.log(test)
   }
 }

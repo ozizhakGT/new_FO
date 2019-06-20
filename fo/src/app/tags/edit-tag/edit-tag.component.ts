@@ -7,7 +7,7 @@ import 'rxjs-compat/add/operator/do';
 import {UtilsService} from '../../core/serviecs/utils.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {operationcategoriesArray} from "../../core/general-enums/operation_categories";
-import {SelectMode} from "./components-opretion/operation-enums";
+import {SelectLayer} from "./components-opretion/operation-enums";
 
 interface TagSearch {
   id: string;
@@ -28,7 +28,7 @@ export class EditTagComponent implements OnInit, OnDestroy {
   searchingTags = false;
   tagGeneralDetails;
   operationTypes = operationcategoriesArray;
-  layerSelected = SelectMode;
+  layerSelected = SelectLayer;
   @ViewChild('query') searchTagQuery: ElementRef;
   searchQuerySubscription: Subscription;
   constructor(private tagService: TagService,
@@ -51,7 +51,6 @@ export class EditTagComponent implements OnInit, OnDestroy {
           this.tagService.getSearchTags(query).toPromise()
             .then((tags: TagSearch[]) => {
               if (tags.length > 0) {
-                console.log(tags)
                 this.hasTagsResults = true;
                 this.tagsSearch = tags;
                 this.searchingTags = false;
@@ -89,13 +88,14 @@ export class EditTagComponent implements OnInit, OnDestroy {
   }
   async onSelectTag(tagId) {
     if (sessionStorage.getItem('tagId') != tagId)  {
-      if (tagId.toString().startsWith('_')) { console.log(tagId = tagId.substring(1)); }
+      if (tagId.toString().startsWith('_')) {
+        tagId = tagId.substring(1);
+      }
       this.loading = true;
       this.utilsService.loader.next(true);
       await this.tagService.getTag(tagId).toPromise()
         .then(
           async _tag => {
-            console.log(_tag['message'])
             const tag = _tag['message'];
             this.tagGeneralDetails = {
               id: tag['_id'],
@@ -107,7 +107,6 @@ export class EditTagComponent implements OnInit, OnDestroy {
               site_id: tag['site_id'],
             };
             await this.tagService.getTagGeneralDetails(this.tagGeneralDetails);
-            console.log(this.tagGeneralDetails);
             sessionStorage.setItem('tagId', tag['_id']);
             this.tagService.onGetTagToService(tag);
             this.router.navigate(['./', tag._id , 'operation', tag.operation_id], {relativeTo: this.route});

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {Observable, Subscription} from 'rxjs';
 import 'rxjs-compat/add/operator/debounceTime';
 import 'rxjs-compat/add/operator/map';
@@ -14,15 +14,16 @@ import {operationcategoriesArray} from "../../../../core/general-enums/operation
 
 export class AdditionalTagSearchComponent implements OnInit {
   @ViewChild('addAdditional') query: ElementRef;
+  @Input() currentAdditionalTags;
+  @Output() presentAdditionalTag = new EventEmitter<[] | {}>();
   operationTypes = operationcategoriesArray;
   tags: any = [];
-  @Output() tagChosen = new EventEmitter<any>();
   constructor(private tagService: TagService) {}
   ngOnInit() {
       Observable.fromEvent(this.query.nativeElement, 'keyup')
         .do(() => {
           this.tags = [];
-          this.query = null
+          this.query = null;
         })
         .debounceTime(1200)
         .subscribe(typing => {
@@ -30,7 +31,6 @@ export class AdditionalTagSearchComponent implements OnInit {
           if (getQuery.length >= 3) {
             this.tagService.getSearchTags(getQuery).subscribe((results: any) => {
               if (results.length > 0) {
-                console.log(results)
                 this.tags = results;
               } else {
                 this.tags = [{id: 'No Results'}];
@@ -39,11 +39,17 @@ export class AdditionalTagSearchComponent implements OnInit {
           }
         });
   }
-
-  getTag(tagId) {
-    this.tagChosen.emit({id: tagId.toString(), boolean: true});
-  }
   onPaintLabel(operationId) {
     return this.tagService.getLabelColor(operationId);
+  }
+
+  onFunc(type, i) {
+    if (type === 'delete') {
+      this.tagService.onDelete(this.currentAdditionalTags, i);
+    }
+    else if (type === 'add') {
+      this.currentAdditionalTags.push({id: i.toString(), enable: true});
+    }
+    this.presentAdditionalTag.emit(this.tagService.onGenerateAdditionalTag('save', this.currentAdditionalTags));
   }
 }
