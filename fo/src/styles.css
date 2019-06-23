@@ -159,23 +159,24 @@ tr:hover {
   display: flex;
   justify-content: space-between;
 }
-.tag__inputs-row .mat-form-field-infix {
-  width: 105px;
-}
-.tag__inputs-row *:not(:last-child) {
+.tag__inputs-row mat-form-field:not(:last-child) {
   margin-right: 4rem;
 }
 .input_select--fields {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
+  margin-right: 4rem;
 }
 .input_select--fields .mat-form-field-infix {
-  width: 83px;
+  width: 90px;
 }
-.input_select--fields *:first-child {
+.input_select--fields mat-form-field:first-child {
   margin-right: 0;
   text-align: center;
+}
+.btn__save {
+  float: right;
 }
 
 /*GENERAL ANIMATION*/

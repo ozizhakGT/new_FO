@@ -45,7 +45,6 @@ export class PopComponent implements OnInit {
     this.tagService.layerSelection.subscribe((layer: {}) => {
         this.tag = this.tagService.getTagToOperation();
         this.tagForm = (layer['enable'] && layer['prop'] !== 'publisherSettings') ? this.tagFormInit(this.tag[layer['prop']]) : this.tagFormInit(this.tag);
-        console.log(this.tagForm.value);
         this.currentLayerOption = {...this.currentLayerOption, ...layer};
     })
   }

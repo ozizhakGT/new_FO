@@ -123,24 +123,8 @@
         <div><app-additional-tag-search
                                         [currentAdditionalTags]="tagForm.value.additional_tags_generator"
                                         (presentAdditionalTag)="tagForm.value.additional_tags = $event"></app-additional-tag-search></div>
-        <!--<mat-card class="tag__additional-tag">-->
-          <!--<mat-card-title>Additional Tags</mat-card-title>-->
-          <!--<app-additional-tag-search (tagChosen)="addNewAdditionalTag($event)"></app-additional-tag-search>-->
-          <!--<mat-card-content>-->
-            <!--<mat-list>-->
-              <!--<mat-list-item *ngFor="let tag of additionalTags; let i = index">-->
-                <!--<div class="tag__additional-btn">-->
-                  <!--{{tag.id}}-->
-                  <!--<mat-slide-toggle checked="{{tag.boolean}}" (change)="tag.boolean = $event.checked"></mat-slide-toggle>-->
-                  <!--<i class="fa fa-trash" (click)="onDelete(additionalTags, i)"></i>-->
-                <!--</div>-->
-                <!--<mat-divider></mat-divider>-->
-              <!--</mat-list-item>-->
-            <!--</mat-list>-->
-          <!--</mat-card-content>-->
-        <!--</mat-card>-->
       </div>
-      <button mat-button>Save Basic Configuration Tag</button>
+      <button class="btn__save" mat-raised-button color="primary"><span>Save {{currentLayerOption.name}} Layer Configuration</span></button>
     </form>
   </div>
 </div>

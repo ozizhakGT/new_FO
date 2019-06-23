@@ -1,12 +1,15 @@
-.tag__additional-tag {
-  margin: 3rem 6rem;
-}
-.tag__additional-btn {
+.tag__additional-row {
   width: 100%;
   display: flex;
   margin-right: 0;
 }
-.tag__additional-btn > i {
+.btn__save {
+  align-self: center;
+}
+.btn__save > span {
+  color: red;
+}
+.tag__additional-row > i {
   cursor: pointer;
   color: red;
   transition: .4s all;

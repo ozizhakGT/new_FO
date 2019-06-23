@@ -1,20 +1,23 @@
 <mat-card>
   <mat-card-title>Additional Tags</mat-card-title>
-  <mat-form-field>
-    <input #addAdditional type="text" placeholder="Add Additional Tag" matInput [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let tag of tags" [value]="tag.id" (click)="onFunc('add', tag.id)">
-        <div class="option__search">
+  <div class="tag__additional-row">
+    <mat-form-field>
+      <input #addAdditional type="text" placeholder="Add Additional Tag" matInput [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let tag of tags" [value]="tag.id" (click)="onFunc('add', tag.id)">
+          <div class="option__search">
           <span class="label__search"
                 [ngStyle]="{'background-color': onPaintLabel(tag.operation_id), 'color': 'white'}">{{operationTypes[tag.operation_id].name}}</span>
-          {{tag.id}}
-        </div>
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+            {{tag.id}}
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button class="btn__save" mat-raised-button color="accent" type="button">Create new Tag</button>
+  </div>
   <mat-list>
     <mat-list-item *ngFor="let tag of currentAdditionalTags; let i = index">
-      <div class="tag__additional-btn">
+      <div class="tag__additional-row">
         <i class="fa fa-trash" (click)="onFunc('delete', i)"></i>
         <span>{{tag.id}}</span>
         <mat-slide-toggle checked="{{tag.enable}}" (change)="onFunc('change', i)"></mat-slide-toggle>
