@@ -1,5 +1,5 @@
 <mat-card>
-  <!--{{currentAdditionalTags | json}}-->
+  <mat-card-title>Additional Tags</mat-card-title>
   <mat-form-field>
     <input #addAdditional type="text" placeholder="Add Additional Tag" matInput [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
@@ -15,9 +15,9 @@
   <mat-list>
     <mat-list-item *ngFor="let tag of currentAdditionalTags; let i = index">
       <div class="tag__additional-btn">
-        {{tag.id}}
-        <mat-slide-toggle checked="{{tag.enable}}" (change)="tag.boolean = $event.checked"></mat-slide-toggle>
         <i class="fa fa-trash" (click)="onFunc('delete', i)"></i>
+        <span>{{tag.id}}</span>
+        <mat-slide-toggle checked="{{tag.enable}}" (change)="onFunc('change', i)"></mat-slide-toggle>
       </div>
       <mat-divider></mat-divider>
     </mat-list-item>

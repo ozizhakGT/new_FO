@@ -177,22 +177,6 @@ tr:hover {
   margin-right: 0;
   text-align: center;
 }
-.tag__additional-tag {
-  margin: 3rem 6rem;
-}
-.tag__additional-btn {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-.tag__additional-btn > i {
-  cursor: pointer;
-  color: red;
-  transition: .4s all;
-}
-.tag__additional-btn > i:hover {
-  font-size: 1.2rem;
-}
 
 /*GENERAL ANIMATION*/
 @keyframes fadeIn {

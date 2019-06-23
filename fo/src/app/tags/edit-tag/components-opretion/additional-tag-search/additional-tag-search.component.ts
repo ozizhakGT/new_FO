@@ -50,6 +50,9 @@ export class AdditionalTagSearchComponent implements OnInit {
     else if (type === 'add') {
       this.currentAdditionalTags.push({id: i.toString(), enable: true});
     }
+    else if (type === 'change') {
+      this.currentAdditionalTags[i].enable = !this.currentAdditionalTags[i].enable;
+    }
     this.presentAdditionalTag.emit(this.tagService.onGenerateAdditionalTag('save', this.currentAdditionalTags));
   }
 }

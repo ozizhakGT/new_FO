@@ -1,3 +1,15 @@
-.mat-form-field-infix, .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0 !important;
+.tag__additional-tag {
+  margin: 3rem 6rem;
+}
+.tag__additional-btn {
+  width: 100%;
+  display: flex;
+  margin-right: 0;
+}
+.tag__additional-btn > i {
+  cursor: pointer;
+  color: red;
+  transition: .4s all;
+  font-size: 1.6rem;
+  align-self: flex-end;
 }

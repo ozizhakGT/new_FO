@@ -30,7 +30,6 @@ export class PopComponent implements OnInit {
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
-  cap
   currentLayerOption = SelectLayer['publisher'];
   constructor(private tagService: TagService,
               private route: ActivatedRoute) { }
@@ -39,12 +38,12 @@ export class PopComponent implements OnInit {
       (params: Params) => {
         if (params.tagId) {
             this.tag = this.tagService.getTagToOperation();
-            console.log(this.tag)
             this.tagForm = this.tagFormInit(this.tag);
         }
       });
 
     this.tagService.layerSelection.subscribe((layer: {}) => {
+        this.tag = this.tagService.getTagToOperation();
         this.tagForm = (layer['enable'] && layer['prop'] !== 'publisherSettings') ? this.tagFormInit(this.tag[layer['prop']]) : this.tagFormInit(this.tag);
         console.log(this.tagForm.value);
         this.currentLayerOption = {...this.currentLayerOption, ...layer};
@@ -75,18 +74,5 @@ export class PopComponent implements OnInit {
       additional_tags_generator: new FormControl(this.tagService.onGenerateAdditionalTag('load', tag.additional_tags) || null),
       additional_tags: new FormControl(tag.additional_tags || null),
     });
-  }
-
-  onSaveTag(form) {
-    (this.currentLayerOption.prop === 'publisherSettings')
-      ?
-      this.tag = this.tagService.onSaveTag(this.tag, form.value, this.currentLayerOption)
-      :
-      this.tagService.onSaveTag(this.tag, form.value, this.currentLayerOption);
-    console.log(this.tag)
-  }
-  example(test) {
-    console.log(this.tagForm.value.additional_tags)
-    console.log(test)
   }
 }

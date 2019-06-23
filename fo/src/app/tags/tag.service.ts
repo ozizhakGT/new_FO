@@ -152,22 +152,24 @@ export class TagService {
     return form;
   }
   
-  onSaveTag(tag, form, currentLayer) {
-    let finalTag = tag;
+  onSaveTag(form, currentLayer) {
+    this.utilsService.loader.next(true);
+    let finalTag = this.tag;
     if (currentLayer['prop'] !== 'publisherSettings') {
       finalTag[currentLayer['prop']] = this.prapareForm(form);
     } else {
       finalTag = this.prapareForm({...finalTag, ...form});
     }
-    this.onUpdateTag(finalTag._id, finalTag);
-    return finalTag;
+    this.onUpdateTag(finalTag._id, finalTag, currentLayer['name']);
   }
 
-  onUpdateTag(tagId, data) {
+  onUpdateTag(tagId, data, layer) {
     this.apiService.updateTag(tagId,data).toPromise().then(res => {
-      console.log(res)
+      console.log(res);
+      this.tag = data;
+      this.utilsService.loader.next(false);
+      this.utilsService.messageNotification(`${layer} Layer Tag Saved Successfully`, null, 'success');
     })
       .catch(err => console.log(err))
   }
 }
-
