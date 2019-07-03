@@ -47,7 +47,7 @@ export class PaymentDetailsComponent implements OnInit {
         this.utilsService.loader.next(false);
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
         this.utilsService.messageNotification(`Cannot get Data!`, null, 'failed')
         this.utilsService.loader.next(false);
       });

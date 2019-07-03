@@ -94,7 +94,7 @@
               <mat-label>Monetization Type</mat-label>
               <mat-select (selectionChange)="onGetReportColumns($event.value)">
                 <mat-option [value]="false">No Type Selected</mat-option>
-                <mat-option *ngFor="let monetization of monetizations" [value]="monetization.id">
+                <mat-option *ngFor="let monetization of monetizations | slice:1" [value]="monetization.id">
                   {{monetization.name}}
                 </mat-option>
               </mat-select>
