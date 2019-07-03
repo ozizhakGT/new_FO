@@ -8,35 +8,35 @@
             type="text" placeholder="Tag name" matInput formControlName="name">
         </mat-form-field>
         <mat-form-field>
-          <mat-select #showParentTag placeholder="Activity" formControlName="activity">
+          <mat-select [disabled]="disableInputs"  #showParentTag placeholder="Activity" formControlName="activity">
             <mat-option *ngFor="let activity of activitySelection" [value]="activity.id">
               {{activity.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Enchantment In S2S" formControlName="s2s_without_enchantment">
+          <mat-select [disabled]="disableInputs" placeholder="Enchantment In S2S" formControlName="s2s_without_enchantment">
             <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
               {{option.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Storage Mode" formControlName="storageMode">
+          <mat-select [disabled]="disableInputs" placeholder="Storage Mode" formControlName="storageMode">
             <mat-option *ngFor="let mode of storageModeSelection" [value]="mode.id">
               {{mode.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Serving Method" formControlName="serving_method_id">
+          <mat-select [disabled]="disableInputs" placeholder="Serving Method" formControlName="serving_method_id">
             <mat-option *ngFor="let method of servingMethodsSelection" [value]="method.id">
               {{method.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Show Parent Tag" formControlName="show_parent_tag">
+          <mat-select [disabled]="disableInputs" placeholder="Show Parent Tag" formControlName="show_parent_tag">
             <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
               {{option.name}}
             </mat-option>
@@ -48,28 +48,28 @@
       </div>
       <div class="tag__inputs-row">
         <mat-form-field>
-          <mat-select placeholder="Work Hours" formControlName="work_hours" multiple>
+          <mat-select [disabled]="disableInputs" placeholder="Work Hours" formControlName="work_hours" multiple>
             <mat-option *ngFor="let hour of workHoursSelection" [value]="hour.id">
               {{hour.hour}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="BLOCK JAVASCRIPT" formControlName="block">
+          <mat-select [disabled]="disableInputs" placeholder="BLOCK JAVASCRIPT" formControlName="block">
             <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
               {{option.name == 'Enable' ? 'Block' : 'Unblock'}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="AdBlock Traffic" formControlName="adblock_traffic_only">
+          <mat-select [disabled]="disableInputs" placeholder="AdBlock Traffic" formControlName="adblock_traffic_only">
             <mat-option *ngFor="let option of adblockTrafficSelection" [value]="option.id">
               {{option.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Show In Self Service" formControlName="show_in_ss">
+          <mat-select [disabled]="disableInputs" placeholder="Show In Self Service" formControlName="show_in_ss">
             <mat-option *ngFor="let option of selectOptions" [value]="option.boolean">
               {{option.name}}
             </mat-option>
@@ -92,7 +92,7 @@
             <input type="number" min="1" placeholder="Cap Interval" matInput formControlName="interval">
           </mat-form-field>
           <mat-form-field>
-            <mat-select formControlName="interval_TimeUnit">
+            <mat-select [disabled]="disableInputs" formControlName="interval_TimeUnit">
               <mat-option *ngFor="let unit of timeUnitsSelection | slice:1" [value]="unit.id">
                 {{unit.name}}
               </mat-option>
@@ -104,7 +104,7 @@
             <input type="number" min="1" placeholder="Cap Reset Frequency" matInput formControlName="cap_reset_seconds">
           </mat-form-field>
           <mat-form-field>
-            <mat-select formControlName="cap_reset_seconds_TimeUnit">
+            <mat-select [disabled]="disableInputs" formControlName="cap_reset_seconds_TimeUnit">
               <mat-option *ngFor="let unit of timeUnitsSelection | slice:1" [value]="unit.id">
                 {{unit.name}}
               </mat-option>
@@ -112,19 +112,19 @@
           </mat-form-field>
         </div>
         <mat-form-field>
-          <mat-select placeholder="Cap Type" formControlName="cap_type">
+          <mat-select [disabled]="disableInputs" placeholder="Cap Type" formControlName="cap_type">
             <mat-option *ngFor="let option of capTypeSelection" [value]="option.id">
               {{option.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="tag__inputs-row">
+      <div *ngIf="currentLayerOption.id === 1" class="tag__inputs-row">
         <div><app-additional-tag-search
                                         [currentAdditionalTags]="tagForm.value.additional_tags_generator"
                                         (presentAdditionalTag)="tagForm.value.additional_tags = $event"></app-additional-tag-search></div>
       </div>
-      <button class="btn__save" mat-raised-button color="primary"><span>Save {{currentLayerOption.name}} Layer Configuration</span></button>
+      <button class="btn__save" mat-raised-button color="primary" [disabled]="!tagForm.valid || disableInputs"><span>Save {{currentLayerOption.name}} Layer Configuration</span></button>
     </form>
   </div>
 </div>

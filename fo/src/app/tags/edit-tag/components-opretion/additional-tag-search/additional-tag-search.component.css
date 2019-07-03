@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   margin-right: 0;
+  justify-content: space-between;
 }
 .btn__save {
   align-self: center;

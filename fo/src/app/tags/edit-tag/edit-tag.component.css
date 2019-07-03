@@ -55,3 +55,5 @@ mat-card {
   50% {transform: scale(1.7)}
   100% {transform: rotate(0) scale(1)}
 }
+.layer__btn {color: white}
+.os__btn {background: green}

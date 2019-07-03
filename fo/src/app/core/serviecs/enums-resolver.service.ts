@@ -19,7 +19,13 @@ export class EnumsResolverService implements Resolve<any> {
         .then(async res => {
           this.enums = await res['results'];
           sessionStorage.setItem('enums', JSON.stringify(this.enums));
-        });
+        })
+        .catch(err => {
+          if (err['status'] === 401) {
+            this.utilsService.messageNotification(`There was some problem with your Token, please try login again to solve this problem.`, null, 'failed')
+            this.utilsService.loader.next(false);
+          }
+        })
     }
     return this.enums;
   }

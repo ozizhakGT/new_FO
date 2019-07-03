@@ -30,41 +30,58 @@ export class PopComponent implements OnInit {
   servingMethodsSelection = this.tagService.getServingMethodsProduct('Pop');
   tag;
   tagForm: FormGroup;
+  disableInputs =  false;
   currentLayerOption = SelectLayer['publisher'];
+
   constructor(private tagService: TagService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
+
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
         if (params.tagId) {
-            this.tag = this.tagService.getTagToOperation();
-            this.tagForm = this.tagFormInit(this.tag);
+          this.tag = this.tagService.getTagToOperation();
+          this.tagForm = this.tagFormInit(this.tag);
         }
       });
 
     this.tagService.layerSelection.subscribe((layer: {}) => {
-        this.tag = this.tagService.getTagToOperation();
-        this.tagForm = (layer['enable'] && layer['prop'] !== 'publisherSettings') ? this.tagFormInit(this.tag[layer['prop']]) : this.tagFormInit(this.tag);
-        this.currentLayerOption = {...this.currentLayerOption, ...layer};
+      let tagHolder;
+      this.tag = this.tagService.getTagToOperation();
+      if (layer['enable'] && layer['id'] >= 2) {
+        if (layer['id'] > 2) {
+          this.disableInputs = true;
+          tagHolder = this.tagFormInit(this.tag)
+        } else {
+          this.disableInputs = false;
+          tagHolder = this.tagFormInit(this.tag[layer['prop']]);
+        }
+      } else {
+        this.disableInputs = false;
+        tagHolder = this.tagFormInit(this.tag)
+      }
+      this.tagForm = tagHolder;
+      this.currentLayerOption = {...this.currentLayerOption, ...layer};
     })
   }
 
   tagFormInit(tag) {
-     return new FormGroup({
-      name: new FormControl(tag.name),
-      show_parent_tag: new FormControl(tag.show_parent_tag || null),
-      parent_tag: new FormControl(tag.parent_tag || null),
+    return new FormGroup({
+      name: new FormControl({value: tag.name, disabled: this.disableInputs}),
+      show_parent_tag: new FormControl({value: tag.show_parent_tag || null, disabled: this.disableInputs}),
+      parent_tag: new FormControl({value: tag.parent_tag || null, disabled: this.disableInputs}),
       activity: new FormControl(tag.activity),
       s2s_without_enchantment: new FormControl(tag.s2s_without_enchantment || null),
-      storageMode: new FormControl(this.tagService.getStorageMode('null',{session: tag['session_storage'], refresh: tag['refresh_storage']}), [Validators.required]),
+      storageMode: new FormControl(this.tagService.getStorageMode('null', {session: tag['session_storage'], refresh: tag['refresh_storage']}), [Validators.required]),
       serving_method_id: new FormControl(tag.serving_method_id, [Validators.required]),
-      cpa_minimum_winning_percent: new FormControl(tag.cpa_minimum_winning_percent, [Validators.required, Validators.min(0), Validators.max(100)]),
-      cap: new FormControl(tag.cap, [Validators.required, Validators.min(0)]),
-      cap_per_url: new FormControl(tag.cap_per_url, [Validators.required, Validators.min(0)]),
-      interval: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnitsSelection)[0], [Validators.required, Validators.min(0)]),
-      interval_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnitsSelection)[1]),
-      cap_reset_seconds: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnitsSelection)[0], [Validators.required, Validators.min(0)]),
-      cap_reset_seconds_TimeUnit: new FormControl(this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnitsSelection)[1]),
+      cpa_minimum_winning_percent: new FormControl({value: tag.cpa_minimum_winning_percent, disabled: this.disableInputs}, [Validators.required, Validators.min(0), Validators.max(100)]),
+      cap: new FormControl({value: tag.cap, disabled: this.disableInputs}, [Validators.required, Validators.min(0)]),
+      cap_per_url: new FormControl({value: tag.cap_per_url, disabled: this.disableInputs}, [Validators.required, Validators.min(0)]),
+      interval: new FormControl({value: this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnitsSelection)[0], disabled: this.disableInputs}, [Validators.required, Validators.min(0)]),
+      interval_TimeUnit: new FormControl({value: this.tagService.getTimeUnit('divide-milli', tag.interval, this.timeUnitsSelection)[1], disabled: this.disableInputs}),
+      cap_reset_seconds: new FormControl({value: this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnitsSelection)[0], disabled: this.disableInputs}, [Validators.required, Validators.min(0)]),
+      cap_reset_seconds_TimeUnit: new FormControl({value: this.tagService.getTimeUnit('divide', tag.cap_reset_seconds, this.timeUnitsSelection)[1], disabled: this.disableInputs}),
       work_hours: new FormControl(tag.work_hours),
       block: new FormControl(tag.block),
       adblock_traffic_only: new FormControl(tag.adblock_traffic_only),

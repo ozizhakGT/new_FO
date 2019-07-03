@@ -50,6 +50,7 @@
         <div class="btns__mode">
           <button (click)="onSelectLayer(layerSelected.publisher)" mat-raised-button color="primary" [disabled]="layerSelected.publisher.enable">Publisher Layer</button>
           <button (click)="onSelectLayer(layerSelected.admin)" mat-raised-button color="accent" [disabled]="layerSelected.admin.enable">Admin Layer</button>
+          <button class="layer__btn os__btn" (click)="onSelectLayer(layerSelected.os)" mat-raised-button [disabled]="layerSelected.os.enable">OS Layer</button>
         </div>
         <router-outlet></router-outlet>
       </mat-tab>
