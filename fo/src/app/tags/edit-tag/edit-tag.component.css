@@ -49,11 +49,16 @@ mat-card {
 .btns__mode button:not(:last-child) {
   margin-right: .7rem;
 }
+.layer__btn {color: white}
+.os__btn {background: green}
+
+.advanced-layer {
+text-align: center;
+}
+
 @keyframes rotate360 {
   0% {transform: rotate(0)}
   40% {transform: rotate(360deg)}
   50% {transform: scale(1.7)}
   100% {transform: rotate(0) scale(1)}
 }
-.layer__btn {color: white}
-.os__btn {background: green}

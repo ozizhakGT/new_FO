@@ -5,7 +5,7 @@
       <div class="tag__inputs-row">
         <mat-form-field>
           <input
-            type="text" placeholder="Tag name" matInput formControlName="name">
+             type="text" placeholder="Tag name" matInput formControlName="name">
         </mat-form-field>
         <mat-form-field>
           <mat-select [disabled]="disableInputs"  #showParentTag placeholder="Activity" formControlName="activity">
@@ -42,11 +42,11 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+      <div class="tag__inputs-row">
         <mat-form-field>
           <input type="number" placeholder="Parent Tag ID" matInput formControlName="parent_tag">
         </mat-form-field>
-      </div>
-      <div class="tag__inputs-row">
         <mat-form-field>
           <mat-select [disabled]="disableInputs" placeholder="Work Hours" formControlName="work_hours" multiple>
             <mat-option *ngFor="let hour of workHoursSelection" [value]="hour.id">

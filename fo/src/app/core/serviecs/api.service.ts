@@ -17,6 +17,15 @@ export class ApiService {
     }
   }
 
+  // GENERAL API
+  async getEnums() {
+    return await this.http.get(`http://fo.algo.web-pick.com/api/adserver/display/collections/enums`).toPromise();
+  }
+  async getAttributes() {
+    return await this.http.get(`http://fo.algo.web-pick.com/api/adserver/display/collections/attributes`).toPromise();
+  }
+
+
   // COMBINED REQUESTS
   UserDetailRequests(request, publisherId, data?: {}) {
     const userDetailsUrl = `${this.baseUrl}user/${publisherId}`;
@@ -95,9 +104,6 @@ export class ApiService {
   }
   getTag(tagId) {
     return this.http.get(`${this.baseUrl}get_tag?tag_id=${tagId}`);
-  }
-  async getEnums() {
-    return await this.http.get(`http://fo.algo.web-pick.com/api/adserver/display/collections/enums`).toPromise();
   }
 
   // PUBLISHER CRUD REQUEST

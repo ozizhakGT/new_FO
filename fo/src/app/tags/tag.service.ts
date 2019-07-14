@@ -151,7 +151,6 @@ export class TagService {
     delete form['additional_tags_generator'];
     return form;
   }
-  
   onSaveTag(form, currentLayer) {
     this.utilsService.loader.next(true);
     let finalTag = this.tag;
@@ -162,7 +161,6 @@ export class TagService {
     }
     this.onUpdateTag(finalTag._id, finalTag, currentLayer['name']);
   }
-
   onUpdateTag(tagId, data, layer) {
     this.apiService.updateTag(tagId,data).toPromise().then(res => {
       console.log(res);
@@ -171,5 +169,12 @@ export class TagService {
       this.utilsService.messageNotification(`${layer} Layer Tag Saved Successfully`, null, 'success');
     })
       .catch(err => console.log(err))
+  }
+  getAttributes() {
+    this.apiService.getAttributes().then(
+      res => {
+        return sessionStorage.setItem('attributes', JSON.stringify(res['results'].slice(31, 33)))
+      }
+    )
   }
 }

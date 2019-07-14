@@ -8,12 +8,12 @@ import {UtilsService} from "./utils.service";
 })
 export class EnumsResolverService implements Resolve<any> {
   enums;
-
+  attributes;
   constructor(private utilsService: UtilsService, private apiService: ApiService) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.utilsService.loader.next(true)
+    this.utilsService.loader.next(true);
     if (!sessionStorage.getItem('enums')) {
       this.enums = await this.apiService.getEnums()
         .then(async res => {
