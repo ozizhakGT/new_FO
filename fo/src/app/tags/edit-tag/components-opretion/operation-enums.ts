@@ -1,8 +1,8 @@
 export const SelectLayer = {
   publisher: {id: 1, enable: true, name: 'Publisher', prop: 'publisherSettings', color: '#e5e5ff'},
   admin: {id: 2, enable: false, name: 'Admin', prop: 'usedSettings', color: 'pink'},
-  os: {id: 3, enable: false, name: 'OS', prop: 'os_configurations', color: '#a9fcac'},
-  browser: {id: 4, enable: false, name: 'BROWSER', prop: 'browser_configurations', color: '#a9ffaa'},
+  browser: {id: 3, enable: false, name: 'BROWSER', prop: 'browser_configurations', color: '#a9ffaa'},
+  os: {id: 4, enable: false, name: 'OS', prop: 'os_configurations', color: '#a9fcac'},
 };
 export const SelectOptions = [
   {id: 0 , boolean: false, name: 'Disable'},
