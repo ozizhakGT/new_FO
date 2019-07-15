@@ -144,15 +144,15 @@ export class EditTagComponent implements OnInit, OnDestroy {
       this.layerSelected[layer].enable = this.layerSelected[layer].name === selection['name'];
     }
     if (selection['id'] > 2) {
-      debugger
+      let finalTag = {};
+      // debugger
         this.attributeSelection = JSON.parse(sessionStorage.getItem('attributes'))[selection['id'] - 3];
         this.attributeItem = this.attributeSelection['_id'] === 29 ? 'OS' : 'BROWSER';
-        // console.log(this.tag[selection['_id']]);
         // console.log(this.tag[selection['prop']]);
       for(let id in this.tag[selection['prop']]) {
         if (Object.entries(this.tag[selection['prop']][id]).length !== 0 && this.tag[selection['prop']][id].constructor === Object) {
-          console.log(this.tag[selection['prop']])
-          console.log(this.attributeItem)
+          finalTag = {...this.tag, ...this.tag[selection['prop']][id]};
+          console.log(finalTag, this.tag);
         }
       }
     } else {
