@@ -47,22 +47,21 @@ export class PopComponent implements OnInit {
       });
 
     this.tagService.layerSelection.subscribe((layer: {}) => {
-      let tagHolder;
-      this.tag = this.tagService.getTagToOperation();
-      if (layer['enable'] && layer['id'] >= 2) {
-        if (layer['id'] > 2) {
-          this.disableInputs = true;
-          tagHolder = this.tagFormInit(this.tag)
-        } else {
-          this.disableInputs = false;
-          tagHolder = this.tagFormInit(this.tag[layer['prop']]);
-        }
-      } else {
-        this.disableInputs = false;
-        tagHolder = this.tagFormInit(this.tag)
-      }
-      this.tagForm = tagHolder;
-      this.currentLayerOption = {...this.currentLayerOption, ...layer};
+          console.log(layer);
+    //   let tagHolder;
+    //   this.tag = this.tagService.getTagToOperation();
+    //   if (layer['enable'] && layer['id'] >= 2) {
+    //     if (layer['id'] > 2) {
+    //       tagHolder = this.tagFormInit(this.tag)
+    //     } else {
+    //       tagHolder = this.tagFormInit(this.tag[layer['prop']]);
+    //     }
+    //   } else {
+    //     tagHolder = this.tagFormInit(this.tag)
+    //   }
+    //   this.tagForm = tagHolder;
+      this.tagForm = this.tagFormInit(layer[1]);
+      this.currentLayerOption = {...this.currentLayerOption, ...layer[0]};
     })
   }
 

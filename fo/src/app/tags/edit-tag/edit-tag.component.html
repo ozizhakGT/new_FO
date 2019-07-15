@@ -48,10 +48,10 @@
           </mat-card>
         </div>
         <div class="btns__mode">
-          <button (click)="onSelectLayer(layerSelected.publisher)" mat-raised-button color="primary" [disabled]="layerSelected.publisher.enable">Publisher Layer</button>
-          <button (click)="onSelectLayer(layerSelected.admin)" mat-raised-button color="accent" [disabled]="layerSelected.admin.enable">Admin Layer</button>
-          <button class="layer__btn os__btn" (click)="onSelectLayer(layerSelected.os)" mat-raised-button [disabled]="layerSelected.os.enable">OS Layer</button>
-          <button class="layer__btn os__btn" (click)="onSelectLayer(layerSelected.browser)" mat-raised-button [disabled]="layerSelected.browser.enable">BROWSER Layer</button>
+          <button (click)="onSelectLayer(layers.publisher)" mat-raised-button color="primary" [disabled]="layers.publisher.enable">Publisher Layer</button>
+          <button (click)="onSelectLayer(layers.admin)" mat-raised-button color="accent" [disabled]="layers.admin.enable">Admin Layer</button>
+          <button class="layer__btn os__btn" (click)="onSelectLayer(layers.os)" mat-raised-button [disabled]="layers.os.enable">OS Layer</button>
+          <button class="layer__btn os__btn" (click)="onSelectLayer(layers.browser)" mat-raised-button [disabled]="layers.browser.enable">BROWSER Layer</button>
         </div>
         <div *ngIf="attributeSelection" class="advanced-layer">
           <h3>Choose {{attributeItem}}</h3>
@@ -62,9 +62,9 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <!--<div *ngFor="item in itemsSelection">-->
-
-          <!--</div>-->
+          <div>
+            {{currentLayer | json}}
+          </div>
         </div>
         <router-outlet></router-outlet>
       </mat-tab>

@@ -29,12 +29,12 @@ export class EditTagComponent implements OnInit, OnDestroy {
   searchingTags = false;
   tagGeneralDetails;
   operationTypes = operationcategoriesArray;
-  layerSelected = SelectLayer;
+  layers = SelectLayer;
+  currentLayer = [];
   @ViewChild('query') searchTagQuery: ElementRef;
   searchQuerySubscription: Subscription;
   attributeSelection;
   attributeItem;
-  itemsSelection = [];
   constructor(private tagService: TagService,
               private utilsService: UtilsService,
               private router: Router,
@@ -140,24 +140,36 @@ export class EditTagComponent implements OnInit, OnDestroy {
    return this.tagService.getLabelColor(oparetionName);
   }
   onSelectLayer(selection) {
-    for (let layer in this.layerSelected) {
-      this.layerSelected[layer].enable = this.layerSelected[layer].name === selection['name'];
+    let attributeArr = [];
+    let finalTag = {...this.tag};
+    for (let layer in this.layers) {
+      this.layers[layer].enable = this.layers[layer].name === selection['name'];
     }
-    if (selection['id'] > 2) {
-      let finalTag = {};
+    if (selection['id'] > 2 && selection['id'] !== 1) {
       // debugger
         this.attributeSelection = JSON.parse(sessionStorage.getItem('attributes'))[selection['id'] - 3];
         this.attributeItem = this.attributeSelection['_id'] === 29 ? 'OS' : 'BROWSER';
-        // console.log(this.tag[selection['prop']]);
-      for(let id in this.tag[selection['prop']]) {
-        if (Object.entries(this.tag[selection['prop']][id]).length !== 0 && this.tag[selection['prop']][id].constructor === Object) {
-          finalTag = {...this.tag, ...this.tag[selection['prop']][id]};
-          console.log(finalTag, this.tag);
+
+      // for(let id in this.tag[selection['prop']]) {
+      //   if (Object.entries(this.tag[selection['prop']][id]).length !== 0 && this.tag[selection['prop']][id].constructor === Object) {
+      //     finalTag = {...this.tag, ...this.tag[selection['prop']][id]};
+      //     console.log(finalTag, this.tag);
+      //   }
+      // }
+      for (let item in this.tag[selection['prop']]) {
+        for (let i = 0; i < this.attributeSelection.options.length; i++) {
+          if (this.attributeSelection.options[i].key == item) {
+
+            break;
+          }
         }
       }
     } else {
+      if (selection['id'] === 2) {
+        finalTag = {...this.tag, ...this.tag[selection['prop']]};
+      }
       this.attributeSelection = '';
     }
-    this.tagService.layerSelection.next(selection);
+    this.tagService.layerSelection.next([selection, finalTag]);
   }
 }

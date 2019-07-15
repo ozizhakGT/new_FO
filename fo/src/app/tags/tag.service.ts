@@ -10,7 +10,7 @@ import {TimeUnits} from "./edit-tag/components-opretion/operation-enums";
 export class TagService {
   tag;
   timeUnitsSelection = TimeUnits;
-  layerSelection = new Subject<string>();
+  layerSelection = new Subject<[]>();
 
   constructor(private apiService: ApiService, private utilsService: UtilsService) {
   }
